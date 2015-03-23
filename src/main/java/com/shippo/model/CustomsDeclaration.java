@@ -10,9 +10,9 @@ import com.shippo.net.APIResource;
 
 public class CustomsDeclaration extends APIResource {
 
-	String object_state;
-	String object_id;
-	String object_owner;
+    String object_state;
+    String object_id;
+    String object_owner;
     Object object_created;
     Object object_updated;
     Object exporter_reference;

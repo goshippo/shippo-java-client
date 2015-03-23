@@ -18,7 +18,7 @@ public class CustomsDeclarationTest extends ShippoTest {
 
     @Test
     public void testValidCreate() {
-		Shippo.setDEBUG(true);
+        Shippo.setDEBUG(true);
         CustomsDeclaration testObject = (CustomsDeclaration) getDefaultObject();
         assertEquals(testObject.getObject_state(), "VALID");
     }
@@ -32,7 +32,7 @@ public class CustomsDeclarationTest extends ShippoTest {
     @Test
     public void testRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-		Shippo.setDEBUG(true);
+        Shippo.setDEBUG(true);
         CustomsDeclaration testObject = (CustomsDeclaration) getDefaultObject();
         CustomsDeclaration retrievedObject;
 
@@ -86,7 +86,7 @@ public class CustomsDeclarationTest extends ShippoTest {
         objectMap.put("incoterm", null);
 
         Map<String, Object> customsItemsMap = new HashMap<String, Object>();
-        String[] arr = {customsItem.getObject_id()};
+        String[] arr = { customsItem.getObject_id() };
         objectMap.put("items", arr);
 
         objectMap.put("metadata", "Order ID #123123");

@@ -72,7 +72,7 @@ public class Example {
         System.out.println(String.format("Generating rates for shipment %s", shipment.getObject_id()));
         RateCollection rates = Shipment.getShippingRatesSync(shipment.getObject_id());
 
-        System.out.println(String.format("Obtainned %d rates for shipment %s ", rates.getCount(),
+        System.out.println(String.format("Obtained %d rates for shipment %s ", rates.getCount(),
                 shipment.getObject_id()));
         Rate rate = rates.getData().get(0);
 

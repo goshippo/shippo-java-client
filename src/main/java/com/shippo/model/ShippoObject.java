@@ -2,10 +2,6 @@ package com.shippo.model;
 
 import java.lang.reflect.Field;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 public abstract class ShippoObject {
 
     private Object getIdString() {

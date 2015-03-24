@@ -6,8 +6,6 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.URLStreamHandler;
@@ -35,492 +33,451 @@ import com.shippo.model.ShippoRawJsonObjectDeserializer;
 
 public abstract class APIResource extends ShippoObject {
 
-	public static final Gson GSON = new GsonBuilder()
-			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-			.registerTypeAdapter(ShippoRawJsonObject.class,
-					new ShippoRawJsonObjectDeserializer()).create();
+    public static final Gson GSON = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .registerTypeAdapter(ShippoRawJsonObject.class, new ShippoRawJsonObjectDeserializer()).create();
 
-	private static String className(Class<?> clazz) {
-		String className = clazz.getSimpleName().toLowerCase()
-				.replace("$", " ");
+    private static String className(Class<?> clazz) {
+        String className = clazz.getSimpleName().toLowerCase().replace("$", " ");
 
-		// Special case class names
-		if (className.equals("address")) {
-			return "addresse";
-		} else if (className.equals("customsitem")) {
-			return "customs/item";
-		} else if (className.equals("customsdeclaration")) {
-			return "customs/declaration";
-		} else {
-			return className;
-		}
-	}
+        // Special case class names
+        if (className.equals("address")) {
+            return "addresse";
+        } else if (className.equals("customsitem")) {
+            return "customs/item";
+        } else if (className.equals("customsdeclaration")) {
+            return "customs/declaration";
+        } else {
+            return className;
+        }
+    }
 
-	protected static String singleClassURL(Class<?> clazz) {
-		return String.format("%s/v1/%s", Shippo.getApiBase(), className(clazz));
-	}
+    protected static String singleClassURL(Class<?> clazz) {
+        return String.format("%s/v1/%s", Shippo.getApiBase(), className(clazz));
+    }
 
-	protected static String classURL(Class<?> clazz) {
-		return String.format("%ss", singleClassURL(clazz));
-	}
+    protected static String classURL(Class<?> clazz) {
+        return String.format("%ss", singleClassURL(clazz));
+    }
 
-	protected static String instanceURL(Class<?> clazz, String id)
-			throws InvalidRequestException {
-		try {
-			return String.format("%s/%s", classURL(clazz), urlEncode(id));
-		} catch (UnsupportedEncodingException e) {
-			throw new InvalidRequestException("Unable to encode parameters to "
-					+ CHARSET
-					+ ". Please contact support@goshippo.com for assistance.",
-					null, e);
-		}
-	}
+    protected static String instanceURL(Class<?> clazz, String id) throws InvalidRequestException {
+        try {
+            return String.format("%s/%s", classURL(clazz), urlEncode(id));
+        } catch (UnsupportedEncodingException e) {
+            throw new InvalidRequestException("Unable to encode parameters to " + CHARSET
+                    + ". Please contact support@goshippo.com for assistance.", null, e);
+        }
+    }
 
-	public static final String CHARSET = "UTF-8";
+    public static final String CHARSET = "UTF-8";
 
-	private static final String DNS_CACHE_TTL_PROPERTY_NAME = "networkaddress.cache.ttl";
+    private static final String DNS_CACHE_TTL_PROPERTY_NAME = "networkaddress.cache.ttl";
 
-	/*
-	 * Set this property to override your environment's default
-	 * URLStreamHandler; Settings the property should not be needed in most
-	 * environments.
-	 */
-	private static final String CUSTOM_URL_STREAM_HANDLER_PROPERTY_NAME = "com.shippo.net.customURLStreamHandler";
+    /*
+     * Set this property to override your environment's default
+     * URLStreamHandler; Settings the property should not be needed in most
+     * environments.
+     */
+    private static final String CUSTOM_URL_STREAM_HANDLER_PROPERTY_NAME = "com.shippo.net.customURLStreamHandler";
 
-	protected enum RequestMethod {
-		GET, POST
-	}
+    protected enum RequestMethod {
+        GET, POST
+    }
 
-	private static String urlEncode(String str)
-			throws UnsupportedEncodingException {
-		// Preserve original behavior that passing null for an object id will
-		// lead
-		// to us actually making a request to /v1/foo/null
-		if (str == null) {
-			return null;
-		} else {
-			return URLEncoder.encode(str, CHARSET);
-		}
-	}
+    private static String urlEncode(String str) throws UnsupportedEncodingException {
+        // Preserve original behavior that passing null for an object id will
+        // lead
+        // to us actually making a request to /v1/foo/null
+        if (str == null) {
+            return null;
+        } else {
+            return URLEncoder.encode(str, CHARSET);
+        }
+    }
 
-	private static String urlEncodePair(String k, String v)
-			throws UnsupportedEncodingException {
-		return String.format("%s=%s", urlEncode(k), urlEncode(v));
-	}
+    private static String urlEncodePair(String k, String v) throws UnsupportedEncodingException {
+        return String.format("%s=%s", urlEncode(k), urlEncode(v));
+    }
 
-	static Map<String, String> getHeaders(String apiKey) {
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Accept-Charset", CHARSET);
-		headers.put("User-Agent",
-				String.format("Shippo/v1 JavaBindings/%s", Shippo.VERSION));
+    static Map<String, String> getHeaders(String apiKey) {
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Accept-Charset", CHARSET);
+        headers.put("User-Agent", String.format("Shippo/v1 JavaBindings/%s", Shippo.VERSION));
 
-		if (apiKey == null) {
-			apiKey = Shippo.apiKey;
-		}
+        if (apiKey == null) {
+            apiKey = Shippo.apiKey;
+        }
 
-		headers.put("Authorization", String.format("ShippoToken %s", apiKey));
-		headers.put("Accept", "application/json");
+        headers.put("Authorization", String.format("ShippoToken %s", apiKey));
+        headers.put("Accept", "application/json");
 
-		// debug headers
-		String[] propertyNames = { "os.name", "os.version", "os.arch",
-				"java.version", "java.vendor", "java.vm.version",
-				"java.vm.vendor" };
-		Map<String, String> propertyMap = new HashMap<String, String>();
-		for (String propertyName : propertyNames) {
-			propertyMap.put(propertyName, System.getProperty(propertyName));
-		}
-		// propertyMap.put("bindings.version", Shippo.VERSION);
-		// propertyMap.put("lang", "Java");
-		// propertyMap.put("publisher", "Shippo");
-		headers.put("User-Agent", GSON.toJson(propertyMap));
-		// if (Shippo.apiVersion != null) {
-		// headers.put("Shippo-Version", Shippo.apiVersion);
-		// }
-		return headers;
-	}
+        // debug headers
+        String[] propertyNames = { "os.name", "os.version", "os.arch", "java.version", "java.vendor",
+                "java.vm.version", "java.vm.vendor" };
+        Map<String, String> propertyMap = new HashMap<String, String>();
+        for (String propertyName : propertyNames) {
+            propertyMap.put(propertyName, System.getProperty(propertyName));
+        }
+        // propertyMap.put("bindings.version", Shippo.VERSION);
+        // propertyMap.put("lang", "Java");
+        // propertyMap.put("publisher", "Shippo");
+        headers.put("User-Agent", GSON.toJson(propertyMap));
+        // if (Shippo.apiVersion != null) {
+        // headers.put("Shippo-Version", Shippo.apiVersion);
+        // }
+        return headers;
+    }
 
-	private static java.net.HttpURLConnection createShippoConnection(
-			String url, String apiKey) throws IOException {
-		URL shippoURL;
-		String customURLStreamHandlerClassName = System.getProperty(
-				CUSTOM_URL_STREAM_HANDLER_PROPERTY_NAME, null);
-		if (customURLStreamHandlerClassName != null) {
-			// instantiate the custom handler provided
-			try {
-				@SuppressWarnings("unchecked")
-				Class<URLStreamHandler> clazz = (Class<URLStreamHandler>) Class
-						.forName(customURLStreamHandlerClassName);
-				Constructor<URLStreamHandler> constructor = clazz
-						.getConstructor();
-				URLStreamHandler customHandler = constructor.newInstance();
-				shippoURL = new URL(null, url, customHandler);
-			} catch (ClassNotFoundException e) {
-				throw new IOException(e);
-			} catch (SecurityException e) {
-				throw new IOException(e);
-			} catch (NoSuchMethodException e) {
-				throw new IOException(e);
-			} catch (IllegalArgumentException e) {
-				throw new IOException(e);
-			} catch (InstantiationException e) {
-				throw new IOException(e);
-			} catch (IllegalAccessException e) {
-				throw new IOException(e);
-			} catch (InvocationTargetException e) {
-				throw new IOException(e);
-			}
-		} else {
-			shippoURL = new URL(url);
-		}
-		java.net.HttpURLConnection conn = (java.net.HttpURLConnection) shippoURL
-				.openConnection();
-		conn.setConnectTimeout(30 * 1000);
-		conn.setReadTimeout(80 * 1000);
-		conn.setUseCaches(false);
-		for (Map.Entry<String, String> header : getHeaders(apiKey).entrySet()) {
-			conn.setRequestProperty(header.getKey(), header.getValue());
-		}
+    private static java.net.HttpURLConnection createShippoConnection(String url, String apiKey) throws IOException {
+        URL shippoURL;
+        String customURLStreamHandlerClassName = System.getProperty(CUSTOM_URL_STREAM_HANDLER_PROPERTY_NAME, null);
+        if (customURLStreamHandlerClassName != null) {
+            // instantiate the custom handler provided
+            try {
+                @SuppressWarnings("unchecked")
+                Class<URLStreamHandler> clazz = (Class<URLStreamHandler>) Class
+                        .forName(customURLStreamHandlerClassName);
+                Constructor<URLStreamHandler> constructor = clazz.getConstructor();
+                URLStreamHandler customHandler = constructor.newInstance();
+                shippoURL = new URL(null, url, customHandler);
+            } catch (ClassNotFoundException e) {
+                throw new IOException(e);
+            } catch (SecurityException e) {
+                throw new IOException(e);
+            } catch (NoSuchMethodException e) {
+                throw new IOException(e);
+            } catch (IllegalArgumentException e) {
+                throw new IOException(e);
+            } catch (InstantiationException e) {
+                throw new IOException(e);
+            } catch (IllegalAccessException e) {
+                throw new IOException(e);
+            } catch (InvocationTargetException e) {
+                throw new IOException(e);
+            }
+        } else {
+            shippoURL = new URL(url);
+        }
+        java.net.HttpURLConnection conn = (java.net.HttpURLConnection) shippoURL.openConnection();
+        conn.setConnectTimeout(30 * 1000);
+        conn.setReadTimeout(80 * 1000);
+        conn.setUseCaches(false);
+        for (Map.Entry<String, String> header : getHeaders(apiKey).entrySet()) {
+            conn.setRequestProperty(header.getKey(), header.getValue());
+        }
 
-		return conn;
-	}
+        return conn;
+    }
 
-	private static void throwInvalidCertificateException()
-			throws APIConnectionException {
-		throw new APIConnectionException(
-				"Invalid server certificate. You tried to connect to a server that has a revoked SSL certificate, which means we cannot securely send data to that server. Please email support@goshippo.com if you need help connecting to the correct API server.");
-	}
+    private static void throwInvalidCertificateException() throws APIConnectionException {
+        throw new APIConnectionException(
+                "Invalid server certificate. You tried to connect to a server that has a revoked SSL certificate, which means we cannot securely send data to that server. Please email support@goshippo.com if you need help connecting to the correct API server.");
+    }
 
-	private static void checkSSLCert(java.net.HttpURLConnection hconn)
-			throws IOException, APIConnectionException {
-		 if (!Shippo.getVerifySSL() &&
-		 !hconn.getURL().getHost().equals("api.shippo.com")) {
-		 return;
-		 }
-		
-		 javax.net.ssl.HttpsURLConnection conn =
-		 (javax.net.ssl.HttpsURLConnection) hconn;
-		 conn.connect();
-		
-		 Certificate[] certs = conn.getServerCertificates();
-		
-		 try {
-		 MessageDigest md = MessageDigest.getInstance("SHA-1");
-		
-		 byte[] der = certs[0].getEncoded();
-		 md.update(der);
-		 byte[] digest = md.digest();
-		
-		 byte[] revokedCertDigest = {};
-		
-		 if (Arrays.equals(digest, revokedCertDigest)) {
-		 throwInvalidCertificateException();
-		 }
-		
-		 } catch (NoSuchAlgorithmException e) {
-		 throw new RuntimeException(e);
-		 } catch (CertificateEncodingException e) {
-		 throwInvalidCertificateException();
-		 }
-	}
+    private static void checkSSLCert(java.net.HttpURLConnection hconn) throws IOException, APIConnectionException {
+        if (!Shippo.getVerifySSL() && !hconn.getURL().getHost().equals("api.shippo.com")) {
+            return;
+        }
 
-	private static String formatURL(String url, String query) {
-		if (query == null || query.isEmpty()) {
-			return url;
-		} else {
-			// In some cases, URL can already contain a question mark (eg,
-			// upcoming invoice lines)
-			String separator = url.contains("?") ? "&" : "?";
-			return String.format("%s%s%s", url, separator, query);
-		}
-	}
+        javax.net.ssl.HttpsURLConnection conn = (javax.net.ssl.HttpsURLConnection) hconn;
+        conn.connect();
 
-	private static java.net.HttpURLConnection createGetConnection(String url,
-			String query, String apiKey) throws IOException,
-			APIConnectionException {
-		if (Shippo.isDEBUG()) {
-			System.out.println("GET URL: " + url);
-		}
-		String getURL = formatURL(url, query);
-		java.net.HttpURLConnection conn = createShippoConnection(getURL, apiKey);
-		conn.setRequestMethod("GET");
+        Certificate[] certs = conn.getServerCertificates();
 
-		checkSSLCert(conn);
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
 
-		return conn;
-	}
+            byte[] der = certs[0].getEncoded();
+            md.update(der);
+            byte[] digest = md.digest();
 
-	private static java.net.HttpURLConnection createPostConnection(String url,
-			String query, String apiKey) throws IOException,
-			APIConnectionException {
-		if (Shippo.isDEBUG()) {
-			System.out.println("POST URL: " + url);
-		}
+            byte[] revokedCertDigest = {};
 
-		java.net.HttpURLConnection conn = createShippoConnection(url, apiKey);
-		conn.setDoOutput(true);
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-Type", "application/json");
+            if (Arrays.equals(digest, revokedCertDigest)) {
+                throwInvalidCertificateException();
+            }
 
-		checkSSLCert(conn);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (CertificateEncodingException e) {
+            throwInvalidCertificateException();
+        }
+    }
 
-		OutputStream output = null;
-		try {
-			output = conn.getOutputStream();
-			output.write(query.getBytes(CHARSET));
-		} finally {
-			if (output != null) {
-				output.close();
-			}
-		}
-		return conn;
+    private static String formatURL(String url, String query) {
+        if (query == null || query.isEmpty()) {
+            return url;
+        } else {
+            // In some cases, URL can already contain a question mark (eg,
+            // upcoming invoice lines)
+            String separator = url.contains("?") ? "&" : "?";
+            return String.format("%s%s%s", url, separator, query);
+        }
+    }
 
-	}
+    private static java.net.HttpURLConnection createGetConnection(String url, String query, String apiKey)
+            throws IOException, APIConnectionException {
+        if (Shippo.isDEBUG()) {
+            System.out.println("GET URL: " + url);
+        }
+        String getURL = formatURL(url, query);
+        java.net.HttpURLConnection conn = createShippoConnection(getURL, apiKey);
+        conn.setRequestMethod("GET");
 
-	private static String mapToJson(Map<String, Object> params) {
-		Gson gson = new GsonBuilder().create();
-		return gson.toJson(params);
+        checkSSLCert(conn);
 
-	}
+        return conn;
+    }
 
-	private static Map<String, String> flattenParams(Map<String, Object> params)
-			throws InvalidRequestException {
-		if (params == null) {
-			return new HashMap<String, String>();
-		}
-		Map<String, String> flatParams = new HashMap<String, String>();
-		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-			if (value instanceof Map<?, ?>) {
-				Map<String, Object> flatNestedMap = new HashMap<String, Object>();
-				Map<?, ?> nestedMap = (Map<?, ?>) value;
-				for (Map.Entry<?, ?> nestedEntry : nestedMap.entrySet()) {
-					flatNestedMap.put(
-							String.format("%s[%s]", key, nestedEntry.getKey()),
-							nestedEntry.getValue());
-				}
-				flatParams.putAll(flattenParams(flatNestedMap));
-			} else if (value == null) {
-				flatParams.put(key, "");
-			} else {
-				flatParams.put(key, value.toString());
-			}
-		}
-		return flatParams;
-	}
+    private static java.net.HttpURLConnection createPostConnection(String url, String query, String apiKey)
+            throws IOException, APIConnectionException {
+        if (Shippo.isDEBUG()) {
+            System.out.println("POST URL: " + url);
+        }
 
-	// represents Errors returned as JSON
-	@SuppressWarnings("unused")
-	private static class ErrorContainer {
-		private APIResource.Error error;
-	}
+        java.net.HttpURLConnection conn = createShippoConnection(url, apiKey);
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
 
-	private static class Error {
-		@SuppressWarnings("unused")
-		String type;
-		String message;
-		@SuppressWarnings("unused")
-		String code;
-		String param;
-	}
+        checkSSLCert(conn);
 
-	@SuppressWarnings("resource")
-	private static String getResponseBody(InputStream responseStream)
-			throws IOException {
-		// \A is the beginning of the stream boundary
-		String rBody = new Scanner(responseStream, CHARSET).useDelimiter("\\A")
-				.next(); //
+        OutputStream output = null;
+        try {
+            output = conn.getOutputStream();
+            output.write(query.getBytes(CHARSET));
+        } finally {
+            if (output != null) {
+                output.close();
+            }
+        }
+        return conn;
 
-		responseStream.close();
-		return rBody;
-	}
+    }
 
-	private static ShippoResponse makeURLConnectionRequest(
-			APIResource.RequestMethod method, String url, String query,
-			String apiKey) throws APIConnectionException {
-		java.net.HttpURLConnection conn = null;
+    private static String mapToJson(Map<String, Object> params) {
+        Gson gson = new GsonBuilder().create();
+        return gson.toJson(params);
 
-		// Print Information about the Connection
-		if (Shippo.isDEBUG()) {
-			System.out.println("URL: " + url);
-			System.out.println("Query: " + query);
-			System.out.println("API Key: " + apiKey);
-		}
+    }
 
-		try {
-			switch (method) {
-			case GET:
-				conn = createGetConnection(url, query, apiKey);
-				break;
-			case POST:
-				conn = createPostConnection(url, query, apiKey);
-				break;
-			default:
-				throw new APIConnectionException(
-						String.format(
-								"Unrecognized HTTP method %s. "
-										+ "This indicates a bug in the Shippo bindings. Please contact "
-										+ "support@goshippo.com for assistance.",
-								method));
-			}
+    private static Map<String, String> flattenParams(Map<String, Object> params) throws InvalidRequestException {
+        if (params == null) {
+            return new HashMap<String, String>();
+        }
+        Map<String, String> flatParams = new HashMap<String, String>();
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (value instanceof Map<?, ?>) {
+                Map<String, Object> flatNestedMap = new HashMap<String, Object>();
+                Map<?, ?> nestedMap = (Map<?, ?>) value;
+                for (Map.Entry<?, ?> nestedEntry : nestedMap.entrySet()) {
+                    flatNestedMap.put(String.format("%s[%s]", key, nestedEntry.getKey()), nestedEntry.getValue());
+                }
+                flatParams.putAll(flattenParams(flatNestedMap));
+            } else if (value == null) {
+                flatParams.put(key, "");
+            } else {
+                flatParams.put(key, value.toString());
+            }
+        }
+        return flatParams;
+    }
 
-			// Trigger the Request
-			int rCode = conn.getResponseCode();
+    // represents Errors returned as JSON
+    @SuppressWarnings("unused")
+    private static class ErrorContainer {
+        private APIResource.Error error;
+    }
 
-			String rBody;
-			Map<String, List<String>> headers;
+    private static class Error {
+        @SuppressWarnings("unused")
+        String type;
+        String message;
+        @SuppressWarnings("unused")
+        String code;
+        String param;
+    }
 
-			if (rCode >= 200 && rCode < 300) {
-				rBody = getResponseBody(conn.getInputStream());
-			} else {
-				rBody = getResponseBody(conn.getErrorStream());
-			}
-			headers = conn.getHeaderFields();
+    @SuppressWarnings("resource")
+    private static String getResponseBody(InputStream responseStream) throws IOException {
+        // \A is the beginning of the stream boundary
+        String rBody = new Scanner(responseStream, CHARSET).useDelimiter("\\A").next(); //
 
-			// /////////////////////////////////////////////////////////////////
-			// PRINT RESULTS
-			// /////////////////////////////////////////////////////////////////
-			if (Shippo.isDEBUG()) {
-				System.out.println("Headers: ");
-				for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-					System.out.println(entry.getKey() + " : "
-							+ entry.getValue());
-				}
-				System.out.println("Response Code: " + rCode);
-				System.out.println("Reponse Body: " + rBody);
-			}
+        responseStream.close();
+        return rBody;
+    }
 
-			return new ShippoResponse(rCode, rBody, headers);
-		} catch (IOException e) {
-			throw new APIConnectionException(
-					String.format(
-							"IOException during API request to Shippo (%s): %s "
-									+ "Please check your internet connection and try again. If this problem persists,"
-									+ "you should check Shippo's service status at http://status.goshippo.com/,"
-									+ " or let us know at support@goshippo.com.",
-							Shippo.getApiBase(), e.getMessage()), e);
-		} finally {
-			if (conn != null) {
-				conn.disconnect();
-			}
-		}
-	}
+    private static ShippoResponse makeURLConnectionRequest(APIResource.RequestMethod method, String url, String query,
+            String apiKey) throws APIConnectionException {
+        java.net.HttpURLConnection conn = null;
 
-	protected static <T> T request(APIResource.RequestMethod method,
-			String url, Map<String, Object> params, Class<T> clazz,
-			String apiKey) throws AuthenticationException,
-			InvalidRequestException, APIConnectionException, APIException {
-		String originalDNSCacheTTL = null;
-		Boolean allowedToSetTTL = true;
-		try {
-			originalDNSCacheTTL = java.security.Security
-					.getProperty(DNS_CACHE_TTL_PROPERTY_NAME);
-			// disable DNS cache
-			java.security.Security
-					.setProperty(DNS_CACHE_TTL_PROPERTY_NAME, "0");
-		} catch (SecurityException se) {
-			allowedToSetTTL = false;
-		}
+        // Print Information about the Connection
+        if (Shippo.isDEBUG()) {
+            System.out.println("URL: " + url);
+            System.out.println("Query: " + query);
+            System.out.println("API Key: " + apiKey);
+        }
 
-		try {
-			return _request(method, url, params, clazz, apiKey);
-		} finally {
-			if (allowedToSetTTL) {
-				if (originalDNSCacheTTL == null) {
-					// value unspecified by implementation
-					// DNS_CACHE_TTL_PROPERTY_NAME of -1 = cache forever
-					java.security.Security.setProperty(
-							DNS_CACHE_TTL_PROPERTY_NAME, "-1");
-				} else {
-					java.security.Security.setProperty(
-							DNS_CACHE_TTL_PROPERTY_NAME, originalDNSCacheTTL);
-				}
-			}
-		}
-	}
+        try {
+            switch (method) {
+            case GET:
+                conn = createGetConnection(url, query, apiKey);
+                break;
+            case POST:
+                conn = createPostConnection(url, query, apiKey);
+                break;
+            default:
+                throw new APIConnectionException(String.format("Unrecognized HTTP method %s. "
+                        + "This indicates a bug in the Shippo bindings. Please contact "
+                        + "support@goshippo.com for assistance.", method));
+            }
 
-	protected static <T> T _request(APIResource.RequestMethod method,
-			String url, Map<String, Object> params, Class<T> clazz,
-			String apiKey) throws AuthenticationException,
-			InvalidRequestException, APIConnectionException, APIException {
-		if ((Shippo.apiKey == null || Shippo.apiKey.length() == 0)
-				&& (apiKey == null || apiKey.length() == 0)) {
-			throw new AuthenticationException(
-					"No API key provided. (HINT: set your API key using 'Shippo.apiKey = <API-KEY>'. "
-							+ "You can generate API keys from the Shippo web interface. "
-							+ "See https://goshippo.com/docs for details or email support@goshippo.com if you have questions.");
-		}
+            // Trigger the Request
+            int rCode = conn.getResponseCode();
 
-		if (apiKey == null) {
-			apiKey = Shippo.apiKey;
-		}
+            String rBody;
+            Map<String, List<String>> headers;
 
-		String query;
-		try {
-			query = createQuery(params, method);
-		} catch (UnsupportedEncodingException e) {
-			 throw new InvalidRequestException("Unable to encode parameters to " + CHARSET
-	                    + ". Please contact support@shippo.com for assistance.", null, e);
-		}
-		ShippoResponse response = makeURLConnectionRequest(method, url, query,
-				apiKey);
+            if (rCode >= 200 && rCode < 300) {
+                rBody = getResponseBody(conn.getInputStream());
+            } else {
+                rBody = getResponseBody(conn.getErrorStream());
+            }
+            headers = conn.getHeaderFields();
 
-		int rCode = response.responseCode;
-		String rBody = response.responseBody;
+            // /////////////////////////////////////////////////////////////////
+            // PRINT RESULTS
+            // /////////////////////////////////////////////////////////////////
+            if (Shippo.isDEBUG()) {
+                System.out.println("Headers: ");
+                for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
+                    System.out.println(entry.getKey() + " : " + entry.getValue());
+                }
+                System.out.println("Response Code: " + rCode);
+                System.out.println("Reponse Body: " + rBody);
+            }
 
-		if (rCode < 200 || rCode >= 300) {
-			handleAPIError(rBody, rCode);
-		}
-		return GSON.fromJson(rBody, clazz);
-	}
+            return new ShippoResponse(rCode, rBody, headers);
+        } catch (IOException e) {
+            throw new APIConnectionException(String.format("IOException during API request to Shippo (%s): %s "
+                    + "Please check your internet connection and try again. If this problem persists,"
+                    + "you should check Shippo's service status at http://status.goshippo.com/,"
+                    + " or let us know at support@goshippo.com.", Shippo.getApiBase(), e.getMessage()), e);
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+    }
 
-	private static void handleAPIError(String rBody, int rCode)
-			throws InvalidRequestException, AuthenticationException,
-			APIException {
+    protected static <T> T request(APIResource.RequestMethod method, String url, Map<String, Object> params,
+            Class<T> clazz, String apiKey) throws AuthenticationException, InvalidRequestException,
+            APIConnectionException, APIException {
+        String originalDNSCacheTTL = null;
+        Boolean allowedToSetTTL = true;
+        try {
+            originalDNSCacheTTL = java.security.Security.getProperty(DNS_CACHE_TTL_PROPERTY_NAME);
+            // disable DNS cache
+            java.security.Security.setProperty(DNS_CACHE_TTL_PROPERTY_NAME, "0");
+        } catch (SecurityException se) {
+            allowedToSetTTL = false;
+        }
 
-		// Current API does not support JSON Based error response bodies
-		// APIResource.Error error = GSON.fromJson(rBody,
-		// APIResource.ErrorContainer.class).error;
-		APIResource.Error error = new Error();
-		error.message = rBody;
-		error.code = rCode + "";
+        try {
+            return _request(method, url, params, clazz, apiKey);
+        } finally {
+            if (allowedToSetTTL) {
+                if (originalDNSCacheTTL == null) {
+                    // value unspecified by implementation
+                    // DNS_CACHE_TTL_PROPERTY_NAME of -1 = cache forever
+                    java.security.Security.setProperty(DNS_CACHE_TTL_PROPERTY_NAME, "-1");
+                } else {
+                    java.security.Security.setProperty(DNS_CACHE_TTL_PROPERTY_NAME, originalDNSCacheTTL);
+                }
+            }
+        }
+    }
 
-		switch (rCode) {
-		case 400:
-			throw new InvalidRequestException(error.message, error.param, null);
-		case 404:
-			throw new InvalidRequestException(error.message, error.param, null);
-		case 401:
-			throw new AuthenticationException(error.message);
-		default:
-			throw new APIException(error.message, null);
-		}
-	}
-	
+    protected static <T> T _request(APIResource.RequestMethod method, String url, Map<String, Object> params,
+            Class<T> clazz, String apiKey) throws AuthenticationException, InvalidRequestException,
+            APIConnectionException, APIException {
+        if ((Shippo.apiKey == null || Shippo.apiKey.length() == 0) && (apiKey == null || apiKey.length() == 0)) {
+            throw new AuthenticationException(
+                    "No API key provided. (HINT: set your API key using 'Shippo.apiKey = <API-KEY>'. "
+                            + "You can generate API keys from the Shippo web interface. "
+                            + "See https://goshippo.com/docs for details or email support@goshippo.com if you have questions.");
+        }
+
+        if (apiKey == null) {
+            apiKey = Shippo.apiKey;
+        }
+
+        String query;
+        try {
+            query = createQuery(params, method);
+        } catch (UnsupportedEncodingException e) {
+            throw new InvalidRequestException("Unable to encode parameters to " + CHARSET
+                    + ". Please contact support@shippo.com for assistance.", null, e);
+        }
+        ShippoResponse response = makeURLConnectionRequest(method, url, query, apiKey);
+
+        int rCode = response.responseCode;
+        String rBody = response.responseBody;
+
+        if (rCode < 200 || rCode >= 300) {
+            handleAPIError(rBody, rCode);
+        }
+        return GSON.fromJson(rBody, clazz);
+    }
+
+    private static void handleAPIError(String rBody, int rCode) throws InvalidRequestException,
+            AuthenticationException, APIException {
+
+        // Current API does not support JSON Based error response bodies
+        // APIResource.Error error = GSON.fromJson(rBody,
+        // APIResource.ErrorContainer.class).error;
+        APIResource.Error error = new Error();
+        error.message = rBody;
+        error.code = rCode + "";
+
+        switch (rCode) {
+        case 400:
+            throw new InvalidRequestException(error.message, error.param, null);
+        case 404:
+            throw new InvalidRequestException(error.message, error.param, null);
+        case 401:
+            throw new AuthenticationException(error.message);
+        default:
+            throw new APIException(error.message, null);
+        }
+    }
+
     private static String createGETQuery(Map<String, Object> params) throws UnsupportedEncodingException,
-    InvalidRequestException {
-Map<String, String> flatParams = flattenParams(params);
-StringBuilder queryStringBuffer = new StringBuilder();
-for (Map.Entry<String, String> entry : flatParams.entrySet()) {
-    if (queryStringBuffer.length() > 0) {
-        queryStringBuffer.append("&");
-    }
-    queryStringBuffer.append(urlEncodePair(entry.getKey(), entry.getValue()));
-}
-return queryStringBuffer.toString();
-}
-
-    private static String createQuery(Map<String, Object> params, APIResource.RequestMethod method) throws UnsupportedEncodingException,
-    InvalidRequestException {
-    	 
-		switch (method) {
-		case GET:
-			return createGETQuery(params);
-		case POST:
-			return mapToJson(params);
-		default:
-			return mapToJson(params);
+            InvalidRequestException {
+        Map<String, String> flatParams = flattenParams(params);
+        StringBuilder queryStringBuffer = new StringBuilder();
+        for (Map.Entry<String, String> entry : flatParams.entrySet()) {
+            if (queryStringBuffer.length() > 0) {
+                queryStringBuffer.append("&");
+            }
+            queryStringBuffer.append(urlEncodePair(entry.getKey(), entry.getValue()));
+        }
+        return queryStringBuffer.toString();
     }
 
-}
+    private static String createQuery(Map<String, Object> params, APIResource.RequestMethod method)
+            throws UnsupportedEncodingException, InvalidRequestException {
+
+        switch (method) {
+        case GET:
+            return createGETQuery(params);
+        case POST:
+            return mapToJson(params);
+        default:
+            return mapToJson(params);
+        }
+
+    }
 }

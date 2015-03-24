@@ -12,6 +12,7 @@ public class ShippoTest {
 
     @Before
     public void setAPIKey() {
+        //TODO:
         Shippo.apiKey = "<REPLACE WITH YOUR KEY>";
     }
 

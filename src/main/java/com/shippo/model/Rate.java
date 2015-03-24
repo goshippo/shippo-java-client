@@ -9,11 +9,11 @@ import com.shippo.exception.InvalidRequestException;
 import com.shippo.net.APIResource;
 
 public class Rate extends APIResource {
-	String object_state;
-	String object_status;
-	String object_purpose;
-	String object_id;
-	String object_owner;
+    String object_state;
+    String object_status;
+    String object_purpose;
+    String object_id;
+    String object_owner;
     Object object_created;
     Object object_updated;
     Object attributes;

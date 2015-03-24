@@ -11,10 +11,10 @@ import com.shippo.net.APIResource;
 // Class is affected by URL name inconsistencies, see APIResource.java (private static String className(Class<?> clazz))
 public class Address extends APIResource {
 
-	String object_state;
-	String object_id;
-	String object_purpose;
-	String object_owner;
+    String object_state;
+    String object_id;
+    String object_purpose;
+    String object_owner;
     Object object_source;
     Object object_created;
     Object object_updated;

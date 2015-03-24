@@ -85,7 +85,7 @@ public class Example {
             System.out.println(String.format("Label url : %s", transaction.getLabel_url()));
             System.out.println(String.format("Tracking number : %s", transaction.getTracking_number()));
         } else {
-            System.out.println(String.format("An Error has occured while generating you label. Messages : %s",
+            System.out.println(String.format("An Error has occured while generating your label. Messages : %s",
                     transaction.getMessages()));
         }
     }

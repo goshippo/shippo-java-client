@@ -74,7 +74,6 @@ public class Example {
 
         System.out.println(String.format("Obtainned %d rates for shipment %s ", rates.getCount(),
                 shipment.getObject_id()));
-        ;
         Rate rate = rates.getData().get(0);
 
         System.out.println("Getting shipping label..");

@@ -23,7 +23,7 @@ public class Example {
 		
 		// replace with your Shippo Token
 		// don't have one? get more info here (https://goshippo.com/docs/#overview)
-		Shippo.setApiKey("924279d5bda97eff28529f264eb14d2646dd3d94");
+		Shippo.setApiKey("<API-KEY>");
 
 		// Optional defaults to false
 		//Shippo.setDEBUG(true);
@@ -70,39 +70,26 @@ public class Example {
 		shipmentMap.put("parcel", parcelMap);
 		shipmentMap.put("object_purpose", "PURCHASE");
 
-		Map<String, Object> accountMap = new HashMap<String, Object>();
-		accountMap.put("carrier", "dhl_express");
-		accountMap.put("account_id", "test_java");
-		accountMap.put("parameters", "{}");
-		for (CarrierAccount account : CarrierAccount.all(accountMap).getData()){
-			System.out.println(account);
-			System.out.println(account.getObjectId());
-			System.out.println(account.getAccountId());
-		}
-		System.out.println();
-		System.out.println(CarrierAccount.create(accountMap));
-		// create Shipment object
-		System.out.println("Creating Shipment object..");
 		Shipment shipment = Shipment.create(shipmentMap);
-//
-//		// get shipping rates
-//		System.out.println(String.format("Generating rates for shipment %s", shipment.getObject_id()));
-//		RateCollection rates = Shipment.getShippingRatesSync(shipment.getObject_id());
-//
-//
-//		System.out.println(String.format("Obtainned %d rates for shipment %s ", rates.getCount(), shipment.getObject_id()));;
-//		Rate rate = rates.getData().get(0);
-//
-//		System.out.println("Getting shipping label..");
-//		Map<String, Object> transParams = new HashMap<String, Object>();
-//		transParams.put("rate", rate.getObject_id());
-//		Transaction transaction = Transaction.createSync(transParams);
-//
-//		if (transaction.getObject_status().equals("SUCCESS")) {
-//			System.out.println(String.format("Label url : %s", transaction.getLabel_url()));
-//			System.out.println(String.format("Tracking number : %s", transaction.getTracking_number()));
-//		} else {
-//			System.out.println(String.format("An Error has occured while generating you label. Messages : %s", transaction.getMessages()));
-//		}
+
+		// get shipping rates
+		System.out.println(String.format("Generating rates for shipment %s", shipment.getObjectId()));
+		RateCollection rates = Shipment.getShippingRatesSync(shipment.getObjectId());
+
+
+		System.out.println(String.format("Obtainned %d rates for shipment %s ", rates.getCount(), shipment.getObjectId()));;
+		Rate rate = rates.getData().get(0);
+
+		System.out.println("Getting shipping label..");
+		Map<String, Object> transParams = new HashMap<String, Object>();
+		transParams.put("rate", rate.getObjectId());
+		Transaction transaction = Transaction.createSync(transParams);
+
+		if (transaction.getObjectStatus().equals("SUCCESS")) {
+			System.out.println(String.format("Label url : %s", transaction.getLabelUrl()));
+			System.out.println(String.format("Tracking number : %s", transaction.getTrackingNumber()));
+		} else {
+			System.out.println(String.format("An Error has occured while generating you label. Messages : %s", transaction.getMessages()));
+		}
 	}
 }

@@ -12,22 +12,22 @@ import com.shippo.net.APIResource;
 
 public class Transaction extends APIResource {
 
-	String object_state;
-	String object_status;
+	String objectState;
+	String objectStatus;
 	String object_purpose;
-	String object_id;
-	String object_owner;
-	Object object_created;
-	Object object_updated;
-	Object was_test;
+	String objectId;
+	String objectOwner;
+	Object objectCreated;
+	Object objectUpdated;
+	Object wasTest;
 	Object rate;
-	Object tracking_number;
-	Object tracking_status;
-	Object tracking_url_provider;
-	Object label_url;
+	Object trackingNumber;
+	Object trackingStatus;
+	Object trackingUrlProvider;
+	Object labelUrl;
 	Object messages;
-	Object customs_note;
-	Object submission_note;
+	Object customsNote;
+	Object submissionNote;
 	Object metadata;
 
 	public static Transaction create(Map<String, Object> params)
@@ -60,18 +60,18 @@ public class Transaction extends APIResource {
 
 		Transaction transaction = request(RequestMethod.POST,
 				classURL(Transaction.class), params, Transaction.class, apiKey);
-		String object_id = transaction.object_id;
-		String object_status = transaction.object_status;
+		String object_id = transaction.objectId;
+		String objectStatus = transaction.objectStatus;
 		long startTime = System.currentTimeMillis();
 
-		while (object_status.equals("QUEUED")
-				|| object_status.equals("WAITING")) {
+		while (objectStatus.equals("QUEUED")
+				|| objectStatus.equals("WAITING")) {
 			if (System.currentTimeMillis() - startTime > Shippo.TRANSACTION_REQ_TIMEOUT) {
 				throw new RequestTimeoutException(
-						"A timeout has occured while waiting for your label to generate. Try retreiving the Transaction object again and check if object_status is updated. If this issue persists, please contact support@goshippo.com");
+						"A timeout has occured while waiting for your label to generate. Try retreiving the Transaction object again and check if objectStatus is updated. If this issue persists, please contact support@goshippo.com");
 			}
 			transaction = retrieve(object_id);
-			object_status = (String) transaction.object_status;
+			objectStatus = (String) transaction.objectStatus;
 		}
 
 		return transaction;
@@ -104,60 +104,68 @@ public class Transaction extends APIResource {
 				TransactionCollection.class, apiKey);
 	}
 
-	public String getObject_state() {
-		return object_state;
+	public String getObjectState() {
+		return objectState;
 	}
 
-	public void setObject_state(String object_state) {
-		this.object_state = object_state;
+	public void setObjectState(String objectState) {
+		this.objectState = objectState;
 	}
 
-	public Object getObject_status() {
-		return object_status;
+	public String getObjectStatus() {
+		return objectStatus;
 	}
 
-	public void setObject_status(String object_status) {
-		this.object_status = object_status;
+	public void setObjectStatus(String objectStatus) {
+		this.objectStatus = objectStatus;
 	}
 
-	public Object getObject_created() {
-		return object_created;
+	public String getObject_purpose() {
+		return object_purpose;
 	}
 
-	public void setObject_created(Object object_created) {
-		this.object_created = object_created;
+	public void setObject_purpose(String object_purpose) {
+		this.object_purpose = object_purpose;
 	}
 
-	public Object getObject_updated() {
-		return object_updated;
+	public String getObjectId() {
+		return objectId;
 	}
 
-	public void setObject_updated(Object object_updated) {
-		this.object_updated = object_updated;
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 
-	public String getObject_id() {
-		return object_id;
+	public String getObjectOwner() {
+		return objectOwner;
 	}
 
-	public void setObject_id(String object_id) {
-		this.object_id = object_id;
+	public void setObjectOwner(String objectOwner) {
+		this.objectOwner = objectOwner;
 	}
 
-	public String getObject_owner() {
-		return object_owner;
+	public Object getObjectCreated() {
+		return objectCreated;
 	}
 
-	public void setObject_owner(String object_owner) {
-		this.object_owner = object_owner;
+	public void setObjectCreated(Object objectCreated) {
+		this.objectCreated = objectCreated;
 	}
 
-	public Object getWas_test() {
-		return was_test;
+	public Object getObjectUpdated() {
+		return objectUpdated;
 	}
 
-	public void setWas_test(Object was_test) {
-		this.was_test = was_test;
+	public void setObjectUpdated(Object objectUpdated) {
+		this.objectUpdated = objectUpdated;
+	}
+
+	public Object getWasTest() {
+		return wasTest;
+	}
+
+	public void setWasTest(Object wasTest) {
+		this.wasTest = wasTest;
 	}
 
 	public Object getRate() {
@@ -168,36 +176,36 @@ public class Transaction extends APIResource {
 		this.rate = rate;
 	}
 
-	public Object getTracking_number() {
-		return tracking_number;
+	public Object getTrackingNumber() {
+		return trackingNumber;
 	}
 
-	public void setTracking_number(Object tracking_number) {
-		this.tracking_number = tracking_number;
+	public void setTrackingNumber(Object trackingNumber) {
+		this.trackingNumber = trackingNumber;
 	}
 
-	public Object getTracking_status() {
-		return tracking_status;
+	public Object getTrackingStatus() {
+		return trackingStatus;
 	}
 
-	public void setTracking_status(Object tracking_status) {
-		this.tracking_status = tracking_status;
+	public void setTrackingStatus(Object trackingStatus) {
+		this.trackingStatus = trackingStatus;
 	}
 
-	public Object getTracking_url_provider() {
-		return tracking_url_provider;
+	public Object getTrackingUrlProvider() {
+		return trackingUrlProvider;
 	}
 
-	public void setTracking_url_provider(Object tracking_url_provider) {
-		this.tracking_url_provider = tracking_url_provider;
+	public void setTrackingUrlProvider(Object trackingUrlProvider) {
+		this.trackingUrlProvider = trackingUrlProvider;
 	}
 
-	public Object getLabel_url() {
-		return label_url;
+	public Object getLabelUrl() {
+		return labelUrl;
 	}
 
-	public void setLabel_url(Object label_url) {
-		this.label_url = label_url;
+	public void setLabelUrl(Object labelUrl) {
+		this.labelUrl = labelUrl;
 	}
 
 	public Object getMessages() {
@@ -208,20 +216,20 @@ public class Transaction extends APIResource {
 		this.messages = messages;
 	}
 
-	public Object getCustoms_note() {
-		return customs_note;
+	public Object getCustomsNote() {
+		return customsNote;
 	}
 
-	public void setCustoms_note(Object customs_note) {
-		this.customs_note = customs_note;
+	public void setCustomsNote(Object customsNote) {
+		this.customsNote = customsNote;
 	}
 
-	public Object getSubmission_note() {
-		return submission_note;
+	public Object getSubmissionNote() {
+		return submissionNote;
 	}
 
-	public void setSubmission_note(Object submission_note) {
-		this.submission_note = submission_note;
+	public void setSubmissionNote(Object submissionNote) {
+		this.submissionNote = submissionNote;
 	}
 
 	public Object getMetadata() {
@@ -231,5 +239,6 @@ public class Transaction extends APIResource {
 	public void setMetadata(Object metadata) {
 		this.metadata = metadata;
 	}
+
 
 }

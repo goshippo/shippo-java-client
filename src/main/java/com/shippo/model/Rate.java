@@ -9,31 +9,31 @@ import com.shippo.exception.InvalidRequestException;
 import com.shippo.net.APIResource;
 
 public class Rate extends APIResource {
-	String object_state;
-	String object_status;
-	String object_purpose;
-	String object_id;
-	String object_owner;
-    Object object_created;
-    Object object_updated;
+	String objectState;
+	String objectStatus;
+	String objectPurpose;
+	String objectId;
+	String objectOwner;
+	Object objectCreated;
+	Object objectUpdated;
     Object attributes;
-    Object amount_local;
-    Object currency_local;
+    Object amountLocal;
+    Object currencyLocal;
     Object amount;
     Object currency;
     Object provider;
     Object provider_image_75;
     Object provider_image_200;
-    Object servicelevel_name;
-    Object servicelevel_terms;
+    Object servicelevelName;
+    Object servicelevelTerms;
     Object days;
-    Object duration_terms;
+    Object durationTerms;
     Object trackable;
     Object insurance;
-    Object insurance_amount_local;
-    Object insurance_currency_local;
-    Object insurance_amount;
-    Object insurance_currency;
+    Object insuranceAmountLocal;
+    Object insuranceCurrencyLocal;
+    Object insuranceAmount;
+    Object insuranceCurrency;
     Object messages;
 
     public static Rate retrieve(String id) throws AuthenticationException, InvalidRequestException,
@@ -56,204 +56,212 @@ public class Rate extends APIResource {
         return request(RequestMethod.GET, classURL(Rate.class), params, RateCollection.class, apiKey);
     }
 
-    public String getObject_state() {
-        return object_state;
-    }
+	public String getObjectState() {
+		return objectState;
+	}
 
-    public void setObject_state(String object_state) {
-        this.object_state = object_state;
-    }
+	public void setObjectState(String objectState) {
+		this.objectState = objectState;
+	}
 
-    public Object getObject_purpose() {
-        return object_purpose;
-    }
+	public String getObjectStatus() {
+		return objectStatus;
+	}
 
-    public void setObject_purpose(String object_purpose) {
-        this.object_purpose = object_purpose;
-    }
+	public void setObjectStatus(String objectStatus) {
+		this.objectStatus = objectStatus;
+	}
 
-    public Object getObject_created() {
-        return object_created;
-    }
+	public String getObjectPurpose() {
+		return objectPurpose;
+	}
 
-    public void setObject_created(Object object_created) {
-        this.object_created = object_created;
-    }
+	public void setObject_purpose(String objectPurpose) {
+		this.objectPurpose = objectPurpose;
+	}
 
-    public Object getObject_updated() {
-        return object_updated;
-    }
+	public String getObjectId() {
+		return objectId;
+	}
 
-    public void setObject_updated(Object object_updated) {
-        this.object_updated = object_updated;
-    }
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
 
-    public String getObject_id() {
-        return object_id;
-    }
+	public String getObjectOwner() {
+		return objectOwner;
+	}
 
-    public void setObject_id(String object_id) {
-        this.object_id = object_id;
-    }
+	public void setObjectOwner(String objectOwner) {
+		this.objectOwner = objectOwner;
+	}
 
-    public String getObject_owner() {
-        return object_owner;
-    }
+	public Object getObjectCreated() {
+		return objectCreated;
+	}
 
-    public void setObject_owner(String object_owner) {
-        this.object_owner = object_owner;
-    }
+	public void setObjectCreated(Object objectCreated) {
+		this.objectCreated = objectCreated;
+	}
 
-    public Object getAttributes() {
-        return attributes;
-    }
+	public Object getObjectUpdated() {
+		return objectUpdated;
+	}
 
-    public void setAttributes(Object attributes) {
-        this.attributes = attributes;
-    }
+	public void setObjectUpdated(Object objectUpdated) {
+		this.objectUpdated = objectUpdated;
+	}
 
-    public Object getAmount_local() {
-        return amount_local;
-    }
+	public Object getAttributes() {
+		return attributes;
+	}
 
-    public void setAmount_local(Object amount_local) {
-        this.amount_local = amount_local;
-    }
+	public void setAttributes(Object attributes) {
+		this.attributes = attributes;
+	}
 
-    public Object getCurrency_local() {
-        return currency_local;
-    }
+	public Object getAmountLocal() {
+		return amountLocal;
+	}
 
-    public void setCurrency_local(Object currency_local) {
-        this.currency_local = currency_local;
-    }
+	public void setAmountLocal(Object amountLocal) {
+		this.amountLocal = amountLocal;
+	}
 
-    public Object getAmount() {
-        return amount;
-    }
+	public Object getCurrencyLocal() {
+		return currencyLocal;
+	}
 
-    public void setAmount(Object amount) {
-        this.amount = amount;
-    }
+	public void setCurrencyLocal(Object currencyLocal) {
+		this.currencyLocal = currencyLocal;
+	}
 
-    public Object getCurrency() {
-        return currency;
-    }
+	public Object getAmount() {
+		return amount;
+	}
 
-    public void setCurrency(Object currency) {
-        this.currency = currency;
-    }
+	public void setAmount(Object amount) {
+		this.amount = amount;
+	}
 
-    public Object getProvider() {
-        return provider;
-    }
+	public Object getCurrency() {
+		return currency;
+	}
 
-    public void setProvider(Object provider) {
-        this.provider = provider;
-    }
+	public void setCurrency(Object currency) {
+		this.currency = currency;
+	}
 
-    public Object getProvider_image_75() {
-        return provider_image_75;
-    }
+	public Object getProvider() {
+		return provider;
+	}
 
-    public void setProvider_image_75(Object provider_image_75) {
-        this.provider_image_75 = provider_image_75;
-    }
+	public void setProvider(Object provider) {
+		this.provider = provider;
+	}
 
-    public Object getProvider_image_200() {
-        return provider_image_200;
-    }
+	public Object getProviderImage75() {
+		return provider_image_75;
+	}
 
-    public void setProvider_image_200(Object provider_image_200) {
-        this.provider_image_200 = provider_image_200;
-    }
+	public void setProviderImage75(Object providerImage75) {
+		this.provider_image_75 = providerImage75;
+	}
 
-    public Object getServicelevel_name() {
-        return servicelevel_name;
-    }
+	public Object getProvider_image_200() {
+		return provider_image_200;
+	}
 
-    public void setServicelevel_name(Object servicelevel_name) {
-        this.servicelevel_name = servicelevel_name;
-    }
+	public void setProvider_image_200(Object provider_image_200) {
+		this.provider_image_200 = provider_image_200;
+	}
 
-    public Object getServicelevel_terms() {
-        return servicelevel_terms;
-    }
+	public Object getServicelevelName() {
+		return servicelevelName;
+	}
 
-    public void setServicelevel_terms(Object servicelevel_terms) {
-        this.servicelevel_terms = servicelevel_terms;
-    }
+	public void setServicelevelName(Object servicelevelName) {
+		this.servicelevelName = servicelevelName;
+	}
 
-    public Object getDays() {
-        return days;
-    }
+	public Object getServicelevelTerms() {
+		return servicelevelTerms;
+	}
 
-    public void setDays(Object days) {
-        this.days = days;
-    }
+	public void setServicelevelTerms(Object servicelevelTerms) {
+		this.servicelevelTerms = servicelevelTerms;
+	}
 
-    public Object getDuration_terms() {
-        return duration_terms;
-    }
+	public Object getDays() {
+		return days;
+	}
 
-    public void setDuration_terms(Object duration_terms) {
-        this.duration_terms = duration_terms;
-    }
+	public void setDays(Object days) {
+		this.days = days;
+	}
 
-    public Object getTrackable() {
-        return trackable;
-    }
+	public Object getDuration_terms() {
+		return durationTerms;
+	}
 
-    public void setTrackable(Object trackable) {
-        this.trackable = trackable;
-    }
+	public void setDuration_terms(Object durationTerms) {
+		this.durationTerms = durationTerms;
+	}
 
-    public Object getInsurance() {
-        return insurance;
-    }
+	public Object getTrackable() {
+		return trackable;
+	}
 
-    public void setInsurance(Object insurance) {
-        this.insurance = insurance;
-    }
+	public void setTrackable(Object trackable) {
+		this.trackable = trackable;
+	}
 
-    public Object getInsurance_amount_local() {
-        return insurance_amount_local;
-    }
+	public Object getInsurance() {
+		return insurance;
+	}
 
-    public void setInsurance_amount_local(Object insurance_amount_local) {
-        this.insurance_amount_local = insurance_amount_local;
-    }
+	public void setInsurance(Object insurance) {
+		this.insurance = insurance;
+	}
 
-    public Object getInsurance_currency_local() {
-        return insurance_currency_local;
-    }
+	public Object getInsuranceAmountLocal() {
+		return insuranceAmountLocal;
+	}
 
-    public void setInsurance_currency_local(Object insurance_currency_local) {
-        this.insurance_currency_local = insurance_currency_local;
-    }
+	public void setInsuranceAmountLocal(Object insuranceAmountLocal) {
+		this.insuranceAmountLocal = insuranceAmountLocal;
+	}
 
-    public Object getInsurance_amount() {
-        return insurance_amount;
-    }
+	public Object getInsuranceCurrencyLocal() {
+		return insuranceCurrencyLocal;
+	}
 
-    public void setInsurance_amount(Object insurance_amount) {
-        this.insurance_amount = insurance_amount;
-    }
+	public void setInsuranceCurrencyLocal(Object insuranceCurrencyLocal) {
+		this.insuranceCurrencyLocal = insuranceCurrencyLocal;
+	}
 
-    public Object getInsurance_currency() {
-        return insurance_currency;
-    }
+	public Object getInsuranceAmount() {
+		return insuranceAmount;
+	}
 
-    public void setInsurance_currency(Object insurance_currency) {
-        this.insurance_currency = insurance_currency;
-    }
+	public void setInsuranceAmount(Object insuranceAmount) {
+		this.insuranceAmount = insuranceAmount;
+	}
 
-    public Object getMessages() {
-        return messages;
-    }
+	public Object getInsuranceCurrency() {
+		return insuranceCurrency;
+	}
 
-    public void setMessages(Object messages) {
-        this.messages = messages;
-    }
+	public void setInsuranceCurrency(Object insuranceCurrency) {
+		this.insuranceCurrency = insuranceCurrency;
+	}
+
+	public Object getMessages() {
+		return messages;
+	}
+
+	public void setMessages(Object messages) {
+		this.messages = messages;
+	}
 
 }

@@ -10,19 +10,21 @@ import com.shippo.net.APIResource;
 
 public class CustomsItem extends APIResource {
 
-	String object_state;
-	String object_id;
-	String object_owner;
-    Object object_created;
-    Object object_updated;
+	String objectState;
+	String objectStatus;
+	String object_purpose;
+	String objectId;
+	String objectOwner;
+	Object objectCreated;
+	Object objectUpdated;
     Object description;
     Object quantity;
-    Object net_weight;
-    Object mass_unit;
-    Object value_amount;
-    Object value_currency;
-    Object origin_country;
-    Object tariff_number;
+    Object netWeight;
+    Object massUnit;
+    Object valueAmount;
+    Object valueCurrency;
+    Object originCountry;
+    Object tariffNumber;
     Object metadata;
 
     public static CustomsItem create(Map<String, Object> params) throws AuthenticationException,
@@ -59,116 +61,133 @@ public class CustomsItem extends APIResource {
         return request(RequestMethod.GET, classURL(CustomsItem.class), params, CustomsItemCollection.class, apiKey);
     }
 
-    public Object getObject_created() {
-        return object_created;
-    }
+	public String getObjectState() {
+		return objectState;
+	}
 
-    public void setObject_created(Object object_created) {
-        this.object_created = object_created;
-    }
+	public void setObjectState(String objectState) {
+		this.objectState = objectState;
+	}
 
-    public Object getObject_updated() {
-        return object_updated;
-    }
+	public String getObjectStatus() {
+		return objectStatus;
+	}
 
-    public void setObject_updated(Object object_updated) {
-        this.object_updated = object_updated;
-    }
+	public void setObjectStatus(String objectStatus) {
+		this.objectStatus = objectStatus;
+	}
 
-    public String getObject_id() {
-        return object_id;
-    }
+	public String getObject_purpose() {
+		return object_purpose;
+	}
 
-    public void setObject_id(String object_id) {
-        this.object_id = object_id;
-    }
+	public void setObject_purpose(String object_purpose) {
+		this.object_purpose = object_purpose;
+	}
 
-    public String getObject_owner() {
-        return object_owner;
-    }
+	public String getObjectId() {
+		return objectId;
+	}
 
-    public void setObject_owner(String object_owner) {
-        this.object_owner = object_owner;
-    }
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
 
-    public String getObject_state() {
-        return object_state;
-    }
+	public String getObjectOwner() {
+		return objectOwner;
+	}
 
-    public void setObject_state(String object_state) {
-        this.object_state = object_state;
-    }
+	public void setObjectOwner(String objectOwner) {
+		this.objectOwner = objectOwner;
+	}
 
-    public Object getDescription() {
-        return description;
-    }
+	public Object getObjectCreated() {
+		return objectCreated;
+	}
 
-    public void setDescription(Object description) {
-        this.description = description;
-    }
+	public void setObjectCreated(Object objectCreated) {
+		this.objectCreated = objectCreated;
+	}
 
-    public Object getQuantity() {
-        return quantity;
-    }
+	public Object getObjectUpdated() {
+		return objectUpdated;
+	}
 
-    public void setQuantity(Object quantity) {
-        this.quantity = quantity;
-    }
+	public void setObjectUpdated(Object objectUpdated) {
+		this.objectUpdated = objectUpdated;
+	}
 
-    public Object getNet_weight() {
-        return net_weight;
-    }
+	public Object getDescription() {
+		return description;
+	}
 
-    public void setNet_weight(Object net_weight) {
-        this.net_weight = net_weight;
-    }
+	public void setDescription(Object description) {
+		this.description = description;
+	}
 
-    public Object getMass_unit() {
-        return mass_unit;
-    }
+	public Object getQuantity() {
+		return quantity;
+	}
 
-    public void setMass_unit(Object mass_unit) {
-        this.mass_unit = mass_unit;
-    }
+	public void setQuantity(Object quantity) {
+		this.quantity = quantity;
+	}
 
-    public Object getValue_amount() {
-        return value_amount;
-    }
+	public Object getNetWeight() {
+		return netWeight;
+	}
 
-    public void setValue_amount(Object value_amount) {
-        this.value_amount = value_amount;
-    }
+	public void setNetWeight(Object netWeight) {
+		this.netWeight = netWeight;
+	}
 
-    public Object getValue_currency() {
-        return value_currency;
-    }
+	public Object getMassUnit() {
+		return massUnit;
+	}
 
-    public void setValue_currency(Object value_currency) {
-        this.value_currency = value_currency;
-    }
+	public void setMassUnit(Object massUnit) {
+		this.massUnit = massUnit;
+	}
 
-    public Object getOrigin_country() {
-        return origin_country;
-    }
+	public Object getValueAmount() {
+		return valueAmount;
+	}
 
-    public void setOrigin_country(Object origin_country) {
-        this.origin_country = origin_country;
-    }
+	public void setValueAmount(Object valueAmount) {
+		this.valueAmount = valueAmount;
+	}
 
-    public Object getTariff_number() {
-        return tariff_number;
-    }
+	public Object getValueCurrency() {
+		return valueCurrency;
+	}
 
-    public void setTariff_number(Object tariff_number) {
-        this.tariff_number = tariff_number;
-    }
+	public void setValueCurrency(Object valueCurrency) {
+		this.valueCurrency = valueCurrency;
+	}
 
-    public Object getMetadata() {
-        return metadata;
-    }
+	public Object getOriginCountry() {
+		return originCountry;
+	}
 
-    public void setMetadata(Object metadata) {
-        this.metadata = metadata;
-    }
+	public void setOriginCountry(Object originCountry) {
+		this.originCountry = originCountry;
+	}
+
+	public Object getTariffNumber() {
+		return tariffNumber;
+	}
+
+	public void setTariffNumber(Object tariffNumber) {
+		this.tariffNumber = tariffNumber;
+	}
+
+	public Object getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(Object metadata) {
+		this.metadata = metadata;
+	}
+
 
 }

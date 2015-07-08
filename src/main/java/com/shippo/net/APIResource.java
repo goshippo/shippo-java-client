@@ -51,6 +51,8 @@ public abstract class APIResource extends ShippoObject {
 			return "customs/item";
 		} else if (className.equals("customsdeclaration")) {
 			return "customs/declaration";
+		} else if (className.equals("carrieraccount")) {
+			return "carrier_account";
 		} else {
 			return className;
 		}
@@ -88,7 +90,7 @@ public abstract class APIResource extends ShippoObject {
 	private static final String CUSTOM_URL_STREAM_HANDLER_PROPERTY_NAME = "com.shippo.net.customURLStreamHandler";
 
 	protected enum RequestMethod {
-		GET, POST
+		GET, POST, PUT
 	}
 
 	private static String urlEncode(String str)

@@ -10,19 +10,18 @@ import com.shippo.net.APIResource;
 
 public class Parcel extends APIResource {
 
-	String object_state;
-	String object_status;
-	String object_purpose;
-	String object_id;
-	String object_owner;
-    Object object_created;
-    Object object_updated;
+	String objectState;
+	String objectStatus;
+	String objectId;
+	String objectOwner;
+	Object objectCreated;
+	Object objectUpdated;
     Object length;
     Object width;
     Object height;
-    Object distance_unit;
+    Object distanceUnit;
     Object weight;
-    Object mass_unit;
+    Object massUnit;
     Object metadata;
 
     public static Parcel create(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
@@ -59,100 +58,108 @@ public class Parcel extends APIResource {
         return request(RequestMethod.GET, classURL(Parcel.class), params, ParcelCollection.class, apiKey);
     }
 
-    public String getObject_state() {
-        return object_state;
-    }
+	public String getObjectState() {
+		return objectState;
+	}
 
-    public void setObject_state(String object_state) {
-        this.object_state = object_state;
-    }
+	public void setObjectState(String objectState) {
+		this.objectState = objectState;
+	}
 
-    public Object getObject_created() {
-        return object_created;
-    }
+	public String getObjectStatus() {
+		return objectStatus;
+	}
 
-    public void setObject_created(Object object_created) {
-        this.object_created = object_created;
-    }
+	public void setObjectStatus(String objectStatus) {
+		this.objectStatus = objectStatus;
+	}
 
-    public Object getObject_updated() {
-        return object_updated;
-    }
+	public String getObjectId() {
+		return objectId;
+	}
 
-    public void setObject_updated(Object object_updated) {
-        this.object_updated = object_updated;
-    }
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
 
-    public String getObject_id() {
-        return object_id;
-    }
+	public String getObjectOwner() {
+		return objectOwner;
+	}
 
-    public void setObject_id(String object_id) {
-        this.object_id = object_id;
-    }
+	public void setObjectOwner(String objectOwner) {
+		this.objectOwner = objectOwner;
+	}
 
-    public String getObject_owner() {
-        return object_owner;
-    }
+	public Object getObjectCreated() {
+		return objectCreated;
+	}
 
-    public void setObject_owner(String object_owner) {
-        this.object_owner = object_owner;
-    }
+	public void setObjectCreated(Object objectCreated) {
+		this.objectCreated = objectCreated;
+	}
 
-    public Object getLength() {
-        return length;
-    }
+	public Object getObjectUpdated() {
+		return objectUpdated;
+	}
 
-    public void setLength(Object length) {
-        this.length = length;
-    }
+	public void setObjectUpdated(Object objectUpdated) {
+		this.objectUpdated = objectUpdated;
+	}
 
-    public Object getWidth() {
-        return width;
-    }
+	public Object getLength() {
+		return length;
+	}
 
-    public void setWidth(Object width) {
-        this.width = width;
-    }
+	public void setLength(Object length) {
+		this.length = length;
+	}
 
-    public Object getHeight() {
-        return height;
-    }
+	public Object getWidth() {
+		return width;
+	}
 
-    public void setHeight(Object height) {
-        this.height = height;
-    }
+	public void setWidth(Object width) {
+		this.width = width;
+	}
 
-    public Object getDistance_unit() {
-        return distance_unit;
-    }
+	public Object getHeight() {
+		return height;
+	}
 
-    public void setDistance_unit(Object distance_unit) {
-        this.distance_unit = distance_unit;
-    }
+	public void setHeight(Object height) {
+		this.height = height;
+	}
 
-    public Object getWeight() {
-        return weight;
-    }
+	public Object getDistanceUnit() {
+		return distanceUnit;
+	}
 
-    public void setWeight(Object weight) {
-        this.weight = weight;
-    }
+	public void setDistanceUnit(Object distanceUnit) {
+		this.distanceUnit = distanceUnit;
+	}
 
-    public Object getMass_unit() {
-        return mass_unit;
-    }
+	public Object getWeight() {
+		return weight;
+	}
 
-    public void setMass_unit(Object mass_unit) {
-        this.mass_unit = mass_unit;
-    }
+	public void setWeight(Object weight) {
+		this.weight = weight;
+	}
 
-    public Object getMetadata() {
-        return metadata;
-    }
+	public Object getMassUnit() {
+		return massUnit;
+	}
 
-    public void setMetadata(Object metadata) {
-        this.metadata = metadata;
-    }
+	public void setMassUnit(Object massUnit) {
+		this.massUnit = massUnit;
+	}
+
+	public Object getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(Object metadata) {
+		this.metadata = metadata;
+	}
 
 }

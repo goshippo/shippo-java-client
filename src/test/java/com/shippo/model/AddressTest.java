@@ -18,7 +18,7 @@ public class AddressTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         Address testObject = (Address) getDefaultObject();
-        assertEquals("VALID", testObject.getObject_state());
+        assertEquals("VALID", testObject.getObjectState());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -33,8 +33,8 @@ public class AddressTest extends ShippoTest {
         Address testObject = (Address) getDefaultObject();
         Address retrievedObject;
 
-        retrievedObject = Address.retrieve((String) testObject.object_id);
-        assertEquals(testObject.object_id, retrievedObject.object_id);
+        retrievedObject = Address.retrieve((String) testObject.objectId);
+        assertEquals(testObject.objectId, retrievedObject.objectId);
 
     }
 

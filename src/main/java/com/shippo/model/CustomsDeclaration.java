@@ -10,24 +10,24 @@ import com.shippo.net.APIResource;
 
 public class CustomsDeclaration extends APIResource {
 
-	String object_state;
-	String object_id;
-	String object_owner;
-    Object object_created;
-    Object object_updated;
-    Object exporter_reference;
-    Object importer_reference;
-    Object contents_type;
-    Object contents_explanation;
+	String objectState;
+	String objectId;
+	String objectOwner;
+    Object objectCreated;
+    Object objectUpdated;
+    Object exporterReference;
+    Object importerReference;
+    Object contentsType;
+    Object contentsExplanation;
     Object invoice;
     Object license;
     Object certificate;
     Object notes;
-    Object eel_pfc;
-    Object aes_itn;
-    Object non_delivery_option;
+    Object eelPfc;
+    Object aesItn;
+    Object nonDeliveryOption;
     Object certify;
-    Object certify_signer;
+    Object certifySigner;
     Object disclaimer;
     Object incoterm;
     Object items;
@@ -69,180 +69,179 @@ public class CustomsDeclaration extends APIResource {
                 CustomsDeclarationCollection.class, apiKey);
     }
 
-    public Object getObject_created() {
-        return object_created;
-    }
+	public String getObjectState() {
+		return objectState;
+	}
 
-    public void setObject_created(Object object_created) {
-        this.object_created = object_created;
-    }
+	public void setObjectState(String objectState) {
+		this.objectState = objectState;
+	}
 
-    public Object getObject_updated() {
-        return object_updated;
-    }
+	public String getObjectId() {
+		return objectId;
+	}
 
-    public void setObject_updated(Object object_updated) {
-        this.object_updated = object_updated;
-    }
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
 
-    public String getObject_id() {
-        return object_id;
-    }
+	public String getObjectOwner() {
+		return objectOwner;
+	}
 
-    public void setObject_id(String object_id) {
-        this.object_id = object_id;
-    }
+	public void setObjectOwner(String objectOwner) {
+		this.objectOwner = objectOwner;
+	}
 
-    public String getObject_owner() {
-        return object_owner;
-    }
+	public Object getObjectCreated() {
+		return objectCreated;
+	}
 
-    public void setObject_owner(String object_owner) {
-        this.object_owner = object_owner;
-    }
+	public void setObjectCreated(Object objectCreated) {
+		this.objectCreated = objectCreated;
+	}
 
-    public String getObject_state() {
-        return object_state;
-    }
+	public Object getObjectUpdated() {
+		return objectUpdated;
+	}
 
-    public void setObject_state(String object_state) {
-        this.object_state = object_state;
-    }
+	public void setObjectUpdated(Object objectUpdated) {
+		this.objectUpdated = objectUpdated;
+	}
 
-    public Object getExporter_reference() {
-        return exporter_reference;
-    }
+	public Object getExporterReference() {
+		return exporterReference;
+	}
 
-    public void setExporter_reference(Object exporter_reference) {
-        this.exporter_reference = exporter_reference;
-    }
+	public void setExporterReference(Object exporterReference) {
+		this.exporterReference = exporterReference;
+	}
 
-    public Object getImporter_reference() {
-        return importer_reference;
-    }
+	public Object getImporterReference() {
+		return importerReference;
+	}
 
-    public void setImporter_reference(Object importer_reference) {
-        this.importer_reference = importer_reference;
-    }
+	public void setImporterReference(Object importerReference) {
+		this.importerReference = importerReference;
+	}
 
-    public Object getContents_type() {
-        return contents_type;
-    }
+	public Object getContentsType() {
+		return contentsType;
+	}
 
-    public void setContents_type(Object contents_type) {
-        this.contents_type = contents_type;
-    }
+	public void setContentsType(Object contentsType) {
+		this.contentsType = contentsType;
+	}
 
-    public Object getContents_explanation() {
-        return contents_explanation;
-    }
+	public Object getContentsExplanation() {
+		return contentsExplanation;
+	}
 
-    public void setContents_explanation(Object contents_explanation) {
-        this.contents_explanation = contents_explanation;
-    }
+	public void setContentsExplanation(Object contentsExplanation) {
+		this.contentsExplanation = contentsExplanation;
+	}
 
-    public Object getInvoice() {
-        return invoice;
-    }
+	public Object getInvoice() {
+		return invoice;
+	}
 
-    public void setInvoice(Object invoice) {
-        this.invoice = invoice;
-    }
+	public void setInvoice(Object invoice) {
+		this.invoice = invoice;
+	}
 
-    public Object getLicense() {
-        return license;
-    }
+	public Object getLicense() {
+		return license;
+	}
 
-    public void setLicense(Object license) {
-        this.license = license;
-    }
+	public void setLicense(Object license) {
+		this.license = license;
+	}
 
-    public Object getCertificate() {
-        return certificate;
-    }
+	public Object getCertificate() {
+		return certificate;
+	}
 
-    public void setCertificate(Object certificate) {
-        this.certificate = certificate;
-    }
+	public void setCertificate(Object certificate) {
+		this.certificate = certificate;
+	}
 
-    public Object getNotes() {
-        return notes;
-    }
+	public Object getNotes() {
+		return notes;
+	}
 
-    public void setNotes(Object notes) {
-        this.notes = notes;
-    }
+	public void setNotes(Object notes) {
+		this.notes = notes;
+	}
 
-    public Object getEel_pfc() {
-        return eel_pfc;
-    }
+	public Object getEelPfc() {
+		return eelPfc;
+	}
 
-    public void setEel_pfc(Object eel_pfc) {
-        this.eel_pfc = eel_pfc;
-    }
+	public void setEelPfc(Object eelPfc) {
+		this.eelPfc = eelPfc;
+	}
 
-    public Object getAes_itn() {
-        return aes_itn;
-    }
+	public Object getAesItn() {
+		return aesItn;
+	}
 
-    public void setAes_itn(Object aes_itn) {
-        this.aes_itn = aes_itn;
-    }
+	public void setAesItn(Object aesItn) {
+		this.aesItn = aesItn;
+	}
 
-    public Object getNon_delivery_option() {
-        return non_delivery_option;
-    }
+	public Object getNonDeliveryOption() {
+		return nonDeliveryOption;
+	}
 
-    public void setNon_delivery_option(Object non_delivery_option) {
-        this.non_delivery_option = non_delivery_option;
-    }
+	public void setNonDeliveryOption(Object nonDeliveryOption) {
+		this.nonDeliveryOption = nonDeliveryOption;
+	}
 
-    public Object getCertify() {
-        return certify;
-    }
+	public Object getCertify() {
+		return certify;
+	}
 
-    public void setCertify(Object certify) {
-        this.certify = certify;
-    }
+	public void setCertify(Object certify) {
+		this.certify = certify;
+	}
 
-    public Object getCertify_signer() {
-        return certify_signer;
-    }
+	public Object getCertifySigner() {
+		return certifySigner;
+	}
 
-    public void setCertify_signer(Object certify_signer) {
-        this.certify_signer = certify_signer;
-    }
+	public void setCertifySigner(Object certifySigner) {
+		this.certifySigner = certifySigner;
+	}
 
-    public Object getDisclaimer() {
-        return disclaimer;
-    }
+	public Object getDisclaimer() {
+		return disclaimer;
+	}
 
-    public void setDisclaimer(Object disclaimer) {
-        this.disclaimer = disclaimer;
-    }
+	public void setDisclaimer(Object disclaimer) {
+		this.disclaimer = disclaimer;
+	}
 
-    public Object getIncoterm() {
-        return incoterm;
-    }
+	public Object getIncoterm() {
+		return incoterm;
+	}
 
-    public void setIncoterm(Object incoterm) {
-        this.incoterm = incoterm;
-    }
+	public void setIncoterm(Object incoterm) {
+		this.incoterm = incoterm;
+	}
 
-    public Object getItems() {
-        return items;
-    }
+	public Object getItems() {
+		return items;
+	}
 
-    public void setItems(Object items) {
-        this.items = items;
-    }
+	public void setItems(Object items) {
+		this.items = items;
+	}
 
-    public Object getMetadata() {
-        return metadata;
-    }
+	public Object getMetadata() {
+		return metadata;
+	}
 
-    public void setMetadata(Object metadata) {
-        this.metadata = metadata;
-    }
-
+	public void setMetadata(Object metadata) {
+		this.metadata = metadata;
+	}
 }

@@ -19,7 +19,7 @@ public class ShipmentTest extends ShippoTest {
     public void testValidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         Shipment testObject = (Shipment) getDefaultObject();
-        assertEquals("VALID", testObject.getObject_state());
+        assertEquals("VALID", testObject.getObjectState());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -34,8 +34,8 @@ public class ShipmentTest extends ShippoTest {
         Shipment testObject = (Shipment) getDefaultObject();
         Shipment retrievedObject;
 
-        retrievedObject = Shipment.retrieve((String) testObject.object_id);
-        assertEquals(testObject.object_id, retrievedObject.object_id);
+        retrievedObject = Shipment.retrieve((String) testObject.objectId);
+        assertEquals(testObject.objectId, retrievedObject.objectId);
 
     }
 
@@ -70,9 +70,9 @@ public class ShipmentTest extends ShippoTest {
         Parcel parcel = (Parcel) ParcelTest.getDefaultObject();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("object_purpose", "QUOTE");
-        objectMap.put("address_from", addressFrom.getObject_id());
-        objectMap.put("address_to", addressTo.getObject_id());
-        objectMap.put("parcel", parcel.getObject_id());
+        objectMap.put("address_from", addressFrom.getObjectId());
+        objectMap.put("address_to", addressTo.getObjectId());
+        objectMap.put("parcel", parcel.getObjectId());
         objectMap.put("submission_type", "PICKUP");
         objectMap.put("submission_date", "2013-12-03T12:00:00.000Z");
         objectMap.put("insurance_amount", "30");

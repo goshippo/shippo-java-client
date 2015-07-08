@@ -51,6 +51,8 @@ public abstract class APIResource extends ShippoObject {
 			return "customs/item";
 		} else if (className.equals("customsdeclaration")) {
 			return "customs/declaration";
+		} else if (className.equals("carrieraccount")) {
+			return "carrier_account";
 		} else {
 			return className;
 		}
@@ -88,7 +90,7 @@ public abstract class APIResource extends ShippoObject {
 	private static final String CUSTOM_URL_STREAM_HANDLER_PROPERTY_NAME = "com.shippo.net.customURLStreamHandler";
 
 	protected enum RequestMethod {
-		GET, POST
+		GET, POST, PUT
 	}
 
 	private static String urlEncode(String str)
@@ -249,8 +251,8 @@ public abstract class APIResource extends ShippoObject {
 		return conn;
 	}
 
-	private static java.net.HttpURLConnection createPostConnection(String url,
-			String query, String apiKey) throws IOException,
+	private static java.net.HttpURLConnection createPostPutConnection(String url,
+			String query, RequestMethod method, String apiKey) throws IOException,
 			APIConnectionException {
 		if (Shippo.isDEBUG()) {
 			System.out.println("POST URL: " + url);
@@ -258,7 +260,34 @@ public abstract class APIResource extends ShippoObject {
 
 		java.net.HttpURLConnection conn = createShippoConnection(url, apiKey);
 		conn.setDoOutput(true);
-		conn.setRequestMethod("POST");
+		conn.setRequestMethod(method.toString());
+		conn.setRequestProperty("Content-Type", "application/json");
+
+		checkSSLCert(conn);
+
+		OutputStream output = null;
+		try {
+			output = conn.getOutputStream();
+			output.write(query.getBytes(CHARSET));
+		} finally {
+			if (output != null) {
+				output.close();
+			}
+		}
+		return conn;
+
+	}
+
+	private static java.net.HttpURLConnection createPutConnection(String url,
+			String query, String apiKey) throws IOException,
+			APIConnectionException {
+		if (Shippo.isDEBUG()) {
+			System.out.println("PUT URL: " + url);
+		}
+
+		java.net.HttpURLConnection conn = createShippoConnection(url, apiKey);
+		conn.setDoOutput(true);
+		conn.setRequestMethod("PUT");
 		conn.setRequestProperty("Content-Type", "application/json");
 
 		checkSSLCert(conn);
@@ -348,14 +377,12 @@ public abstract class APIResource extends ShippoObject {
 		}
 
 		try {
-			switch (method) {
-			case GET:
+			if(method.equals(RequestMethod.GET)){
 				conn = createGetConnection(url, query, apiKey);
-				break;
-			case POST:
-				conn = createPostConnection(url, query, apiKey);
-				break;
-			default:
+			}
+			else if (method.equals(RequestMethod.POST) || method.equals(RequestMethod.PUT)) {
+				conn = createPostPutConnection(url, query, method, apiKey);
+			}else{
 				throw new APIConnectionException(
 						String.format(
 								"Unrecognized HTTP method %s. "

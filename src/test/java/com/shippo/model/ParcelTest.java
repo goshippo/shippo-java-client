@@ -19,7 +19,7 @@ public class ParcelTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         Parcel testObject = (Parcel) getDefaultObject();
-        assertEquals("VALID", testObject.getObject_state());
+        assertEquals("VALID", testObject.getObjectState());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -34,8 +34,8 @@ public class ParcelTest extends ShippoTest {
         Parcel testObject = (Parcel) getDefaultObject();
         Parcel retrievedObject;
 
-        retrievedObject = Parcel.retrieve((String) testObject.object_id);
-        assertEquals(testObject.object_id, retrievedObject.object_id);
+        retrievedObject = Parcel.retrieve((String) testObject.objectId);
+        assertEquals(testObject.objectId, retrievedObject.objectId);
 
     }
 

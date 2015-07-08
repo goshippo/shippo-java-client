@@ -13,26 +13,26 @@ import com.shippo.net.APIResource;
 
 public class Shipment extends APIResource {
 
-	String object_state;
-	String object_status;
-	String object_purpose;
-	String object_id;
-	String object_owner;
-	Object object_created;
-	Object object_updated;
-	Object address_from;
-	Object address_to;
-	Object address_return;
+	String objectState;
+	String objectStatus;
+	String objectPurpose;
+	String objectId;
+	String objectOwner;
+	Object objectCreated;
+	Object objectUpdated;
+	Object addressFrom;
+	Object addressTo;
+	Object addressReturn;
 	Object parcel;
-	Object submission_type;
-	Object submission_date;
-	Object insurance_amount;
-	Object insurance_currency;
+	Object submissionType;
+	Object submissionDate;
+	Object insuranceAmount;
+	Object insuranceCurrency;
 	Object extra;
-	Object customs_declaration;
+	Object customsDeclaration;
 	Object reference_1;
 	Object reference_2;
-	Object rates_url;
+	Object ratesUrl;
 	Object metadata;
 	Object messages;
 
@@ -74,17 +74,17 @@ public class Shipment extends APIResource {
 			APIConnectionException, APIException, RequestTimeoutException {
 		String object_id = (String) params.get("id");
 		Shipment shipment = retrieve(object_id);
-		String object_status = (String) shipment.object_status;
+		String objectStatus = (String) shipment.objectStatus;
 		long startTime = System.currentTimeMillis();
 
-		while (object_status.equals("QUEUED")
-				|| object_status.equals("WAITING")) {
+		while (objectStatus.equals("QUEUED")
+				|| objectStatus.equals("WAITING")) {
 			if (System.currentTimeMillis() - startTime > Shippo.RATES_REQ_TIMEOUT) {
 				throw new RequestTimeoutException(
-						"A timeout has occured while waiting for your rates to generate. Try retreiving the Shipment object again and check if object_status is updated. If this issue persists, please contact support@goshippo.com");
+						"A timeout has occured while waiting for your rates to generate. Try retreiving the Shipment object again and check if objectStatus is updated. If this issue persists, please contact support@goshippo.com");
 			}
 			shipment = retrieve(object_id);
-			object_status = (String) shipment.object_status;
+			objectStatus = (String) shipment.objectStatus;
 		}
 
 		return Shipment.getShippingRates(params, apiKey);
@@ -146,84 +146,84 @@ public class Shipment extends APIResource {
 				RateCollection.class, apiKey);
 	}
 
-	public String getObject_state() {
-		return object_state;
+	public String getObjectState() {
+		return objectState;
 	}
 
-	public void setObject_state(String object_state) {
-		this.object_state = object_state;
+	public void setObjectState(String objectState) {
+		this.objectState = objectState;
 	}
 
-	public Object getObject_status() {
-		return object_status;
+	public String getObjectStatus() {
+		return objectStatus;
 	}
 
-	public void setObject_status(String object_status) {
-		this.object_status = object_status;
+	public void setObjectStatus(String objectStatus) {
+		this.objectStatus = objectStatus;
 	}
 
-	public Object getObject_purpose() {
-		return object_purpose;
+	public String getObject_purpose() {
+		return objectPurpose;
 	}
 
 	public void setObject_purpose(String object_purpose) {
-		this.object_purpose = object_purpose;
+		this.objectPurpose = object_purpose;
 	}
 
-	public Object getObject_created() {
-		return object_created;
+	public String getObjectId() {
+		return objectId;
 	}
 
-	public void setObject_created(Object object_created) {
-		this.object_created = object_created;
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 
-	public Object getObject_updated() {
-		return object_updated;
+	public String getObjectOwner() {
+		return objectOwner;
 	}
 
-	public void setObject_updated(Object object_updated) {
-		this.object_updated = object_updated;
+	public void setObjectOwner(String objectOwner) {
+		this.objectOwner = objectOwner;
 	}
 
-	public String getObject_id() {
-		return object_id;
+	public Object getObjectCreated() {
+		return objectCreated;
 	}
 
-	public void setObject_id(String object_id) {
-		this.object_id = object_id;
+	public void setObjectCreated(Object objectCreated) {
+		this.objectCreated = objectCreated;
 	}
 
-	public String getObject_owner() {
-		return object_owner;
+	public Object getObjectUpdated() {
+		return objectUpdated;
 	}
 
-	public void setObject_owner(String object_owner) {
-		this.object_owner = object_owner;
+	public void setObjectUpdated(Object objectUpdated) {
+		this.objectUpdated = objectUpdated;
 	}
 
-	public Object getAddress_from() {
-		return address_from;
+	public Object getAddressFrom() {
+		return addressFrom;
 	}
 
-	public void setAddress_from(Object address_from) {
-		this.address_from = address_from;
+	public void setAddressFrom(Object addressFrom) {
+		this.addressFrom = addressFrom;
 	}
 
-	public Object getAddress_to() {
-		return address_to;
+	public Object getAddressTo() {
+		return addressTo;
 	}
 
-	public void setAddress_to(Object address_to) {
-		this.address_to = address_to;
+	public void setAddressTo(Object addressTo) {
+		this.addressTo = addressTo;
 	}
 
-	public Object getAddress_return() {
-		return address_return;
+	public Object getAddressReturn() {
+		return addressReturn;
 	}
 
-	public void setAddress_return(Object address_return) {
-		this.address_return = address_return;
+	public void setAddressReturn(Object addressReturn) {
+		this.addressReturn = addressReturn;
 	}
 
 	public Object getParcel() {
@@ -234,36 +234,36 @@ public class Shipment extends APIResource {
 		this.parcel = parcel;
 	}
 
-	public Object getSubmission_type() {
-		return submission_type;
+	public Object getSubmissionType() {
+		return submissionType;
 	}
 
-	public void setSubmission_type(Object submission_type) {
-		this.submission_type = submission_type;
+	public void setSubmissionType(Object submissionType) {
+		this.submissionType = submissionType;
 	}
 
-	public Object getSubmission_date() {
-		return submission_date;
+	public Object getSubmissionDate() {
+		return submissionDate;
 	}
 
-	public void setSubmission_date(Object submission_date) {
-		this.submission_date = submission_date;
+	public void setSubmissionDate(Object submissionDate) {
+		this.submissionDate = submissionDate;
 	}
 
-	public Object getInsurance_amount() {
-		return insurance_amount;
+	public Object getInsuranceAmount() {
+		return insuranceAmount;
 	}
 
-	public void setInsurance_amount(Object insurance_amount) {
-		this.insurance_amount = insurance_amount;
+	public void setInsuranceAmount(Object insuranceAmount) {
+		this.insuranceAmount = insuranceAmount;
 	}
 
-	public Object getInsurance_currency() {
-		return insurance_currency;
+	public Object getInsuranceCurrency() {
+		return insuranceCurrency;
 	}
 
-	public void setInsurance_currency(Object insurance_currency) {
-		this.insurance_currency = insurance_currency;
+	public void setInsuranceCurrency(Object insuranceCurrency) {
+		this.insuranceCurrency = insuranceCurrency;
 	}
 
 	public Object getExtra() {
@@ -274,12 +274,12 @@ public class Shipment extends APIResource {
 		this.extra = extra;
 	}
 
-	public Object getCustoms_declaration() {
-		return customs_declaration;
+	public Object getCustomsDeclaration() {
+		return customsDeclaration;
 	}
 
-	public void setCustoms_declaration(Object customs_declaration) {
-		this.customs_declaration = customs_declaration;
+	public void setCustomsDeclaration(Object customsDeclaration) {
+		this.customsDeclaration = customsDeclaration;
 	}
 
 	public Object getReference_1() {
@@ -298,12 +298,12 @@ public class Shipment extends APIResource {
 		this.reference_2 = reference_2;
 	}
 
-	public Object getRates_url() {
-		return rates_url;
+	public Object getRatesUrl() {
+		return ratesUrl;
 	}
 
-	public void setRates_url(Object rates_url) {
-		this.rates_url = rates_url;
+	public void setRatesUrl(Object ratesUrl) {
+		this.ratesUrl = ratesUrl;
 	}
 
 	public Object getMetadata() {
@@ -321,5 +321,6 @@ public class Shipment extends APIResource {
 	public void setMessages(Object messages) {
 		this.messages = messages;
 	}
+
 
 }

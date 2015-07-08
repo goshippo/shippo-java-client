@@ -18,7 +18,7 @@ public class ManifestTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         Manifest testObject = (Manifest) getDefaultObject();
-        assertEquals("NOTRANSACTIONS", testObject.getObject_status());
+        assertEquals("NOTRANSACTIONS", testObject.getObjectStatus());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -33,8 +33,8 @@ public class ManifestTest extends ShippoTest {
         Manifest testObject = (Manifest) getDefaultObject();
         Manifest retrievedObject;
 
-        retrievedObject = Manifest.retrieve((String) testObject.object_id);
-        assertEquals(testObject.object_id, retrievedObject.object_id);
+        retrievedObject = Manifest.retrieve((String) testObject.objectId);
+        assertEquals(testObject.objectId, retrievedObject.objectId);
 
     }
 
@@ -68,7 +68,7 @@ public class ManifestTest extends ShippoTest {
 
         objectMap.put("provider", "USPS");
         objectMap.put("submission_date", "2014-05-16T23:59:59Z");
-        objectMap.put("address_from", testAddress.getObject_id());
+        objectMap.put("address_from", testAddress.getObjectId());
 
         try {
             Manifest testObject = Manifest.create(objectMap);

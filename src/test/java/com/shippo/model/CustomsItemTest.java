@@ -18,7 +18,7 @@ public class CustomsItemTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         CustomsItem testObject = (CustomsItem) getDefaultObject();
-        assertEquals(testObject.getObject_state(), "VALID");
+        assertEquals(testObject.getObjectState(), "VALID");
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -33,8 +33,8 @@ public class CustomsItemTest extends ShippoTest {
         CustomsItem testObject = (CustomsItem) getDefaultObject();
         CustomsItem retrievedObject;
 
-        retrievedObject = CustomsItem.retrieve((String) testObject.object_id);
-        assertEquals(testObject.object_id, retrievedObject.object_id);
+        retrievedObject = CustomsItem.retrieve((String) testObject.objectId);
+        assertEquals(testObject.objectId, retrievedObject.objectId);
 
     }
 

@@ -19,7 +19,7 @@ public class TransactionTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         Transaction testObject = (Transaction) getDefaultObject();
-        assertEquals("VALID", testObject.getObject_state());
+        assertEquals("VALID", testObject.getObjectState());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -34,8 +34,8 @@ public class TransactionTest extends ShippoTest {
         Transaction testObject = (Transaction) getDefaultObject();
         Transaction retrievedObject;
 
-        retrievedObject = Transaction.retrieve((String) testObject.object_id);
-        assertEquals(testObject.object_id, retrievedObject.object_id);
+        retrievedObject = Transaction.retrieve((String) testObject.objectId);
+        assertEquals(testObject.objectId, retrievedObject.objectId);
 
     }
 
@@ -68,7 +68,7 @@ public class TransactionTest extends ShippoTest {
         RateCollection rateCollection = (RateCollection) RateTest.getDefaultObject();
         List<Rate> rateList = rateCollection.getData();
 
-        objectMap.put("rate", rateList.get(0).getObject_id());
+        objectMap.put("rate", rateList.get(0).getObjectId());
         objectMap.put("notification_email_from", "true");
         objectMap.put("notification_email_to", "false");
         objectMap.put("notification_email_other", "max@goshippo.com");

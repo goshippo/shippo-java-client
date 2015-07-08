@@ -48,7 +48,7 @@ public class RateTest extends ShippoTest {
     public static Object getDefaultObject() {
         Shipment testObject = (Shipment) ShipmentTest.getDefaultObject();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        objectMap.put("id", testObject.getObject_id());
+        objectMap.put("id", testObject.getObjectId());
         objectMap.put("currency_code", "USD");
         try {
             Shipment.getShippingRates(objectMap);

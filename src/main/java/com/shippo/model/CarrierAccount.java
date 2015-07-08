@@ -13,51 +13,66 @@ public class CarrierAccount extends APIResource {
 	String objectId;
 	String accountId;
 	String carrier;
-    Boolean test;
-    Boolean active;
-    Object parameters;
+	Boolean test;
+	Boolean active;
+	Object parameters;
 
+	public static CarrierAccount create(Map<String, Object> params)
+			throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return create(params, null);
+	}
 
-    public static CarrierAccount create(Map<String, Object> params) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return create(params, null);
-    }
+	public static CarrierAccount retrieve(String id)
+			throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return retrieve(id, null);
+	}
 
-    public String getInstanceURL() {
-        return "";
-    }
+	public static CarrierAccount update(String id, Map<String, Object> params)
+			throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return update(id, params, null);
+	}
 
-    public static CarrierAccount create(Map<String, Object> params, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.POST, classURL(CarrierAccount.class), params, CarrierAccount.class, apiKey);
-    }
+	public static CarrierAccount create(Map<String, Object> params,
+			String apiKey) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.POST, classURL(CarrierAccount.class),
+				params, CarrierAccount.class, apiKey);
+	}
 
-    public static CarrierAccount update(String id, Map<String, Object> params, String apiKey) throws AuthenticationException,
-    		InvalidRequestException, APIConnectionException, APIException {
-    	return request(RequestMethod.PUT, instanceURL(CarrierAccount.class, id), params, CarrierAccount.class, apiKey);
-    }
+	public static CarrierAccount update(String id, Map<String, Object> params,
+			String apiKey) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.PUT,
+				instanceURL(CarrierAccount.class, id), params,
+				CarrierAccount.class, apiKey);
+	}
 
-    public static CarrierAccount retrieve(String id) throws AuthenticationException, InvalidRequestException,
-            APIConnectionException, APIException {
-        return retrieve(id, null);
-    }
+	public static CarrierAccount retrieve(String id, String apiKey)
+			throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return request(RequestMethod.GET,
+				instanceURL(CarrierAccount.class, id), null,
+				CarrierAccount.class, apiKey);
+	}
 
-    public static CarrierAccount retrieve(String id, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.GET, instanceURL(CarrierAccount.class, id), null, CarrierAccount.class,
-                apiKey);
-    }
+	public static CarrierAccountCollection all()
+			throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return all(null);
+	}
 
-    public static CarrierAccountCollection all(Map<String, Object> params) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return all(params, null);
-    }
+	public static CarrierAccountCollection all(String apiKey) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.GET, classURL(CarrierAccount.class),
+				null, CarrierAccountCollection.class, apiKey);
+	}
 
-    public static CarrierAccountCollection all(Map<String, Object> params, String apiKey)
-            throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.GET, classURL(CarrierAccount.class), params,
-                CarrierAccountCollection.class, apiKey);
-    }
+	public String getInstanceURL() {
+		return "";
+	}
 
 	public String getObjectId() {
 		return objectId;

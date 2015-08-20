@@ -112,6 +112,13 @@
                 <nexusUrl>https://oss.sonatype.org/</nexusUrl>
               </configuration>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+              <configuration>
+               <arguments>-DskipTests</arguments>
+              </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

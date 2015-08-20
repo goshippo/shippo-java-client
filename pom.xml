@@ -4,7 +4,7 @@
     <groupId>com.shippo</groupId>
     <artifactId>shippo-java-client</artifactId>
     <packaging>jar</packaging>
-    <version>1.19.1</version>
+    <version>1.1.0-SNAPSHOT</version>
     <name>shippo-java-client</name>
     <url>https://github.com/goshippo/shippo-java-client</url>
     <dependencies>

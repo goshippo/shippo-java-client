@@ -12,6 +12,13 @@
         <name>Shippo</name>
         <url>https://goshippo.com</url>
     </organization>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
     <developers>
         <developer>
             <name>Subhi Beidas</name>
@@ -30,8 +37,8 @@
         <connection>scm:git:git@github.com:goshippo/shippo-java-clienta.git</connection>
         <developerConnection>scm:git:git@github.com:goshippo/shippo-java-client.git</developerConnection>
         <url>git@github.com:goshippo/shippo-java-client.git</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>com.google.code.gson</groupId>

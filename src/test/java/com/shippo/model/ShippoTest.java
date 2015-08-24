@@ -12,7 +12,7 @@ public class ShippoTest {
 
     @Before
     public void setAPIKey() {
-        Shippo.apiKey = "<REPLACE WITH YOUR KEY>";
+        Shippo.apiKey = "2633bb26af6f9b9171a44f36059b5d86a54e06d7";
     }
 
     public Map<String, Object> getInvalidObjectMap() {

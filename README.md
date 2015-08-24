@@ -15,9 +15,9 @@ Installation
 Add this dependency to your project's POM:
 
     <dependency>
-      <groupId>com.shippo</groupId>
-      <artifactId>shippo-java-client</artifactId>
-      <version>1.0</version>
+        <groupId>com.goshippo</groupId>
+        <artifactId>shippo-java-client</artifactId>
+        <version>1.1.1-SNAPSHOT</version>
     </dependency>
 
 

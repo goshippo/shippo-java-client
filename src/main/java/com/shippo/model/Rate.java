@@ -16,6 +16,7 @@ public class Rate extends APIResource {
 	String objectOwner;
 	Object objectCreated;
 	Object objectUpdated;
+	Object shipment;
     Object attributes;
     Object amountLocal;
     Object currencyLocal;
@@ -110,6 +111,14 @@ public class Rate extends APIResource {
 
 	public void setObjectUpdated(Object objectUpdated) {
 		this.objectUpdated = objectUpdated;
+	}
+
+	public Object getShipment() {
+		return shipment;
+	}
+
+	public void setShipment(Object shipment) {
+		this.shipment = shipment;
 	}
 
 	public Object getAttributes() {

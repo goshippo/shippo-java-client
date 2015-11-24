@@ -31,7 +31,7 @@ public class Example {
 		// to address
 		Map<String, Object> toAddressMap = new HashMap<String, Object>();
 		toAddressMap.put("object_purpose", "PURCHASE");
-		toAddressMap.put("name", "Shippo Itle");
+		toAddressMap.put("name", "Mr Hippo");
 		toAddressMap.put("company", "Shippo");
 		toAddressMap.put("street1", "215 Clayton St.");
 		toAddressMap.put("city", "San Francisco");
@@ -39,19 +39,19 @@ public class Example {
 		toAddressMap.put("zip", "94117");
 		toAddressMap.put("country", "US");
 		toAddressMap.put("phone", "+1 555 341 9393");
-		toAddressMap.put("email", "laura@goshipppo.com");
+		toAddressMap.put("email", "mrhippo@goshipppo.com");
 
 		// from address
 		Map<String, Object> fromAddressMap = new HashMap<String, Object>();
 		fromAddressMap.put("object_purpose", "PURCHASE");
-		fromAddressMap.put("name", "Mr Hippo");
+		fromAddressMap.put("name", "Ms Hippo");
 		fromAddressMap.put("company", "San Diego Zoo");
 		fromAddressMap.put("street1", "2920 Zoo Drive");
 		fromAddressMap.put("city", "San Diego");
 		fromAddressMap.put("state", "CA");
 		fromAddressMap.put("zip", "92101");
 		fromAddressMap.put("country", "US");
-		fromAddressMap.put("email", "hippo@goshipppo.com");
+		fromAddressMap.put("email", "mshippo@goshipppo.com");
 		fromAddressMap.put("phone", "+1 619 231 1515");
 		fromAddressMap.put("metadata", "Customer ID 123456");
 
@@ -69,21 +69,19 @@ public class Example {
 		shipmentMap.put("address_from", fromAddressMap);
 		shipmentMap.put("parcel", parcelMap);
 		shipmentMap.put("object_purpose", "PURCHASE");
+		shipmentMap.put("async", false);
 
 		Shipment shipment = Shipment.create(shipmentMap);
 
-		// get shipping rates
-		System.out.println(String.format("Generating rates for shipment %s", shipment.getObjectId()));
-		RateCollection rates = Shipment.getShippingRatesSync(shipment.getObjectId());
-
-
-		System.out.println(String.format("Obtainned %d rates for shipment %s ", rates.getCount(), shipment.getObjectId()));;
-		Rate rate = rates.getData().get(0);
+		// select shipping rate according to your business logic
+		// we select the first rate in this example
+		Rate rate = shipment.getRatesList().get(0);
 
 		System.out.println("Getting shipping label..");
 		Map<String, Object> transParams = new HashMap<String, Object>();
 		transParams.put("rate", rate.getObjectId());
-		Transaction transaction = Transaction.createSync(transParams);
+		transParams.put("async", false);
+		Transaction transaction = Transaction.create(transParams);
 
 		if (transaction.getObjectStatus().equals("SUCCESS")) {
 			System.out.println(String.format("Label url : %s", transaction.getLabelUrl()));

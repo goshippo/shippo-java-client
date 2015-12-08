@@ -306,6 +306,14 @@ public class Shipment extends APIResource {
 		this.ratesUrl = ratesUrl;
 	}
 
+	public Object getRatesList() {
+		return ratesList;
+	}
+
+	public void setRatesList(Object ratesList) {
+		this.ratesList = ratesList;
+	}
+
 	public Object getMetadata() {
 		return metadata;
 	}

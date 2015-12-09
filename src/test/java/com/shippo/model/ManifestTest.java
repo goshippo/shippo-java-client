@@ -18,7 +18,7 @@ public class ManifestTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         Manifest testObject = (Manifest) getDefaultObject();
-        assertEquals("NOTRANSACTIONS", testObject.getObjectStatus());
+        assertEquals("QUEUED", testObject.getObjectStatus());
     }
 
     @Test(expected = InvalidRequestException.class)

@@ -1,6 +1,7 @@
 package com.shippo.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.shippo.Shippo;
@@ -35,6 +36,7 @@ public class Shipment extends APIResource {
 	Object ratesUrl;
 	Object metadata;
 	Object messages;
+	List<Rate> ratesList;
 
 	public static Shipment create(Map<String, Object> params)
 			throws AuthenticationException, InvalidRequestException,
@@ -306,11 +308,11 @@ public class Shipment extends APIResource {
 		this.ratesUrl = ratesUrl;
 	}
 
-	public Object getRatesList() {
+	public List<Rate> getRatesList() {
 		return ratesList;
 	}
 
-	public void setRatesList(Object ratesList) {
+	public void setRatesList(List<Rate> ratesList) {
 		this.ratesList = ratesList;
 	}
 

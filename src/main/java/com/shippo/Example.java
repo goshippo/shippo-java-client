@@ -1,19 +1,11 @@
 package com.shippo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import com.shippo.exception.APIConnectionException;
-import com.shippo.exception.APIException;
-import com.shippo.exception.AuthenticationException;
-import com.shippo.exception.InvalidRequestException;
-import com.shippo.exception.RequestTimeoutException;
 import com.shippo.exception.ShippoException;
-import com.shippo.model.Address;
-import com.shippo.model.AddressCollection;
-import com.shippo.model.CarrierAccount;
 import com.shippo.model.Rate;
-import com.shippo.model.RateCollection;
 import com.shippo.model.Shipment;
 import com.shippo.model.Transaction;
 
@@ -75,7 +67,8 @@ public class Example {
 
 		// select shipping rate according to your business logic
 		// we select the first rate in this example
-		Rate rate = shipment.getRatesList().get(0);
+		List<Rate> rates = shipment.getRatesList();
+		Rate rate = rates.get(0);
 
 		System.out.println("Getting shipping label..");
 		Map<String, Object> transParams = new HashMap<String, Object>();

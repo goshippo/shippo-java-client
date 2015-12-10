@@ -17,7 +17,7 @@ Add this dependency to your project's POM:
     <dependency>
         <groupId>com.goshippo</groupId>
         <artifactId>shippo-java-client</artifactId>
-        <version>1.1.3</version>
+        <version>1.1.4</version>
     </dependency>
 
 

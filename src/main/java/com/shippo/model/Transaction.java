@@ -19,7 +19,7 @@ public class Transaction extends APIResource {
 	String objectOwner;
 	Object objectCreated;
 	Object objectUpdated;
-	public Object commercialInvoiceUrl;
+	Object commercialInvoiceUrl;
 	Object wasTest;
 	Object rate;
 	Object trackingNumber;

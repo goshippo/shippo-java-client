@@ -19,6 +19,7 @@ public class Transaction extends APIResource {
 	String objectOwner;
 	Object objectCreated;
 	Object objectUpdated;
+	public Object commercialInvoiceUrl;
 	Object wasTest;
 	Object rate;
 	Object trackingNumber;
@@ -230,6 +231,14 @@ public class Transaction extends APIResource {
 
 	public void setSubmissionNote(Object submissionNote) {
 		this.submissionNote = submissionNote;
+	}
+	
+	public Object getCommercialInvoiceUrl() {
+		return commercialInvoiceUrl;
+	}
+
+	public void setCommercialInvoiceUrl(Object commercialInvoiceUrl) {
+		this.commercialInvoiceUrl = commercialInvoiceUrl;
 	}
 
 	public Object getMetadata() {

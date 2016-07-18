@@ -50,10 +50,10 @@ public class RateTest extends ShippoTest {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("id", testObject.getObjectId());
         objectMap.put("currency_code", "USD");
+        objectMap.put("async", false);
         try {
             Shipment.getShippingRates(objectMap);
             // Allow five seconds to pass for server rates generation
-            Thread.sleep(5000);
             return Shipment.getShippingRates(objectMap);
         } catch (Exception e) {
             e.printStackTrace();

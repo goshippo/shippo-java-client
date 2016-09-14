@@ -49,7 +49,7 @@ For useful debugging information including headers, server raw response etc, set
 Below is a brief code example:
 
     /* Code Example */
-        public static void main(String[] args) {
+    public static void main(String[] args) {
     
         Shippo.apiKey = "<Your Shippo authToken>";
         
@@ -63,7 +63,7 @@ Below is a brief code example:
 		addressMap.put("zip", "94117");
 		addressMap.put("country", "US");
 		addressMap.put("phone", "+1 555 341 9393");
-		addressMap.put("email", "laura@goshipppo.com")
+		addressMap.put("email", "laura@goshipppo.com");
 
         try {
             Address address = Address.create(addressMap);

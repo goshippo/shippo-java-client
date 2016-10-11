@@ -57,7 +57,7 @@ public class ParcelTest extends ShippoTest {
     public void testListPageSize() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        objectMap.put("results", "2"); // one result per page
+        objectMap.put("results", "2"); // two results per page
         objectMap.put("page", "1"); // the first page of results
         ParcelCollection ParcelCollection = Parcel.all(objectMap);
         assertEquals(ParcelCollection.getData().size(), 2);

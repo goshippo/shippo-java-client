@@ -87,7 +87,7 @@ public class ManifestTest extends ShippoTest {
             }
         }
         objectMap.put("carrier_account", usps_account.getObjectId());
-        objectMap.put("submission_date", "2016-10-11T01:12:46Z");
+        objectMap.put("submission_date", nowTime);
         objectMap.put("address_from", testAddress.getObjectId());
         objectMap.put("transactions", transactions);
 

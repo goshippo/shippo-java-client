@@ -86,4 +86,28 @@ public class AddressTest extends ShippoTest {
         }
         return null;
     }
+
+    public static Object getSecondObject() {
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        objectMap.put("object_purpose", "PURCHASE");
+        objectMap.put("name", "Second New Wu");
+        objectMap.put("company", "Hippo");
+        objectMap.put("street1", "965 Mission St");
+        objectMap.put("street2", null);
+        objectMap.put("city", "San Francisco");
+        objectMap.put("state", "CA");
+        objectMap.put("zip", "94103");
+        objectMap.put("country", "US");
+        objectMap.put("phone", "+1 415 111 1111");
+        objectMap.put("email", "test@goshipppo.com");
+        objectMap.put("metadata", "Customer ID 1234567");
+
+        try {
+            Address testObject = Address.create(objectMap);
+            return testObject;
+        } catch (ShippoException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

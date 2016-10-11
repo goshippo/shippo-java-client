@@ -2,8 +2,14 @@ package com.shippo.model;
 
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -16,7 +22,8 @@ import com.shippo.exception.ShippoException;
 public class ManifestTest extends ShippoTest {
 
     @Test
-    public void testValidCreate() {
+    public void testValidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+            APIException {
         Manifest testObject = (Manifest) getDefaultObject();
         assertEquals("QUEUED", testObject.getObjectStatus());
     }
@@ -62,13 +69,27 @@ public class ManifestTest extends ShippoTest {
         assertEquals(ManifestCollection.getData().size(), 1);
     }
 
-    public static Object getDefaultObject() {
+    public static Object getDefaultObject() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+            APIException {
+        TimeZone tz = TimeZone.getTimeZone("PST");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        df.setTimeZone(tz);
+        String nowTime = df.format(new Date());
         Map<String, Object> objectMap = new HashMap<String, Object>();
         Address testAddress = (Address) AddressTest.getDefaultObject();
-
-        objectMap.put("provider", "USPS");
-        objectMap.put("submission_date", "2014-05-16T23:59:59Z");
+        Transaction transaction = (Transaction) TransactionTest.getDefaultObject();
+        List<String> transactions = new ArrayList<String>();
+        CarrierAccountCollection carrier_accounts = CarrierAccount.all();
+        CarrierAccount usps_account = null;
+        for (CarrierAccount account : carrier_accounts.getData()) {
+            if (account.getCarrier().equals("usps")) {
+                usps_account = account;
+            }
+        }
+        objectMap.put("carrier_account", usps_account.getObjectId());
+        objectMap.put("submission_date", "2016-10-11T01:12:46Z");
         objectMap.put("address_from", testAddress.getObjectId());
+        objectMap.put("transactions", transactions);
 
         try {
             Manifest testObject = Manifest.create(objectMap);

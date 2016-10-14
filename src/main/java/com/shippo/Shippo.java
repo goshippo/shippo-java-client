@@ -55,4 +55,12 @@ public abstract class Shippo {
     public static void setApiKey(String apiKey) {
         Shippo.apiKey = apiKey;
     }
+
+    public static String getApiVersion() {
+        return apiVersion;
+    }
+
+    public static void setApiVersion(String apiVersion) {
+        Shippo.apiVersion = apiVersion;
+    }
 }

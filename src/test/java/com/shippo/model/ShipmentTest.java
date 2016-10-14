@@ -66,15 +66,13 @@ public class ShipmentTest extends ShippoTest {
     public static Object getDefaultObject() {
         // Create prerequisite helper objects
         Address addressFrom = (Address) AddressTest.getDefaultObject();
-        Address addressTo = (Address) AddressTest.getDefaultObject();
+        Address addressTo = (Address) AddressTest.getSecondObject();
         Parcel parcel = (Parcel) ParcelTest.getDefaultObject();
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        objectMap.put("object_purpose", "QUOTE");
+        objectMap.put("object_purpose", "PURCHASE");
         objectMap.put("address_from", addressFrom.getObjectId());
         objectMap.put("address_to", addressTo.getObjectId());
         objectMap.put("parcel", parcel.getObjectId());
-        objectMap.put("submission_type", "PICKUP");
-        objectMap.put("submission_date", "2013-12-03T12:00:00.000Z");
         objectMap.put("insurance_amount", "30");
         objectMap.put("insurance_currency", "USD");
         objectMap.put("extra", "{signature_confirmation: true}");

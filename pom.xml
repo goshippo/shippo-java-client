@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.goshippo</groupId>
     <artifactId>shippo-java-client</artifactId>
-    <version>1.1.5-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Shippo Java Client</name>
     <description>Shippo Java Bindings</description>

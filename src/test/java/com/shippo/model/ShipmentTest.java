@@ -2,8 +2,12 @@ package com.shippo.model;
 
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -68,6 +72,10 @@ public class ShipmentTest extends ShippoTest {
         Address addressFrom = (Address) AddressTest.getDefaultObject();
         Address addressTo = (Address) AddressTest.getSecondObject();
         Parcel parcel = (Parcel) ParcelTest.getDefaultObject();
+
+        TimeZone tz = TimeZone.getTimeZone("PST");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        df.setTimeZone(tz);
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("object_purpose", "PURCHASE");
         objectMap.put("address_from", addressFrom.getObjectId());
@@ -79,6 +87,7 @@ public class ShipmentTest extends ShippoTest {
         objectMap.put("customs_declaration", null);
         objectMap.put("reference_1", null);
         objectMap.put("reference_2", null);
+        objectMap.put("submission_date", df.format(new Date()));
         objectMap.put("metadata", "Customer ID 123456");
 
         try {

@@ -8,15 +8,20 @@ import org.junit.Before;
 import com.shippo.Shippo;
 
 public class ShippoTest {
-    static boolean VERBOSE_TESTING = true;
+	static boolean VERBOSE_TESTING = true;
 
-    @Before
-    public void setAPIKey() {
-        Shippo.apiKey = "2633bb26af6f9b9171a44f36059b5d86a54e06d7";
+	@Before
+	public void setAPIKey() {
+		Shippo.apiKey = "shippo_test_cf1b6d0655e59fc6316880580765066038ef20d8";
+	}
+
+	@Before
+    public void setVersion() {
+        Shippo.apiVersion = "2016-10-25";
     }
 
-    public Map<String, Object> getInvalidObjectMap() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        return map;
-    }
+	public Map<String, Object> getInvalidObjectMap() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		return map;
+	}
 }

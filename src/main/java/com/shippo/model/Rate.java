@@ -27,6 +27,7 @@ public class Rate extends APIResource {
     Object provider_image_200;
     Object servicelevelName;
     Object servicelevelTerms;
+    Object servicelevelToken;
     Object days;
     Object durationTerms;
     Object trackable;
@@ -271,6 +272,14 @@ public class Rate extends APIResource {
 
 	public void setMessages(Object messages) {
 		this.messages = messages;
+	}
+
+	public Object getServicelevelToken() {
+		return servicelevelToken;
+	}
+
+	public void setServicelevelToken(Object servicelevelToken) {
+		this.servicelevelToken = servicelevelToken;
 	}
 
 }

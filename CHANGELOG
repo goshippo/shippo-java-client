@@ -1,6 +1,6 @@
 === 1.2.0
 
-- Added support for SerivcelevelToken
+- Added support for ServicelevelToken
 - Added ability to set version header
 
 === 1.1.4

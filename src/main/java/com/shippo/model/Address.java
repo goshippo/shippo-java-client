@@ -29,6 +29,7 @@ public class Address extends APIResource {
     Object country;
     Object phone;
     Object email;
+    Object is_residential;
     Object ip;
     Object metadata;
     Object messages;
@@ -216,6 +217,10 @@ public class Address extends APIResource {
 	public void setEmail(Object email) {
 		this.email = email;
 	}
+
+	public Object getIs_Residential() { return is_residential; }
+
+	public void setIs_Residential(Object is_residential) { this.is_residential = is_residential; }
 
 	public Object getIp() {
 		return ip;

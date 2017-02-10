@@ -1,5 +1,6 @@
 package com.shippo.model;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -149,12 +150,38 @@ public final class Track extends APIResource {
 	public TrackingEvent[] getTrackingHistory() {
 		return trackingHistory;
 	}
-	
-	public static Track getTrackingStatus(String carrier, String trackingNumber, String apiKey)
+
+    /*
+     * Return URL that maps given tracking number on given carrier as 
+     * https://api.goshippo.com/tracks/<carrier>/<number>
+     */
+    private static String trackingNumberURL(String carrier, String trackingNumber) 
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		return request(RequestMethod.GET, instanceURL(Track.class, String.format("%s/%s", carrier, trackingNumber)),
+        try {
+            return String.format("%s/%s/%s", classURL(Track.class), urlEncode(carrier), 
+                                 urlEncode(trackingNumber));
+        } catch (UnsupportedEncodingException e) {
+			throw new InvalidRequestException("Unable to encode parameters to "
+					+ CHARSET
+					+ ". Please contact support@goshippo.com for assistance.",
+					null, e);
+        }
+    }
+	
+	public static Track getTrackingInfo(String carrier, String trackingNumber, String apiKey)
+			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.GET, trackingNumberURL(carrier, trackingNumber),
 				null, Track.class, apiKey);
 	}
 
-    //public static Track registerTrackingWebhook(String carrier, String trackingNumber, String metadata, String apiKey)
+    public static Track registerTrackingWebhook(String carrier, String trackingNumber, String metadata, 
+                                                String apiKey)
+			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException
+    {
+		Map<String, Object> params = new HashMap<String, Object>();
+        params.put("carrier", carrier);
+        params.put("tracking_number", trackingNumber);
+        params.put("metadata", metadata);
+        return request(RequestMethod.POST, classURL(Track.class), params, Track.class, apiKey);
+    }
 }

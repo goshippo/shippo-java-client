@@ -66,6 +66,10 @@ public abstract class APIResource extends ShippoObject {
 		return String.format("%ss", singleClassURL(clazz));
 	}
 
+	protected static String classURLWithTrailingSlash(Class<?> clazz) {
+		return String.format("%ss/", singleClassURL(clazz));
+	}
+
 	protected static String instanceURL(Class<?> clazz, String id)
 			throws InvalidRequestException {
 		try {

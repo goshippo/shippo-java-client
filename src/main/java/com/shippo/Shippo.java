@@ -4,7 +4,7 @@ public abstract class Shippo {
 
     public static final String LIVE_API_BASE = "https://api.goshippo.com";
     public static final String VERSION = "1.0";
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
 
     public static int RATES_REQ_TIMEOUT = 25000; //  milliseconds
     public static int TRANSACTION_REQ_TIMEOUT = 25000; // milliseconds

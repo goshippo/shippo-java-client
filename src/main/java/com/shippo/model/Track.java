@@ -16,6 +16,10 @@ import com.shippo.exception.RequestTimeoutException;
 import com.shippo.net.APIResource;
 
 
+/**
+ * Use this class to track shipments. Represnts object defined in https://api.goshippo.com/tracks endpoint.
+ * The endpoint's documentation can be found in https://goshippo.com/docs/reference#tracks
+ */
 public final class Track extends APIResource {
     
 	private String carrier;

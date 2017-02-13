@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/goshippo/shippo-java-client.svg?branch=master)](https://travis-ci.org/goshippo/shippo-java-client)
+[![Build Status](https://travis-ci.org/goshippo/shippo-java-client.svg?branch=master)](https://travis-ci.org/goshippo/shippo-java-client)
 
 #Shippo Java API wrapper
 

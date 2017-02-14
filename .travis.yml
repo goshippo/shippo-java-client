@@ -1,3 +1,7 @@
 language: java
 sudo: false
-script: mvn clean verify
+install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
+script: mvn test
+branches:
+    only:
+        - master

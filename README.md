@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/goshippo/shippo-java-client.svg?branch=master)](https://travis-ci.org/goshippo/shippo-java-client)
+
 #Shippo Java API wrapper
 
 Shippo is a shipping API that connects you with [multiple shipping carriers](https://goshippo.com/carriers/) (such as USPS, UPS, DHL, Canada Post, Australia Post, UberRUSH and many others) through one interface.

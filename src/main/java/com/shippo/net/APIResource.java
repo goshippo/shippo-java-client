@@ -66,6 +66,10 @@ public abstract class APIResource extends ShippoObject {
 		return String.format("%ss", singleClassURL(clazz));
 	}
 
+	protected static String classURLWithTrailingSlash(Class<?> clazz) {
+		return String.format("%ss/", singleClassURL(clazz));
+	}
+
 	protected static String instanceURL(Class<?> clazz, String id)
 			throws InvalidRequestException {
 		try {
@@ -93,7 +97,7 @@ public abstract class APIResource extends ShippoObject {
 		GET, POST, PUT
 	}
 
-	private static String urlEncode(String str)
+	protected static String urlEncode(String str)
 			throws UnsupportedEncodingException {
 		// Preserve original behavior that passing null for an object id will
 		// lead

@@ -98,7 +98,7 @@ public final class Batch extends APIResource {
         
     private Counts objectResults;
 
-    @SerializedName("label_url");
+    @SerializedName("label_url")
     private String[] labelURLs;
 
     public static Batch[] all()
@@ -112,8 +112,9 @@ public final class Batch extends APIResource {
         PURCHASE_SUCCEEDED, PURCHASE_FAILED, CREATION_SUCCEEDED, CREATION_FAILED
     }
 
-    public static Batch get(String id, Integer page, ShipmentStatus objectResults)
-    { }
+    public static Batch get(String id, Integer page, ShipmentStatus objectResults) {
+        return request(RequestMethod.GET, instanceURL(Batch.class, id), null, Batch.class, null);
+    }
 
     public static Batch addShipments(String id, String[] shipmentIds)
     { }

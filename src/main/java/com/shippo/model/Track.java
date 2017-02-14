@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.annotations.SerializedName;
+
 import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
@@ -17,7 +19,7 @@ import com.shippo.net.APIResource;
 
 
 /**
- * Use this class to track shipments. Represnts object defined in https://api.goshippo.com/tracks endpoint.
+ * Use this class to track shipments. Represents object defined in https://api.goshippo.com/tracks endpoint.
  * The endpoint's documentation can be found in https://goshippo.com/docs/reference#tracks
  */
 public final class Track extends APIResource {
@@ -45,7 +47,7 @@ public final class Track extends APIResource {
     	private String token;
     	private String name;
     	
-		public String getToken() {
+        public String getToken() {
 			return token;
 		}
 		public String getName() {
@@ -57,7 +59,9 @@ public final class Track extends APIResource {
 		}
     }
     
-    private ServiceLevel servicelevel;
+    @SerializedName("servicelevel")
+    private ServiceLevel serviceLevel;
+
     private String metadata;
 
     public static enum TrackingStatus {
@@ -114,8 +118,8 @@ public final class Track extends APIResource {
 
  	@Override
 	public String toString() {
-		return "Track [carrier=" + carrier + ", tracking_number=" + trackingNumber + ", from=" + addressFrom + ", to=" + addressTo
-				+ ", eta=" + eta + ", serviceLevel=" + servicelevel + ", metadata=" + metadata + ", tracking_status=" + trackingStatus 
+		return "Track [carrier=" + carrier + ", tracking_number=" + trackingNumber + ", addressFrom=" + addressFrom + ", addressTo=" + addressTo
+				+ ", eta=" + eta + ", serviceLevel=" + serviceLevel + ", metadata=" + metadata + ", tracking_status=" + trackingStatus 
 				+ ", tracking_history=" + Arrays.toString(trackingHistory) + "]";
 	}
 	
@@ -140,7 +144,7 @@ public final class Track extends APIResource {
 	}
 
 	public ServiceLevel getServiceLevel() {
-		return servicelevel;
+		return serviceLevel;
 	}
 
 	public String getMetadata() {
@@ -159,7 +163,7 @@ public final class Track extends APIResource {
      * Return URL that maps given tracking number on given carrier as 
      * https://api.goshippo.com/tracks/<carrier>/<number>
      */
-    private static String trackingNumberURL(String carrier, String trackingNumber) 
+    private static String trackingNumberURL(String carrier, String trackingNumber)
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
         try {
             return String.format("%s/%s/%s", classURL(Track.class), urlEncode(carrier), 
@@ -177,7 +181,7 @@ public final class Track extends APIResource {
      * This corresponds to https://api.goshippo.com/tracks/<carrier>/<tracking number> API defined
      * in https://goshippo.com/docs/reference#tracks-retrieve
      *
-     * @param carrier   Name of the carrier (like "usps") tracking the packing
+     * @param carrier   Name of the carrier (like "usps") tracking the package
      * @param trackingNumber Tracking number provided by the carrier for a package
      * @return Track object containing tracking info
      */

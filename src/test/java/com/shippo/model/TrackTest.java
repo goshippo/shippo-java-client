@@ -18,8 +18,8 @@ import com.shippo.exception.ShippoException;
 
 public class TrackTest extends ShippoTest {
 
-    static String carrier = "usps";
-    static String number = "9205590164917312751089";
+    final static String carrier = "usps";
+    final static String number = "9205590164917312751089";
 
     private void checkTrack(Track track) {
         assertEquals(track.getCarrier(), carrier);

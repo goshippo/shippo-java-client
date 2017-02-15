@@ -147,8 +147,21 @@ public final class Batch extends APIResource {
 				+ ", objectResults=" + objectResults + ", labelURLs=" + Arrays.toString(labelURLs) + "]";
 	}
 
-    public static Batch[] all()
-    { return null; }
+    private static class BatchCollection {
+        private int count;
+        private String previous;
+        private String next;
+        @SerializedName("results") private Batch[] array;
+
+        public Batch[] getBatchArray() {
+            return array;
+        }
+    }
+
+    public static Batch[] all() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+        BatchCollection coll = request(RequestMethod.GET, classURL(Batch.class), null, BatchCollection.class, null);
+        return coll.getBatchArray();
+    }
 
     public static Batch create(String defaultCarrierAccount, String defaultServiceLevelToken, LabelFileType labelFileType,
                                String metadata, BatchShipment[] shipments)

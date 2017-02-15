@@ -3,9 +3,11 @@ package com.shippo.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.shippo.Shippo;
@@ -20,9 +22,18 @@ public class BatchTest extends ShippoTest {
 
     final String id = "74fb0059c02e49c68df4f634dea90ea1";
 
+    @Before public void set() {
+        Shippo.setApiKey("shippo_test_4955381329c77d71badf132112936e49d060c3b9");
+    }
+
+    @Test
+    public void testAll() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+        Batch[] batches = Batch.all();
+        System.out.println(Arrays.toString(batches));
+    }
+
     @Test
     public void testValidGet() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-        Shippo.setApiKey("shippo_test_4955381329c77d71badf132112936e49d060c3b9");
         Batch batch = Batch.get(id, 0, Batch.ShipmentStatus.PURCHASE_FAILED);
         //Batch batch = Batch.get(id, 0, null);
         System.out.println(batch);

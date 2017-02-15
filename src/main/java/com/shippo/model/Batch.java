@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
+import java.util.HashMap;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -36,7 +37,7 @@ public final class Batch extends APIResource {
     private String defaultServiceLevelToken;
 
     public static enum LabelFileType {
-        PNG, PDF, PDF_4X6, ZPLII 
+        PNG, PDF, PDF_4X6, ZPLII
     }
 
     private LabelFileType labelFileType;
@@ -54,7 +55,7 @@ public final class Batch extends APIResource {
             this.id = id;
         }
 
-        public Shipment(Address from, Address to, Parcel parcel, String carrierAccount, 
+        public Shipment(Address from, Address to, Parcel parcel, String carrierAccount,
                         String serviceLevelToken) {
             this.from = from;
             this.to = to;
@@ -75,11 +76,11 @@ public final class Batch extends APIResource {
             if (json instanceof JsonPrimitive) {
                 Shipment s = new Shipment(((JsonPrimitive)json).getAsString());
                 return s;
-            } 
+            }
             return GSON.fromJson(json, Shipment.class);
         }
     }
-    
+
     public static class BatchShipment {
 
         private String metadata;
@@ -125,19 +126,19 @@ public final class Batch extends APIResource {
         private int creationFailed;
         private int purchaseSucceeded;
         private int purchaseFailed;
-		
+
         @Override
 		public String toString() {
 			return "Counts [creationSucceeded=" + creationSucceeded + ", creationFailed=" + creationFailed
 					+ ", purchaseSucceeded=" + purchaseSucceeded + ", purchaseFailed=" + purchaseFailed + "]";
 		}
     }
-        
+
     private Counts objectResults;
 
     @SerializedName("label_url")
     private String[] labelURLs;
-    
+
 	@Override
 	public String toString() {
 		return "Batch [objectId=" + objectId + ", objectOwner=" + objectOwner + ", objectStatus=" + objectStatus
@@ -168,16 +169,74 @@ public final class Batch extends APIResource {
     { return null; }
 
     public static enum ShipmentStatus {
-        PURCHASE_SUCCEEDED, PURCHASE_FAILED, CREATION_SUCCEEDED, CREATION_FAILED
+        PURCHASE_SUCCEEDED("purchase_succeeded"),
+        PURCHASE_FAILED("purchase_failed"),
+        CREATION_SUCCEEDED("creation_succeeded"),
+        CREATION_FAILED("creation_failed");
+
+        private final String apiText;
+        ShipmentStatus(String apiText) {
+            this.apiText = apiText;
+        }
+        @Override
+        public String toString() {
+            return apiText;
+        }
     }
 
-    public static Batch get(String id, int page, ShipmentStatus objectResults) 
+    /**
+     * Get batch based on its ID. Optionally filter shipments inside the batch using <code>page</code>
+     * and <code>objectResults</code> parameter. This function corresponds to
+     * https://api.goshippo.com/batches/<BATCH OBJECT ID> endpoint
+     * documented at https://goshippo.com/docs/reference#batches-retrieve
+     *
+     * @param id            ID of batch to retrieve
+     * @param page:         the page to return. Is ignored if it is 0.
+     * @param objectResults filter shipments that have this status. Can be null if filtering is not required.
+     * @return              The Batch object
+     */
+    public static Batch get(String id, int page, ShipmentStatus objectResults)
         throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.GET, instanceURL(Batch.class, id), null, Batch.class, null);
+        Map<String, Object> params = new HashMap<String, Object>();
+        if (page != 0) {
+            params.put("page", page);
+        }
+        if (objectResults != null) {
+            params.put("object_results", objectResults.toString());
+        }
+        return request(RequestMethod.GET, instanceURL(Batch.class, id), params, Batch.class, null);
     }
 
+    private static class BatchShipmentId {
+        @SerializedName("shipment") private String id;
+        public BatchShipmentId(String id) {
+            this.id = id;
+        }
+    }
+
+    /**
+     * Add shipments to an existing batch provided by id. This takes shipment IDs which means shipments
+     * should have been already been created using {@link Shipment.create}. This method corresponds
+     * to https://api.goshippo.com/batches/<BATCH OBJECT ID>/add_shipments endpoint defined in
+     * https://goshippo.com/docs/reference#batches-add-shipments
+     *
+     * @param shipmentIds   Array of shipment Ids to be added to the batch
+     * @return              The Batch object after shipments have been added
+     */
     public static Batch addShipments(String id, String[] shipmentIds)
-    { return null; }
+        throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+        BatchShipmentId[] array = new BatchShipmentId[shipmentIds.length];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = new BatchShipmentId(shipmentIds[i]);
+        }
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("__list", array);
+        return request(RequestMethod.POST,
+                       instanceURL(Batch.class, id) + "/add_shipments",
+                       params,
+                       Batch.class,
+                       null);
+    }
 
     public static Batch removeShipments(String id,  String[] shipmentIds)
     { return null; }

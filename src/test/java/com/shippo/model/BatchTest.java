@@ -34,15 +34,24 @@ public class BatchTest extends ShippoTest {
 
     @Test
     public void testValidGet() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-        Batch batch = Batch.get(id, 0, Batch.ShipmentStatus.PURCHASE_FAILED);
+        Batch batch = Batch.get(id, 1, Batch.ShipmentStatus.CREATION_SUCCEEDED);
         //Batch batch = Batch.get(id, 0, null);
         System.out.println(batch);
     }
 
     @Test(expected = InvalidRequestException.class)
-    public void testInvalidRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+    public void testInvalidGet() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        //Batch.get("invalid_id");
+        Batch.get("invalid_id", 0, null);
+    }
+
+    @Test
+    public void testAddShipments() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+            APIException {
+
+        String[] shipmentIds = {"c1a4824aed7e472f9a2ee521be17c52b"};
+        Batch batch = Batch.addShipments(id, shipmentIds);
+        System.out.println(batch);
     }
 }
 

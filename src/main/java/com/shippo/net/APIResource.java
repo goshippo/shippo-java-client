@@ -316,6 +316,11 @@ public abstract class APIResource extends ShippoObject {
 
 	private static String mapToJson(Map<String, Object> params) {
 		Gson gson = new GsonBuilder().create();
+        // hack to serialize list instead of object
+        Object o = params.get("__list");
+        if (o != null) {
+            return gson.toJson(o);
+        }
 		return gson.toJson(params);
 
 	}

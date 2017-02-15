@@ -29,6 +29,7 @@ import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
+import com.shippo.model.Batch;
 import com.shippo.model.ShippoObject;
 import com.shippo.model.ShippoRawJsonObject;
 import com.shippo.model.ShippoRawJsonObjectDeserializer;
@@ -37,6 +38,8 @@ public abstract class APIResource extends ShippoObject {
 
 	public static final Gson GSON = new GsonBuilder()
 			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            // find a way to not access Batch here
+			.registerTypeAdapter(Batch.Shipment.class, new Batch.ShipmentDeserializer())
 			.registerTypeAdapter(ShippoRawJsonObject.class,
 					new ShippoRawJsonObjectDeserializer()).create();
 
@@ -53,6 +56,8 @@ public abstract class APIResource extends ShippoObject {
 			return "customs/declaration";
 		} else if (className.equals("carrieraccount")) {
 			return "carrier_account";
+		} else if (className.equals("batch")) {
+			return "batche";
 		} else {
 			return className;
 		}

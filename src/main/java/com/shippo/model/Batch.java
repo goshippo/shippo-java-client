@@ -1,7 +1,17 @@
 package com.shippo.model;
 
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
+import com.google.gson.annotations.SerializedName;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -40,6 +50,10 @@ public final class Batch extends APIResource {
         String carrierAccount;
         String serviceLevelToken;
 
+        private Shipment(String id) {
+            this.id = id;
+        }
+
         public Shipment(Address from, Address to, Parcel parcel, String carrierAccount, 
                         String serviceLevelToken) {
             this.from = from;
@@ -47,14 +61,19 @@ public final class Batch extends APIResource {
             this.carrierAccount = carrierAccount;
             this.serviceLevelToken = serviceLevelToken;
         }
+
+		@Override
+		public String toString() {
+			return "Shipment [id=" + id + ", from=" + from + ", to=" + to + ", parcel=" + parcel + ", carrierAccount="
+					+ carrierAccount + ", serviceLevelToken=" + serviceLevelToken + "]";
+		}
     }
 
-    public static class ShipmentSerializer implements JsonSerializer<Shipment> {
+    public static class ShipmentDeserializer implements JsonDeserializer<Shipment> {
         public Shipment deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
             if (json instanceof JsonPrimitive) {
-                Shipment s = new Shipment();
-                s.id = (JsonPrimitive)json.getAsString();
+                Shipment s = new Shipment(((JsonPrimitive)json).getAsString());
                 return s;
             } 
             return GSON.fromJson(json, Shipment.class);
@@ -70,58 +89,87 @@ public final class Batch extends APIResource {
         private String transaction;
         private String objectId;
         private String objectStatus;
-        private String[] messages;
+        private Object messages;
 
         public static BatchShipment createForShipment(Shipment shipment) {
             BatchShipment bs = new BatchShipment();
             bs.shipment = shipment;
             return bs;
         }
+
+		@Override
+		public String toString() {
+			return "BatchShipment [metadata=" + metadata + ", carrierAccount=" + carrierAccount + ", serviceLevelToken="
+					+ serviceLevelToken + ", shipment=" + shipment + ", transaction=" + transaction + ", objectId="
+					+ objectId + ", objectStatus=" + objectStatus + ", messages=" + messages + "]";
+		}
     }
 
-    public static class BatchShipments {
+    public static class BatchShipmentCollection {
         private String next;
-        private Sting previous;
+        private String previous;
 
         @SerializedName("results")
-        private BatchShipments[] shipments;
+        private BatchShipment[] shipments;
+
+		@Override
+		public String toString() {
+			return "BatchShipmentCollection [next=" + next + ", shipments=" + Arrays.toString(shipments) + "]";
+		}
     }
 
-    private BatchShipments batchShipments;
+    private BatchShipmentCollection batchShipments;
 
     public static class Counts {
         private int creationSucceeded;
         private int creationFailed;
         private int purchaseSucceeded;
         private int purchaseFailed;
+		
+        @Override
+		public String toString() {
+			return "Counts [creationSucceeded=" + creationSucceeded + ", creationFailed=" + creationFailed
+					+ ", purchaseSucceeded=" + purchaseSucceeded + ", purchaseFailed=" + purchaseFailed + "]";
+		}
     }
         
     private Counts objectResults;
 
     @SerializedName("label_url")
     private String[] labelURLs;
+    
+	@Override
+	public String toString() {
+		return "Batch [objectId=" + objectId + ", objectOwner=" + objectOwner + ", objectStatus=" + objectStatus
+				+ ", objectCreated=" + objectCreated + ", objectUpdated=" + objectUpdated + ", metadata=" + metadata
+				+ ", defaultCarrierAccount=" + defaultCarrierAccount + ", defaultServiceLevelToken="
+				+ defaultServiceLevelToken + ", labelFileType=" + labelFileType + ", batchShipments=" + batchShipments
+				+ ", objectResults=" + objectResults + ", labelURLs=" + Arrays.toString(labelURLs) + "]";
+	}
 
     public static Batch[] all()
-    { }
+    { return null; }
 
     public static Batch create(String defaultCarrierAccount, String defaultServiceLevelToken, LabelFileType labelFileType,
                                String metadata, BatchShipment[] shipments)
-    { }
+    { return null; }
 
     public static enum ShipmentStatus {
         PURCHASE_SUCCEEDED, PURCHASE_FAILED, CREATION_SUCCEEDED, CREATION_FAILED
     }
 
-    public static Batch get(String id, Integer page, ShipmentStatus objectResults) {
+    public static Batch get(String id, int page, ShipmentStatus objectResults) 
+        throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
         return request(RequestMethod.GET, instanceURL(Batch.class, id), null, Batch.class, null);
     }
 
     public static Batch addShipments(String id, String[] shipmentIds)
-    { }
+    { return null; }
 
     public static Batch removeShipments(String id,  String[] shipmentIds)
-    { }
+    { return null; }
 
     public static Batch purchase(String id)
-    { }
+    { return null; }
+
 }

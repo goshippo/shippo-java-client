@@ -207,26 +207,26 @@ public abstract class APIResource extends ShippoObject {
 		 !hconn.getURL().getHost().equals("api.shippo.com")) {
 		 return;
 		 }
-		
+
 		 javax.net.ssl.HttpsURLConnection conn =
 		 (javax.net.ssl.HttpsURLConnection) hconn;
 		 conn.connect();
-		
+
 		 Certificate[] certs = conn.getServerCertificates();
-		
+
 		 try {
 		 MessageDigest md = MessageDigest.getInstance("SHA-1");
-		
+
 		 byte[] der = certs[0].getEncoded();
 		 md.update(der);
 		 byte[] digest = md.digest();
-		
+
 		 byte[] revokedCertDigest = {};
-		
+
 		 if (Arrays.equals(digest, revokedCertDigest)) {
 		 throwInvalidCertificateException();
 		 }
-		
+
 		 } catch (NoSuchAlgorithmException e) {
 		 throw new RuntimeException(e);
 		 } catch (CertificateEncodingException e) {
@@ -315,13 +315,12 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	private static String mapToJson(Map<String, Object> params) {
-		Gson gson = new GsonBuilder().create();
         // hack to serialize list instead of object
         Object o = params.get("__list");
         if (o != null) {
-            return gson.toJson(o);
+            return GSON.toJson(o);
         }
-		return gson.toJson(params);
+		return GSON.toJson(params);
 
 	}
 
@@ -537,7 +536,7 @@ public abstract class APIResource extends ShippoObject {
 			throw new APIException(error.message, null);
 		}
 	}
-	
+
     private static String createGETQuery(Map<String, Object> params) throws UnsupportedEncodingException,
     InvalidRequestException {
 Map<String, String> flatParams = flattenParams(params);
@@ -553,7 +552,7 @@ return queryStringBuffer.toString();
 
     private static String createQuery(Map<String, Object> params, APIResource.RequestMethod method) throws UnsupportedEncodingException,
     InvalidRequestException {
-    	 
+
 		switch (method) {
 		case GET:
 			return createGETQuery(params);

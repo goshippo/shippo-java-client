@@ -42,25 +42,21 @@ public final class Batch extends APIResource {
 
     private LabelFileType labelFileType;
 
+    // TODO: maybe use existing shipment class?
     public static class Shipment {
         // Either id or rest of attributes will exist
         String id;
         Address from;
         Address to;
         Parcel parcel;
-        String carrierAccount;
-        String serviceLevelToken;
 
         private Shipment(String id) {
             this.id = id;
         }
 
-        public Shipment(Address from, Address to, Parcel parcel, String carrierAccount,
-                        String serviceLevelToken) {
+        public Shipment(Address from, Address to, Parcel parcel) {
             this.from = from;
             this.to = to;
-            this.carrierAccount = carrierAccount;
-            this.serviceLevelToken = serviceLevelToken;
         }
 
 		@Override
@@ -92,9 +88,11 @@ public final class Batch extends APIResource {
         private String objectStatus;
         private Object messages;
 
-        public static BatchShipment createForShipment(Shipment shipment) {
+        public static BatchShipment createForShipment(Shipment shipment, String carrierAccount, String serviceLevelToken) {
             BatchShipment bs = new BatchShipment();
             bs.shipment = shipment;
+            bs.carrierAccount = carrierAccount;
+            bs.serviceLevelToken = serviceLevelToken;
             return bs;
         }
 
@@ -159,14 +157,36 @@ public final class Batch extends APIResource {
         }
     }
 
+    /**
+     * Get all batches created in the account.
+     *
+     * @return Array of Batch object
+     */
     public static Batch[] all() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
         BatchCollection coll = request(RequestMethod.GET, classURL(Batch.class), null, BatchCollection.class, null);
         return coll.getBatchArray();
     }
 
-    public static Batch create(String defaultCarrierAccount, String defaultServiceLevelToken, LabelFileType labelFileType,
-                               String metadata, BatchShipment[] shipments)
-    { return null; }
+    /**
+     * Create a batch. This function corresponds to POSTing to https://api.goshippo.com/batches endpoint
+     * documented at https://goshippo.com/docs/reference#batches-create
+     *
+     * @param carrierAccount    Carrier account ID used if not provided in individual shipments
+     * @param serviceLevelToken Associated service level token used if not provided in shipments
+     * @param labelFileType     Print format of the label
+     * @param metadata          Optional user content associated with the batch
+     * @param shipments         Array of {@link Shipment} objects that will be added to the batch
+     * @return                  The newly created Batch object
+     */
+    public static Batch create(String carrierAccount, String serviceLevelToken, LabelFileType labelFileType,
+                               String metadata, BatchShipment[] shipments) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("default_carrier_account", carrierAccount);
+        params.put("default_servicelevel_token", serviceLevelToken);
+        params.put("label_filetype", labelFileType.toString());
+        params.put("batch_shipments", shipments);
+        return request(RequestMethod.POST, classURL(Batch.class), params, Batch.class, null);
+    }
 
     public static enum ShipmentStatus {
         PURCHASE_SUCCEEDED("purchase_succeeded"),

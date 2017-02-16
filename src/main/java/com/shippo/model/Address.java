@@ -34,6 +34,19 @@ public class Address extends APIResource {
     Object metadata;
     Object messages;
 
+    public static Address createForPurchase(String name, String street1, String city, String zip, String state,
+                                            String country, String email) {
+        Address a = new Address();
+        a.name = name;
+        a.street1 = street1;
+        a.city = city;
+        a.zip = zip;
+        a.state = state;
+        a.country = country;
+        a.email = email;
+        return a;
+    }
+
     public static Address validate(String id) throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException {
         return validate(id, null);

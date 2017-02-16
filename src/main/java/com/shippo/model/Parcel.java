@@ -24,6 +24,18 @@ public class Parcel extends APIResource {
     Object massUnit;
     Object metadata;
 
+    public static Parcel createForShipment(double length, double width, double height, DistanceUnit distanceUnit,
+                                           double weight, MassUnit massUnit) {
+        Parcel p = new Parcel();
+        p.length = length;
+        p.width = width;
+        p.height = height;
+        p.distanceUnit = (Object)distanceUnit.toString();
+        p.weight = weight;
+        p.massUnit = (Object)massUnit.toString();
+        return p;
+    }
+
     public static Parcel create(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException {
         return create(params, null);

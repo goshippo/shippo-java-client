@@ -53,5 +53,15 @@ public class BatchTest extends ShippoTest {
         Batch batch = Batch.addShipments(id, shipmentIds);
         System.out.println(batch);
     }
+
+    @Test
+    public void testCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+            APIException {
+
+        Batch.Shipment shipment = new Batch.Shipment(from, to, parcel, "fedex", "token");
+        Batch.BatchShipment bs = Batch.BatchShipment.createForShipment(shipment);
+        Batch batch = Batch.addShipments(id, shipmentIds);
+        System.out.println(batch);
+    }
 }
 

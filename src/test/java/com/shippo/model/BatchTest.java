@@ -35,7 +35,12 @@ public class BatchTest extends ShippoTest {
     @Test
     public void testValidGet() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
         Batch batch = Batch.get(id, 1, Batch.ShipmentStatus.CREATION_SUCCEEDED);
-        //Batch batch = Batch.get(id, 0, null);
+        System.out.println(batch);
+    }
+    
+    @Test
+    public void testValidGetParams() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+        Batch batch = Batch.get(id, 1, Batch.ShipmentStatus.CREATION_SUCCEEDED);
         System.out.println(batch);
     }
 
@@ -48,7 +53,6 @@ public class BatchTest extends ShippoTest {
     @Test
     public void testAddShipments() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-
         String[] shipmentIds = {"c1a4824aed7e472f9a2ee521be17c52b"};
         Batch batch = Batch.addShipments(id, shipmentIds);
         System.out.println(batch);
@@ -58,10 +62,10 @@ public class BatchTest extends ShippoTest {
     public void testCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
 
-        Batch.Shipment shipment = new Batch.Shipment(from, to, parcel, "fedex", "token");
-        Batch.BatchShipment bs = Batch.BatchShipment.createForShipment(shipment);
-        Batch batch = Batch.addShipments(id, shipmentIds);
-        System.out.println(batch);
+        //Shipment shipment = Shipment.createForBatch(from, to, parcel, "fedex", "token");
+        //Batch.BatchShipment bs = Batch.BatchShipment.createForShipment(shipment);
+        //Batch batch = Batch.addShipments(id, shipmentIds);
+        //System.out.println(batch);
     }
 }
 

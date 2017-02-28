@@ -22,16 +22,24 @@ import com.shippo.net.APIResource;
 
 public final class Batch extends APIResource {
 
-    private String objectId;
-    private String objectOwner;
+    @SerializedName("object_id")
+    private String id;
+
+    @SerializedName("object_owner")
+    private String owner;
 
     public static enum BatchStatus {
         VALIDATING, VALID, INVALID, PURCHASING, PURCHASED
     }
 
-    private BatchStatus objectStatus;
-    private Date objectCreated;
-    private Date objectUpdated;
+    @SerializedName("object_status")
+    private BatchStatus status;
+
+    @SerializedName("object_created")
+    private Date created;
+
+    @SerializedName("object_updated")
+    private Date updated;
     private String metadata;
     private String defaultCarrierAccount;
     private String defaultServiceLevelToken;
@@ -42,51 +50,26 @@ public final class Batch extends APIResource {
 
     private LabelFileType labelFileType;
 
-    // TODO: maybe use existing shipment class?
-    public static class Shipment {
-        // Either id or rest of attributes will exist
-        String id;
-        Address from;
-        Address to;
-        Parcel parcel;
-
-        private Shipment(String id) {
-            this.id = id;
-        }
-
-        public Shipment(Address from, Address to, Parcel parcel) {
-            this.from = from;
-            this.to = to;
-        }
-
-		@Override
-		public String toString() {
-			return "Shipment [id=" + id + ", from=" + from + ", to=" + to + ", parcel=" + parcel + ", carrierAccount="
-					+ carrierAccount + ", serviceLevelToken=" + serviceLevelToken + "]";
-		}
-    }
-
-    public static class ShipmentDeserializer implements JsonDeserializer<Shipment> {
-        public Shipment deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-            throws JsonParseException {
-            if (json instanceof JsonPrimitive) {
-                Shipment s = new Shipment(((JsonPrimitive)json).getAsString());
-                return s;
-            }
-            return GSON.fromJson(json, Shipment.class);
-        }
+    public static enum BatchShipmentStatus {
+        INVALID, VALID, INCOMPLETE, TRANSACTION_FAILED
     }
 
     public static class BatchShipment {
 
-        private String metadata;
+        @SerializedName("object_id")
+        private String id;
+
+        @SerializedName("object_status")
+        private BatchShipmentStatus status;
+
         private String carrierAccount;
         private String serviceLevelToken;
-        private Shipment shipment;
+        // shipment will be either String containing shipment ID when retrieving or Shipment object
+        // when creating batch
+        private Object shipment;
         private String transaction;
-        private String objectId;
-        private String objectStatus;
         private Object messages;
+        private String metadata;
 
         public static BatchShipment createForShipment(Shipment shipment, String carrierAccount, String serviceLevelToken) {
             BatchShipment bs = new BatchShipment();
@@ -98,9 +81,9 @@ public final class Batch extends APIResource {
 
 		@Override
 		public String toString() {
-			return "BatchShipment [metadata=" + metadata + ", carrierAccount=" + carrierAccount + ", serviceLevelToken="
-					+ serviceLevelToken + ", shipment=" + shipment + ", transaction=" + transaction + ", objectId="
-					+ objectId + ", objectStatus=" + objectStatus + ", messages=" + messages + "]";
+			return "BatchShipment [id=" + id + ", status=" + status + ", carrierAccount=" + carrierAccount
+					+ ", serviceLevelToken=" + serviceLevelToken + ", shipment=" + shipment + ", transaction="
+					+ transaction + ", messages=" + messages + ", metadata=" + metadata + "]";
 		}
     }
 
@@ -119,6 +102,9 @@ public final class Batch extends APIResource {
 
     private BatchShipmentCollection batchShipments;
 
+    @SerializedName("label_url")
+    private String[] labelURLs;
+
     public static class Counts {
         private int creationSucceeded;
         private int creationFailed;
@@ -134,18 +120,6 @@ public final class Batch extends APIResource {
 
     private Counts objectResults;
 
-    @SerializedName("label_url")
-    private String[] labelURLs;
-
-	@Override
-	public String toString() {
-		return "Batch [objectId=" + objectId + ", objectOwner=" + objectOwner + ", objectStatus=" + objectStatus
-				+ ", objectCreated=" + objectCreated + ", objectUpdated=" + objectUpdated + ", metadata=" + metadata
-				+ ", defaultCarrierAccount=" + defaultCarrierAccount + ", defaultServiceLevelToken="
-				+ defaultServiceLevelToken + ", labelFileType=" + labelFileType + ", batchShipments=" + batchShipments
-				+ ", objectResults=" + objectResults + ", labelURLs=" + Arrays.toString(labelURLs) + "]";
-	}
-
     private static class BatchCollection {
         private int count;
         private String previous;
@@ -156,6 +130,15 @@ public final class Batch extends APIResource {
             return array;
         }
     }
+    
+	@Override
+	public String toString() {
+		return "Batch [id=" + id + ", owner=" + owner + ", status=" + status + ", created=" + created + ", updated="
+				+ updated + ", metadata=" + metadata + ", defaultCarrierAccount=" + defaultCarrierAccount
+				+ ", defaultServiceLevelToken=" + defaultServiceLevelToken + ", labelFileType=" + labelFileType
+				+ ", batchShipments=" + batchShipments + ", labelURLs=" + Arrays.toString(labelURLs)
+				+ ", objectResults=" + objectResults + "]";
+	}
 
     /**
      * Get all batches created in the account.
@@ -178,8 +161,10 @@ public final class Batch extends APIResource {
      * @param shipments         Array of {@link Shipment} objects that will be added to the batch
      * @return                  The newly created Batch object
      */
-    public static Batch create(String carrierAccount, String serviceLevelToken, LabelFileType labelFileType,
-                               String metadata, BatchShipment[] shipments) {
+	public static Batch create(String carrierAccount, String serviceLevelToken, LabelFileType labelFileType,
+			String metadata, BatchShipment[] shipments)
+			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException
+    {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("default_carrier_account", carrierAccount);
         params.put("default_servicelevel_token", serviceLevelToken);

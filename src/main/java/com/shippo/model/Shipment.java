@@ -38,6 +38,14 @@ public class Shipment extends APIResource {
 	Object messages;
 	List<Rate> ratesList;
 
+    public static Shipment createForBatch(Address from, Address to, Parcel parcel) {
+        Shipment s = new Shipment();
+        s.addressFrom = from;
+        s.addressTo = to;
+        s.parcel = parcel;
+        return s;
+    }
+
 	public static Shipment create(Map<String, Object> params)
 			throws AuthenticationException, InvalidRequestException,
 			APIConnectionException, APIException {

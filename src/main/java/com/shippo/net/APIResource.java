@@ -39,7 +39,7 @@ public abstract class APIResource extends ShippoObject {
 	public static final Gson GSON = new GsonBuilder()
 			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             // find a way to not access Batch here
-			.registerTypeAdapter(Batch.Shipment.class, new Batch.ShipmentDeserializer())
+			//.registerTypeAdapter(Batch.Shipment.class, new Batch.ShipmentDeserializer())
 			.registerTypeAdapter(ShippoRawJsonObject.class,
 					new ShippoRawJsonObjectDeserializer()).create();
 

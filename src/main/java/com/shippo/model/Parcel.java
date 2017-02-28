@@ -24,8 +24,8 @@ public class Parcel extends APIResource {
     Object massUnit;
     Object metadata;
 
-    public static Parcel createForShipment(double length, double width, double height, DistanceUnit distanceUnit,
-                                           double weight, MassUnit massUnit) {
+    public static Parcel createForShipment(double length, double width, double height, String distanceUnit,
+                                           double weight, String massUnit) {
         Parcel p = new Parcel();
         p.length = length;
         p.width = width;

@@ -37,6 +37,7 @@ public class Address extends APIResource {
     public static Address createForPurchase(String name, String street1, String city, String zip, String state,
                                             String country, String email) {
         Address a = new Address();
+        a.objectPurpose = "PURCHASE";
         a.name = name;
         a.street1 = street1;
         a.city = city;

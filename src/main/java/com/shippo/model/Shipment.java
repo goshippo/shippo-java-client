@@ -40,6 +40,7 @@ public class Shipment extends APIResource {
 
     public static Shipment createForBatch(Address from, Address to, Parcel parcel) {
         Shipment s = new Shipment();
+        s.objectPurpose = "PURCHASE";
         s.addressFrom = from;
         s.addressTo = to;
         s.parcel = parcel;

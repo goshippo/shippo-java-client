@@ -43,11 +43,6 @@ public final class Batch extends APIResource {
     private String metadata;
     private String defaultCarrierAccount;
     private String defaultServiceLevelToken;
-
-    public static enum LabelFileType {
-        PNG, PDF, PDF_4X6, ZPLII
-    }
-
     private LabelFileType labelFileType;
 
     public static enum BatchShipmentStatus {
@@ -149,7 +144,7 @@ public final class Batch extends APIResource {
         BatchCollection coll = request(RequestMethod.GET, classURL(Batch.class), null, BatchCollection.class, null);
         return coll.getBatchArray();
     }
-
+    
     /**
      * Create a batch. This function corresponds to POSTing to https://api.goshippo.com/batches endpoint
      * documented at https://goshippo.com/docs/reference#batches-create
@@ -158,7 +153,7 @@ public final class Batch extends APIResource {
      * @param serviceLevelToken Associated service level token used if not provided in shipments
      * @param labelFileType     Print format of the label
      * @param metadata          Optional user content associated with the batch
-     * @param shipments         Array of {@link Shipment} objects that will be added to the batch
+     * @param shipments         Array of {@link BatchShipment} objects that will be added to the batch
      * @return                  The newly created Batch object
      */
 	public static Batch create(String carrierAccount, String serviceLevelToken, LabelFileType labelFileType,
@@ -225,6 +220,7 @@ public final class Batch extends APIResource {
      * to https://api.goshippo.com/batches/<BATCH OBJECT ID>/add_shipments endpoint defined in
      * https://goshippo.com/docs/reference#batches-add-shipments
      *
+     * @param id   			Batch object ID
      * @param shipmentIds   Array of shipment Ids to be added to the batch
      * @return              The Batch object after shipments have been added
      */
@@ -242,11 +238,38 @@ public final class Batch extends APIResource {
                        Batch.class,
                        null);
     }
-
+    
+    /**
+     * Remove shipments to an existing batch provided by id. This method corresponds
+     * to https://api.goshippo.com/batches/<BATCH OBJECT ID>/remove_shipments endpoint defined in
+     * https://goshippo.com/docs/reference#batches-remove-shipments
+     *
+     * @param id   			Batch object ID
+     * @param shipmentIds   Array of shipment Ids to be removed from the batch
+     * @return              The Batch object after shipments have been removed
+     */
     public static Batch removeShipments(String id,  String[] shipmentIds)
-    { return null; }
-
-    public static Batch purchase(String id)
-    { return null; }
+    		throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("__list", shipmentIds);
+        return request(RequestMethod.POST,
+                       instanceURL(Batch.class, id) + "/remove_shipments",
+                       params,
+                       Batch.class,
+                       null);
+    }
+    
+    /**
+     * Purchase batch provided by id. This method corresponds
+     * to https://api.goshippo.com/batches/<BATCH OBJECT ID>/purchase endpoint defined in
+     * https://goshippo.com/docs/reference#batches-purchase
+     *
+     * @param id   			Batch object ID
+     * @return              The Batch object after purchasing
+     */
+	public static Batch purchase(String id)
+			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.POST, instanceURL(Batch.class, id) + "/purchase", null, Batch.class, null);
+	}
 
 }

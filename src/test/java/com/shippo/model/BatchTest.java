@@ -59,13 +59,31 @@ public class BatchTest extends ShippoTest {
     }
 
     @Test
+    public void testRemoveShipments() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+    	APIException {
+        String[] shipmentIds = {"c2f2d35033624fbba6350597f3642cf8"};
+        Batch batch = Batch.removeShipments(id, shipmentIds);
+        System.out.println(batch);
+    }
+    
+    @Test
     public void testCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-
-        //Shipment shipment = Shipment.createForBatch(from, to, parcel, "fedex", "token");
-        //Batch.BatchShipment bs = Batch.BatchShipment.createForShipment(shipment);
-        //Batch batch = Batch.addShipments(id, shipmentIds);
-        //System.out.println(batch);
+    	Address from = Address.createForPurchase("Hippo", "Hippo st", "SFO", "91234", "CA", "USA", "hippo@g.com");
+    	Address to = Address.createForPurchase("SHippo", "SHippo st", "LA", "91234", "CA", "USA", "shippo@g.com");
+    	Parcel parcel = Parcel.createForShipment(2, 3, 3, "cm", 23, "g");
+        Shipment shipment = Shipment.createForBatch(from, to, parcel);
+        Batch.BatchShipment[] shipments = {Batch.BatchShipment.createForShipment(shipment, null, null)};
+        Batch batch = Batch.create("09a25c72f0df461ea8fea8b755356aaf", "usps_priority", LabelFileType.PDF, null, shipments);
+        System.out.println(batch);
     }
+
+    @Test
+    public void testPurchase() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+    	APIException {
+        Batch batch = Batch.purchase("fdd7bd30dc4d4cd8ac7e72eeb7440e5e");
+        System.out.println(batch);
+    }
+
 }
 

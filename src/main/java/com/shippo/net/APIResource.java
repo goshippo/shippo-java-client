@@ -315,13 +315,15 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	private static String mapToJson(Map<String, Object> params) {
+		if (params == null) {
+			return GSON.toJson(new HashMap<String, Object>());
+		}
         // hack to serialize list instead of object
         Object o = params.get("__list");
         if (o != null) {
             return GSON.toJson(o);
         }
 		return GSON.toJson(params);
-
 	}
 
 	private static Map<String, String> flattenParams(Map<String, Object> params)

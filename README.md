@@ -11,7 +11,7 @@ Requirements
 
 * Java 1.5 and later
 
-* [Shippo account](https://goshippo.com/) - free to sign up, free to use the API. Only pay to print a live label, test labels are free. 
+* [Shippo account](https://goshippo.com/) - free to sign up, free to use the API. Only pay to print a live label, test labels are free.
 
 Installation
 ============
@@ -19,13 +19,13 @@ Installation
 ### Maven users
 
 Add this dependency to your project's POM:
-
+```java
     <dependency>
         <groupId>com.goshippo</groupId>
         <artifactId>shippo-java-client</artifactId>
         <version>1.2.0</version>
     </dependency>
-
+```
 
 ### Others
 
@@ -39,22 +39,22 @@ You'll need to manually install the following JARs:
 You can also load the source into Eclipse, simply clone this repository. Then open up Eclipse (the latest eclipse comes with maven).
 Within eclipse, File --> Import
 In the dialog window that appears, chose "Existing Maven Projects", from there on, follow the wizard, and you will have imported the project.
-You can then run Example.java, or any of the individual JUnit test cases. 
+You can then run [Example.java](/src/main/java/com/shippo/Example.java), or any of the individual JUnit test cases.
 
 
 Usage
 =====
 
-Check out the file Example.java for more examples, alternatively you can look through all of the test classes for each particular model for examples.
+Check out the file [Example.java](/src/main/java/com/shippo/Example.java) for more examples, alternatively you can look through all of the [test classes](/src/test/java/com/shippo/model) for each particular model for examples.
 For useful debugging information including headers, server raw response etc, set Shippo.setDEBUG(true);
 
 Below is a brief code example:
-
+```java
     /* Code Example */
     public static void main(String[] args) {
-    
+
         Shippo.apiKey = "<Your Shippo authToken>";
-        
+
         Map<String, Object> addressMap = new HashMap<String, Object>();
 		addressMap.put("object_purpose", "PURCHASE");
 		addressMap.put("name", "Shippo Itle");
@@ -75,7 +75,7 @@ Below is a brief code example:
             e.printStackTrace();
         }
     }
-    
+```
 
 
 Testing

@@ -74,7 +74,10 @@ public class BatchTest extends ShippoTest {
 	@Test
 	public void testAddShipments()
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+		int beforeAddCount = Batch.get(id, 0, null).getBatchShipments().getCount();
 		assertNotNull(addShipment());
+		int afterAddCount = Batch.get(id, 0, null).getBatchShipments().getCount();
+		assertEquals(beforeAddCount + 1, afterAddCount);
 	}
 
 	@Test
@@ -82,6 +85,7 @@ public class BatchTest extends ShippoTest {
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
 		BatchShipment batchShipment = addShipment();
 		String[] bsObjectIds = { batchShipment.getId() };
+		int beforeRemoveCount = Batch.get(id, 0, null).getBatchShipments().getCount();
 		Batch batch = Batch.removeShipments(id, bsObjectIds);
 		for (BatchShipment bs : batch.getBatchShipments().getShipments()) {
 			if (bs.getId().equals(bsObjectIds[0])) {
@@ -89,6 +93,8 @@ public class BatchTest extends ShippoTest {
 						batch.getId()));
 			}
 		}
+		int afterRemoveCount = Batch.get(id, 0, null).getBatchShipments().getCount();
+		assertEquals(beforeRemoveCount - 1, afterRemoveCount);
 	}
 
 	private Batch createBatch()

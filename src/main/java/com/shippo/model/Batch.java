@@ -56,6 +56,7 @@ public final class Batch extends APIResource {
 	private LabelFileType labelFileType;
 
 	public static class BatchShipmentCollection {
+		private int count;
 		private String next;
 		private String previous;
 
@@ -77,6 +78,10 @@ public final class Batch extends APIResource {
 
 		public BatchShipment[] getShipments() {
 			return shipments;
+		}
+
+		public int getCount() {
+			return count;
 		}
 	}
 

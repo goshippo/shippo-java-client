@@ -3,7 +3,6 @@ package com.shippo.model;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -17,6 +16,7 @@ import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.net.APIResource;
+import com.shippo.util.HttpUtil;
 
 /**
  * Represents <code>/batches</code> endpoint documented at
@@ -136,21 +136,9 @@ public final class Batch extends APIResource {
 	}
 
 	private static class BatchCollection {
+		private String next;
 		@SerializedName("results")
 		private Batch[] array;
-	}
-
-	// Taken from
-	// http://stackoverflow.com/questions/13592236/parse-a-uri-string-into-name-value-collection
-	private static Map<String, String> queryToParams(String query) throws UnsupportedEncodingException {
-		Map<String, String> query_pairs = new HashMap<String, String>();
-		String[] pairs = query.split("&");
-		for (String pair : pairs) {
-			int idx = pair.indexOf("=");
-			query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"),
-					URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
-		}
-		return query_pairs;
 	}
 
 	/**
@@ -173,7 +161,7 @@ public final class Batch extends APIResource {
 			if (coll.next == null) {
 				break;
 			}
-			params = queryToParams(new URL(coll.next).getQuery());
+			params = HttpUtil.queryToParams(new URL(coll.next).getQuery());
 		}
 		Batch[] array = new Batch[all_batches.size()];
 		all_batches.toArray(array);

@@ -18,8 +18,9 @@ import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.net.APIResource;
 
-/*
- * Represents ../batches endpoint documented at https://goshippo.com/docs/reference#batches
+/**
+ * Represents <code>/batches</code> endpoint documented at
+ * https://goshippo.com/docs/reference#batches
  */
 public final class Batch extends APIResource {
 
@@ -41,9 +42,17 @@ public final class Batch extends APIResource {
 
 	@SerializedName("object_updated")
 	private Date updated;
+
+	@SerializedName("metadata")
 	private String metadata;
+
+	@SerializedName("default_carrier_account")
 	private String defaultCarrierAccount;
+
+	@SerializedName("default_servicelevel_token")
 	private String defaultServiceLevelToken;
+
+	@SerializedName("label_filetype")
 	private LabelFileType labelFileType;
 
 	public static class BatchShipmentCollection {
@@ -71,15 +80,24 @@ public final class Batch extends APIResource {
 		}
 	}
 
+	@SerializedName("batch_shipments")
 	private BatchShipmentCollection batchShipments;
 
 	@SerializedName("label_url")
 	private String[] labelURLs;
 
 	public static class Counts {
+
+		@SerializedName("creation_succeeded")
 		private int creationSucceeded;
+
+		@SerializedName("creation_failed")
 		private int creationFailed;
+
+		@SerializedName("purchase_succeeded")
 		private int purchaseSucceeded;
+
+		@SerializedName("purchase_failed")
 		private int purchaseFailed;
 
 		@Override
@@ -105,6 +123,7 @@ public final class Batch extends APIResource {
 		}
 	}
 
+	@SerializedName("object_results")
 	private Counts objectResults;
 
 	@Override
@@ -117,9 +136,6 @@ public final class Batch extends APIResource {
 	}
 
 	private static class BatchCollection {
-		private int count;
-		private String previous;
-		private String next;
 		@SerializedName("results")
 		private Batch[] array;
 	}

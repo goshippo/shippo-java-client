@@ -6,43 +6,48 @@ package com.shippo.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * This class represents a shipment inside a {@link Batch}
- *
+ * This class represents a shipment inside a {@link Batch} documented at
+ * https://goshippo.com/docs/reference#batches-batch-shipments
  */
 public final class BatchShipment {
-	
-    @SerializedName("object_id")
-    private String id;
-    
-    public static enum Status {
+
+	@SerializedName("object_id")
+	private String id;
+
+	public static enum Status {
 		INVALID, VALID, INCOMPLETE, TRANSACTION_FAILED
-    }
+	}
 
-    @SerializedName("object_status")
-    private Status status;
+	@SerializedName("object_status")
+	private Status status;
 
-    private String carrierAccount;
-    private String serviceLevelToken;
-    // shipment will be either String containing shipment ID when retrieving or Shipment object
-    // when creating batch
-    private Object shipment;
-    private String transaction;
-    private Object messages;
-    private String metadata;
+	@SerializedName("carrier_account")
+	private String carrierAccount;
 
-    public static BatchShipment createForShipment(Shipment shipment, String carrierAccount, String serviceLevelToken) {
-        BatchShipment bs = new BatchShipment();
-        bs.shipment = shipment;
-        bs.carrierAccount = carrierAccount;
-        bs.serviceLevelToken = serviceLevelToken;
-        return bs;
-    }
+	@SerializedName("servicelevel_token")
+	private String serviceLevelToken;
+
+	// shipment will be either String containing shipment ID when retrieving or
+	// Shipment object
+	// when creating batch
+	private Object shipment;
+	private String transaction;
+	private Object messages;
+	private String metadata;
+
+	public static BatchShipment createForShipment(Shipment shipment, String carrierAccount, String serviceLevelToken) {
+		BatchShipment bs = new BatchShipment();
+		bs.shipment = shipment;
+		bs.carrierAccount = carrierAccount;
+		bs.serviceLevelToken = serviceLevelToken;
+		return bs;
+	}
 
 	@Override
 	public String toString() {
 		return "BatchShipment [id=" + id + ", status=" + status + ", carrierAccount=" + carrierAccount
-				+ ", serviceLevelToken=" + serviceLevelToken + ", shipment=" + shipment + ", transaction="
-				+ transaction + ", messages=" + messages + ", metadata=" + metadata + "]";
+				+ ", serviceLevelToken=" + serviceLevelToken + ", shipment=" + shipment + ", transaction=" + transaction
+				+ ", messages=" + messages + ", metadata=" + metadata + "]";
 	}
 
 	public String getId() {
@@ -60,10 +65,11 @@ public final class BatchShipment {
 	public String getServiceLevelToken() {
 		return serviceLevelToken;
 	}
-    /*
-     * Returned object will be either String containing shipment ID when retrieving or 
-     * {@link Shipment} object
-     */
+
+	/**
+	 * Returned object will be either String containing shipment ID when
+	 * retrieving or {@link Shipment} object
+	 */
 	public Object getShipment() {
 		return shipment;
 	}

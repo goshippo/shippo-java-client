@@ -6,8 +6,6 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.URLStreamHandler;
@@ -37,6 +35,8 @@ public abstract class APIResource extends ShippoObject {
 
 	public static final Gson GSON = new GsonBuilder()
 			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            // find a way to not access Batch here
+			//.registerTypeAdapter(Batch.Shipment.class, new Batch.ShipmentDeserializer())
 			.registerTypeAdapter(ShippoRawJsonObject.class,
 					new ShippoRawJsonObjectDeserializer()).create();
 
@@ -53,6 +53,8 @@ public abstract class APIResource extends ShippoObject {
 			return "customs/declaration";
 		} else if (className.equals("carrieraccount")) {
 			return "carrier_account";
+		} else if (className.equals("batch")) {
+			return "batche";
 		} else {
 			return className;
 		}
@@ -202,26 +204,26 @@ public abstract class APIResource extends ShippoObject {
 		 !hconn.getURL().getHost().equals("api.shippo.com")) {
 		 return;
 		 }
-		
+
 		 javax.net.ssl.HttpsURLConnection conn =
 		 (javax.net.ssl.HttpsURLConnection) hconn;
 		 conn.connect();
-		
+
 		 Certificate[] certs = conn.getServerCertificates();
-		
+
 		 try {
 		 MessageDigest md = MessageDigest.getInstance("SHA-1");
-		
+
 		 byte[] der = certs[0].getEncoded();
 		 md.update(der);
 		 byte[] digest = md.digest();
-		
+
 		 byte[] revokedCertDigest = {};
-		
+
 		 if (Arrays.equals(digest, revokedCertDigest)) {
 		 throwInvalidCertificateException();
 		 }
-		
+
 		 } catch (NoSuchAlgorithmException e) {
 		 throw new RuntimeException(e);
 		 } catch (CertificateEncodingException e) {
@@ -310,9 +312,15 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	private static String mapToJson(Map<String, Object> params) {
-		Gson gson = new GsonBuilder().create();
-		return gson.toJson(params);
-
+		if (params == null) {
+			return GSON.toJson(new HashMap<String, Object>());
+		}
+        // hack to serialize list instead of object
+        Object o = params.get("__list");
+        if (o != null) {
+            return GSON.toJson(o);
+        }
+		return GSON.toJson(params);
 	}
 
 	private static Map<String, String> flattenParams(Map<String, Object> params)
@@ -527,7 +535,7 @@ public abstract class APIResource extends ShippoObject {
 			throw new APIException(error.message, null);
 		}
 	}
-	
+
     private static String createGETQuery(Map<String, Object> params) throws UnsupportedEncodingException,
     InvalidRequestException {
 Map<String, String> flatParams = flattenParams(params);
@@ -543,7 +551,7 @@ return queryStringBuffer.toString();
 
     private static String createQuery(Map<String, Object> params, APIResource.RequestMethod method) throws UnsupportedEncodingException,
     InvalidRequestException {
-    	 
+
 		switch (method) {
 		case GET:
 			return createGETQuery(params);

@@ -223,9 +223,8 @@ public final class Batch extends APIResource {
 	/**
 	 * Get batch based on its ID. Optionally filter shipments inside the batch
 	 * using <code>page</code> and <code>objectResults</code> parameter. This
-	 * function corresponds to https://api.goshippo.com/batches/<BATCH OBJECT
-	 * ID> endpoint documented at
-	 * https://goshippo.com/docs/reference#batches-retrieve
+	 * function corresponds to https://api.goshippo.com/batches/<i>BATCH OBJECT ID</i>
+	 * endpoint documented at https://goshippo.com/docs/reference#batches-retrieve
 	 *
 	 * @param id
 	 *            ID of batch to retrieve
@@ -260,8 +259,8 @@ public final class Batch extends APIResource {
 	/**
 	 * Add shipments to an existing batch provided by id. This takes shipment
 	 * IDs which means shipments should have been already been created using
-	 * {@link Shipment.create}. This method corresponds to
-	 * https://api.goshippo.com/batches/<BATCH OBJECT ID>/add_shipments endpoint
+	 * {@link Shipment#create}. This method corresponds to
+	 * https://api.goshippo.com/batches/<i>BATCH OBJECT ID</i>/add_shipments endpoint
 	 * defined in https://goshippo.com/docs/reference#batches-add-shipments
 	 *
 	 * @param id
@@ -283,9 +282,8 @@ public final class Batch extends APIResource {
 
 	/**
 	 * Remove shipments to an existing batch provided by id. This method
-	 * corresponds to https://api.goshippo.com/batches/<BATCH OBJECT
-	 * ID>/remove_shipments endpoint defined in
-	 * https://goshippo.com/docs/reference#batches-remove-shipments
+	 * corresponds to https://api.goshippo.com/batches/<i>BATCH OBJECT ID</i>/remove_shipments
+	 * endpoint defined in https://goshippo.com/docs/reference#batches-remove-shipments
 	 *
 	 * @param id
 	 *            Batch object ID
@@ -303,7 +301,7 @@ public final class Batch extends APIResource {
 
 	/**
 	 * Purchase batch provided by id. This method corresponds to
-	 * https://api.goshippo.com/batches/<BATCH OBJECT ID>/purchase endpoint
+	 * https://api.goshippo.com/batches/<i>BATCH OBJECT ID</i>/purchase endpoint
 	 * defined in https://goshippo.com/docs/reference#batches-purchase
 	 *
 	 * @param id

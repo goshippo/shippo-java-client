@@ -2,18 +2,12 @@ package com.shippo.model;
 
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
-
-import com.google.gson.Gson;
 
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
-import com.shippo.exception.ShippoException;
 
 
 public class TrackTest extends ShippoTest {
@@ -37,13 +31,13 @@ public class TrackTest extends ShippoTest {
     @Test(expected = InvalidRequestException.class)
     public void testGetInvalidCarrier()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {
-        Track track = Track.getTrackingInfo("bad", number, null);
+        Track.getTrackingInfo("bad", number, null);
     }
 
     @Test(expected = InvalidRequestException.class)
     public void testGetInvalidCarrierNumber()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {
-        Track track = Track.getTrackingInfo(carrier, "invalid", null);
+        Track.getTrackingInfo(carrier, "invalid", null);
     }
 
     @Test

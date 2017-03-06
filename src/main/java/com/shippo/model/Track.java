@@ -4,17 +4,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
-import com.shippo.exception.RequestTimeoutException;
 import com.shippo.net.APIResource;
 
 /**

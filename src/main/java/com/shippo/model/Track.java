@@ -161,7 +161,7 @@ public final class Track extends APIResource {
 
 	/**
 	 * Return URL that maps given tracking number on given carrier as
-	 * https://api.goshippo.com/tracks/<carrier>/<number>
+	 * https://api.goshippo.com/tracks/<i>carrier</i>/<i>tracking number</i>
 	 */
 	private static String trackingNumberURL(String carrier, String trackingNumber)
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
@@ -175,9 +175,8 @@ public final class Track extends APIResource {
 
 	/**
 	 * Get tracking information of any package from given carrier. This
-	 * corresponds to https://api.goshippo.com/tracks/<carrier>/<tracking
-	 * number> API defined in
-	 * https://goshippo.com/docs/reference#tracks-retrieve
+	 * corresponds to https://api.goshippo.com/tracks/<i>carrier</i>/<i>tracking_number</i>
+	 * API defined in https://goshippo.com/docs/reference#tracks-retrieve
 	 *
 	 * @param carrier
 	 *            Name of the carrier (like "usps") tracking the package
@@ -191,7 +190,7 @@ public final class Track extends APIResource {
 	}
 
 	/**
-	 * Register webhook for tracking shipment of a pacakge. This corresponds to
+	 * Register webhook for tracking shipment of a package. This corresponds to
 	 * API defined in https://goshippo.com/docs/reference#tracks-create. Please
 	 * note that the webhook where information will be posted need to be already
 	 * provided in https://app.goshippo.com

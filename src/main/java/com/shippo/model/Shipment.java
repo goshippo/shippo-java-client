@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonSyntaxException;
 import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
@@ -190,6 +191,13 @@ public class Shipment extends APIResource {
 	}
 
 	public Object getAddressFrom() {
+		// Since address can be both an object_id and json object, do a try-catch
+		// to build a generic method for it.
+		try {
+			return GSON.fromJson((String) addressFrom, Address.class);
+		} catch (JsonSyntaxException ex) {
+			// Expected if it's not an address type, return raw.
+		}
 		return addressFrom;
 	}
 
@@ -198,6 +206,13 @@ public class Shipment extends APIResource {
 	}
 
 	public Object getAddressTo() {
+		// Since address can be both an object_id and json object, do a try-catch
+		// to build a generic method for it.
+		try {
+			return GSON.fromJson(GSON.toJson(addressTo), Address.class);
+		} catch (JsonSyntaxException exception) {
+			// Expected if it's not an address type, return raw.
+		}
 		return addressTo;
 	}
 
@@ -206,6 +221,13 @@ public class Shipment extends APIResource {
 	}
 
 	public Object getAddressReturn() {
+		// Since address can be both an object_id and json object, do a try-catch
+		// to build a generic method for it.
+		try {
+			return GSON.fromJson(GSON.toJson(addressReturn), Address.class);
+		} catch (JsonSyntaxException exception) {
+			// Expected if it's not an address type, return raw.
+		}
 		return addressReturn;
 	}
 

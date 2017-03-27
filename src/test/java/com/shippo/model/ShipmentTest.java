@@ -86,6 +86,7 @@ public class ShipmentTest extends ShippoTest {
         objectMap.put("customs_declaration", null);
         objectMap.put("shipment_date", df.format(new Date()));
         objectMap.put("metadata", "Customer ID 123456");
+        objectMap.put("async", false);
 
         try {
             Shipment testObject = Shipment.create(objectMap);

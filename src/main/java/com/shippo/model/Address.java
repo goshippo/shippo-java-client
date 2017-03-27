@@ -2,6 +2,7 @@ package com.shippo.model;
 
 import java.util.Map;
 
+import com.google.gson.annotations.SerializedName;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -11,7 +12,9 @@ import com.shippo.net.APIResource;
 // Class is affected by URL name inconsistencies, see APIResource.java (private static String className(Class<?> clazz))
 public class Address extends APIResource {
 
+	@SerializedName("is_complete")
 	boolean isComplete;
+
 	String objectId;
 	String objectOwner;
 	Object objectCreated;

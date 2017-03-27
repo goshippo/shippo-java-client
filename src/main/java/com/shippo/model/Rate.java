@@ -36,16 +36,6 @@ public class Rate extends APIResource {
         return request(RequestMethod.GET, instanceURL(Rate.class, id), null, Rate.class, apiKey);
     }
 
-    public static RateCollection all(Map<String, Object> params) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return all(params, null);
-    }
-
-    public static RateCollection all(Map<String, Object> params, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.GET, classURL(Rate.class), params, RateCollection.class, apiKey);
-    }
-
 	public String getObjectId() {
 		return objectId;
 	}

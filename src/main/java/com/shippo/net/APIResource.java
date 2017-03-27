@@ -141,6 +141,7 @@ public abstract class APIResource extends ShippoObject {
 		// propertyMap.put("lang", "Java");
 		// propertyMap.put("publisher", "Shippo");
 		headers.put("User-Agent", GSON.toJson(propertyMap));
+		headers.put("Content-Type", "application/json");
 		if (Shippo.apiVersion != null) {
 		    headers.put("Shippo-API-Version", Shippo.apiVersion);
 		}

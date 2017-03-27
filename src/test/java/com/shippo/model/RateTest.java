@@ -27,24 +27,6 @@ public class RateTest extends ShippoTest {
         Rate.retrieve("invalid_id");
     }
 
-    @Test
-    public void testListAll() throws AuthenticationException, InvalidRequestException, APIConnectionException,
-            APIException {
-        RateCollection objectCollection = Rate.all(null);
-        assertNotNull(objectCollection.getCount());
-        assertNotNull(objectCollection.getData());
-    }
-
-    @Test
-    public void testListPageSize() throws AuthenticationException, InvalidRequestException, APIConnectionException,
-            APIException {
-        Map<String, Object> objectMap = new HashMap<String, Object>();
-        objectMap.put("results", "1"); // one result per page
-        objectMap.put("page", "1"); // the first page of results
-        RateCollection RateCollection = Rate.all(objectMap);
-        assertEquals(RateCollection.getData().size(), 1);
-    }
-
     public static Object getDefaultObject() {
         Shipment testObject = (Shipment) ShipmentTest.getDefaultObject();
         Map<String, Object> objectMap = new HashMap<String, Object>();

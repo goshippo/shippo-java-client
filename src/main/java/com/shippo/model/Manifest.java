@@ -16,7 +16,7 @@ public class Manifest extends APIResource {
 	Object objectCreated;
 	Object objectUpdated;
     Object provider;
-    Object submissionDate;
+    Object shipmentDate;
     Object addressFrom;
     Object documents;
 
@@ -110,12 +110,12 @@ public class Manifest extends APIResource {
 		this.provider = provider;
 	}
 
-	public Object getSubmissionDate() {
-		return submissionDate;
+	public Object getShipmentDate() {
+		return shipmentDate;
 	}
 
-	public void setSubmissionDate(Object submissionDate) {
-		this.submissionDate = submissionDate;
+	public void setShipmentDate(Object shipmentDate) {
+		this.shipmentDate = shipmentDate;
 	}
 
 	public Object getAddressFrom() {

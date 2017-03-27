@@ -23,7 +23,9 @@ public class ShipmentTest extends ShippoTest {
     public void testValidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         Shipment testObject = (Shipment) getDefaultObject();
-        assertEquals("VALID", testObject.getObjectState());
+        assertEquals("SUCCESS", testObject.getStatus());
+        Address addressTo = (Address) testObject.getAddressTo();
+        assertTrue(addressTo.getIsComplete());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -77,17 +79,12 @@ public class ShipmentTest extends ShippoTest {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         df.setTimeZone(tz);
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        objectMap.put("object_purpose", "PURCHASE");
         objectMap.put("address_from", addressFrom.getObjectId());
         objectMap.put("address_to", addressTo.getObjectId());
         objectMap.put("parcel", parcel.getObjectId());
-        objectMap.put("insurance_amount", "30");
-        objectMap.put("insurance_currency", "USD");
-        objectMap.put("extra", "{signature_confirmation: true}");
+        objectMap.put("extra", "{\"signature_confirmation\": true}");
         objectMap.put("customs_declaration", null);
-        objectMap.put("reference_1", null);
-        objectMap.put("reference_2", null);
-        objectMap.put("submission_date", df.format(new Date()));
+        objectMap.put("shipment_date", df.format(new Date()));
         objectMap.put("metadata", "Customer ID 123456");
 
         try {

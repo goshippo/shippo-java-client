@@ -11,9 +11,7 @@ import com.shippo.net.APIResource;
 // Class is affected by URL name inconsistencies, see APIResource.java (private static String className(Class<?> clazz))
 public class Address extends APIResource {
 
-	String objectState;
-	String objectStatus;
-	String objectPurpose;
+	boolean isComplete;
 	String objectId;
 	String objectOwner;
 	Object objectCreated;
@@ -30,14 +28,12 @@ public class Address extends APIResource {
     Object phone;
     Object email;
     Object is_residential;
-    Object ip;
     Object metadata;
     Object messages;
 
     public static Address createForPurchase(String name, String street1, String city, String zip, String state,
                                             String country, String email) {
         Address a = new Address();
-        a.objectPurpose = "PURCHASE";
         a.name = name;
         a.street1 = street1;
         a.city = city;
@@ -88,28 +84,12 @@ public class Address extends APIResource {
         return request(RequestMethod.GET, classURL(Address.class), params, AddressCollection.class, apiKey);
     }
 
-	public String getObjectState() {
-		return objectState;
+	public boolean getIsComplete() {
+		return isComplete;
 	}
 
-	public void setObjectState(String objectState) {
-		this.objectState = objectState;
-	}
-
-	public String getObjectStatus() {
-		return objectStatus;
-	}
-
-	public void setObjectStatus(String objectStatus) {
-		this.objectStatus = objectStatus;
-	}
-
-	public String getObjectPurpose() {
-		return objectPurpose;
-	}
-
-	public void setObject_purpose(String objectPurpose) {
-		this.objectPurpose = objectPurpose;
+	public void setIsComplete(boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 
 	public String getObjectId() {
@@ -235,14 +215,6 @@ public class Address extends APIResource {
 	public Object getIs_Residential() { return is_residential; }
 
 	public void setIs_Residential(Object is_residential) { this.is_residential = is_residential; }
-
-	public Object getIp() {
-		return ip;
-	}
-
-	public void setIp(Object ip) {
-		this.ip = ip;
-	}
 
 	public Object getMetadata() {
 		return metadata;

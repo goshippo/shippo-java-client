@@ -61,7 +61,7 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	protected static String singleClassURL(Class<?> clazz) {
-		return String.format("%s/v1/%s", Shippo.getApiBase(), className(clazz));
+		return String.format("%s/%s", Shippo.getApiBase(), className(clazz));
 	}
 
 	protected static String classURL(Class<?> clazz) {

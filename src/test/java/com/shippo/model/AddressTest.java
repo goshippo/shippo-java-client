@@ -18,7 +18,7 @@ public class AddressTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         Address testObject = (Address) getDefaultObject();
-        assertEquals("VALID", testObject.getObjectState());
+        assertTrue(testObject.getIsComplete());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -64,7 +64,6 @@ public class AddressTest extends ShippoTest {
 
     public static Object getDefaultObject() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        objectMap.put("object_purpose", "PURCHASE");
         objectMap.put("name", "Undefault New Wu");
         objectMap.put("company", "Shippo");
         objectMap.put("street1", "Clayton St.");
@@ -90,7 +89,6 @@ public class AddressTest extends ShippoTest {
 
     public static Object getSecondObject() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        objectMap.put("object_purpose", "PURCHASE");
         objectMap.put("name", "Second New Wu");
         objectMap.put("company", "Hippo");
         objectMap.put("street1", "965 Mission St");

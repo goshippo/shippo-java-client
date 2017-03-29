@@ -1,17 +1,30 @@
 package com.shippo.model;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.RequestTimeoutException;
+import com.shippo.model.ShippoRawJsonObject;
+import com.shippo.model.ShippoRawJsonObjectDeserializer;
 import com.shippo.net.APIResource;
+
 
 public class Shipment extends APIResource {
 
@@ -191,13 +204,6 @@ public class Shipment extends APIResource {
 	}
 
 	public Object getAddressFrom() {
-		// Since address can be both an object_id and json object, do a try-catch
-		// to build a generic method for it.
-		try {
-			return GSON.fromJson((String) addressFrom, Address.class);
-		} catch (JsonSyntaxException ex) {
-			// Expected if it's not an address type, return raw.
-		}
 		return addressFrom;
 	}
 
@@ -206,13 +212,6 @@ public class Shipment extends APIResource {
 	}
 
 	public Object getAddressTo() {
-		// Since address can be both an object_id and json object, do a try-catch
-		// to build a generic method for it.
-		try {
-			return GSON.fromJson(GSON.toJson(addressTo), Address.class);
-		} catch (JsonSyntaxException exception) {
-			// Expected if it's not an address type, return raw.
-		}
 		return addressTo;
 	}
 
@@ -221,13 +220,6 @@ public class Shipment extends APIResource {
 	}
 
 	public Object getAddressReturn() {
-		// Since address can be both an object_id and json object, do a try-catch
-		// to build a generic method for it.
-		try {
-			return GSON.fromJson(GSON.toJson(addressReturn), Address.class);
-		} catch (JsonSyntaxException exception) {
-			// Expected if it's not an address type, return raw.
-		}
 		return addressReturn;
 	}
 
@@ -299,4 +291,57 @@ public class Shipment extends APIResource {
 		this.messages = messages;
 	}
 
+	protected static Gson getGson() {
+    	return new GsonBuilder()
+			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+			.registerTypeAdapter(Shipment.class, new Shipment.ShipmentDeserializer())
+			.registerTypeAdapter(ShippoRawJsonObject.class,
+					new ShippoRawJsonObjectDeserializer()).create();
+    }
+
+	public static class ShipmentDeserializer implements JsonDeserializer<Shipment> {
+	    public Shipment deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+	            throws JsonParseException {
+	        Shipment shipment = new Gson().fromJson(json, Shipment.class);
+	        JsonObject jsonObject = json.getAsJsonObject();
+	        Address addressTo = this.getAddress(jsonObject, "address_to");
+	        if (addressTo != null) {
+	        	shipment.setAddressTo(addressTo);
+	        }
+	        Address addressFrom = this.getAddress(jsonObject, "address_from");
+	        if (addressFrom != null) {
+	        	shipment.setAddressFrom(addressFrom);
+	        }
+	        Address addressReturn = this.getAddress(jsonObject, "address_to");
+	        if (jsonObject.has("address_return")) {
+	        	JsonElement elem = jsonObject.get("address_return");
+	        	shipment.setAddressReturn(addressReturn);
+	 		}
+	 		return shipment;
+	    }
+
+	    private Address getAddress(JsonObject jsonObject, String address_key) {
+	    	if (jsonObject.has(address_key)) {
+	    		JsonElement elem = jsonObject.get(address_key);
+	    		if ((elem != null) && !elem.isJsonNull()) {
+	    			String valuesString = elem.getAsString();
+	    			if ((valuesString != null) && !valuesString.isEmpty()) {
+	    				try {
+	    					return getGenericGson().fromJson(valuesString, Address.class);
+	    				} catch (JsonSyntaxException ex) {
+	    					// Expected if it's not an address type, return raw.
+	    				}
+	    			}
+	    		}
+	    	}
+	    	return null;
+	    }
+
+	    private Gson getGenericGson() {
+	    	return new GsonBuilder()
+				.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+				.registerTypeAdapter(ShippoRawJsonObject.class,
+						new ShippoRawJsonObjectDeserializer()).create();
+		}
+	}
 }

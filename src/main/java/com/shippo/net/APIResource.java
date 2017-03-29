@@ -33,13 +33,6 @@ import com.shippo.model.ShippoRawJsonObjectDeserializer;
 
 public abstract class APIResource extends ShippoObject {
 
-	public static final Gson GSON = new GsonBuilder()
-			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            // find a way to not access Batch here
-			//.registerTypeAdapter(Batch.Shipment.class, new Batch.ShipmentDeserializer())
-			.registerTypeAdapter(ShippoRawJsonObject.class,
-					new ShippoRawJsonObjectDeserializer()).create();
-
 	private static String className(Class<?> clazz) {
 		String className = clazz.getSimpleName().toLowerCase()
 				.replace("$", " ");
@@ -58,6 +51,13 @@ public abstract class APIResource extends ShippoObject {
 		} else {
 			return className;
 		}
+	}
+
+	protected static Gson getGson() {
+    	return new GsonBuilder()
+			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+			.registerTypeAdapter(ShippoRawJsonObject.class,
+					new ShippoRawJsonObjectDeserializer()).create();
 	}
 
 	protected static String singleClassURL(Class<?> clazz) {
@@ -140,7 +140,7 @@ public abstract class APIResource extends ShippoObject {
 		// propertyMap.put("bindings.version", Shippo.VERSION);
 		// propertyMap.put("lang", "Java");
 		// propertyMap.put("publisher", "Shippo");
-		headers.put("User-Agent", GSON.toJson(propertyMap));
+		headers.put("User-Agent", getGson().toJson(propertyMap));
 		headers.put("Content-Type", "application/json");
 		if (Shippo.apiVersion != null) {
 		    headers.put("Shippo-API-Version", Shippo.apiVersion);
@@ -313,15 +313,16 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	private static String mapToJson(Map<String, Object> params) {
+		Gson gson = getGson();
 		if (params == null) {
-			return GSON.toJson(new HashMap<String, Object>());
+			return gson.toJson(new HashMap<String, Object>());
 		}
         // hack to serialize list instead of object
         Object o = params.get("__list");
         if (o != null) {
-            return GSON.toJson(o);
+            return gson.toJson(o);
         }
-		return GSON.toJson(params);
+		return gson.toJson(params);
 	}
 
 	private static Map<String, String> flattenParams(Map<String, Object> params)
@@ -511,7 +512,7 @@ public abstract class APIResource extends ShippoObject {
 		if (rCode < 200 || rCode >= 300) {
 			handleAPIError(rBody, rCode);
 		}
-		return GSON.fromJson(rBody, clazz);
+		return getGson().fromJson(rBody, clazz);
 	}
 
 	private static void handleAPIError(String rBody, int rCode)

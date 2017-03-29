@@ -312,11 +312,10 @@ public class Shipment extends APIResource {
 	        if (addressFrom != null) {
 	        	shipment.setAddressFrom(addressFrom);
 	        }
-	        Address addressReturn = this.getAddress(jsonObject, "address_to");
-	        if (jsonObject.has("address_return")) {
-	        	JsonElement elem = jsonObject.get("address_return");
-	        	shipment.setAddressReturn(addressReturn);
-	 		}
+	        Address addressReturn = this.getAddress(jsonObject, "address_return");
+	        if (addressReturn != null) {
+	        	shipment.setAddressreturn(addressReturn);
+	        }
 	 		return shipment;
 	    }
 

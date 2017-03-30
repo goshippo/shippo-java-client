@@ -10,7 +10,7 @@ import com.shippo.net.APIResource;
 
 public class Refund extends APIResource {
 	String object_state;
-	String object_status;
+	String status;
 	String object_purpose;
 	String object_id;
 	String object_owner;
@@ -84,12 +84,12 @@ public class Refund extends APIResource {
         this.object_owner = object_owner;
     }
 
-    public Object getObject_status() {
-        return object_status;
+    public Object getStatus() {
+        return status;
     }
 
-    public void setObject_status(String object_status) {
-        this.object_status = object_status;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Object getTransaction() {
@@ -99,5 +99,4 @@ public class Refund extends APIResource {
     public void setTransaction(Object transaction) {
         this.transaction = transaction;
     }
-
 }

@@ -10,7 +10,7 @@ import com.shippo.net.APIResource;
 
 public class Manifest extends APIResource {
 	String objectState;
-	String objectStatus;
+	String status;
 	String objectId;
 	String objectOwner;
 	Object objectCreated;
@@ -62,12 +62,12 @@ public class Manifest extends APIResource {
 		this.objectState = objectState;
 	}
 
-	public String getObjectStatus() {
-		return objectStatus;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setObjectStatus(String objectStatus) {
-		this.objectStatus = objectStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getObjectId() {

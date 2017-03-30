@@ -1,4 +1,4 @@
-package com.shippo.model;
+package com.shippo.serialization;
 
 import java.lang.reflect.Type;
 

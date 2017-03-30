@@ -25,7 +25,7 @@ public class ManifestTest extends ShippoTest {
     public void testValidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         Manifest testObject = (Manifest) getDefaultObject();
-        assertEquals("QUEUED", testObject.getObjectStatus());
+        assertEquals("QUEUED", testObject.getStatus());
     }
 
     @Test(expected = InvalidRequestException.class)

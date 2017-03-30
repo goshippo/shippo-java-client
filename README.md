@@ -9,6 +9,7 @@ Print a shipping label in 10 mins using our default USPS and DHL Express account
 Requirements
 ============
 
+* Shippo API Version: 2017-03-29. For older versions, please use an older release.
 * Java 1.5 and later
 
 * [Shippo account](https://goshippo.com/) - free to sign up, free to use the API. Only pay to print a live label, test labels are free.
@@ -56,7 +57,6 @@ Below is a brief code example:
         Shippo.apiKey = "<Your Shippo authToken>";
 
         Map<String, Object> addressMap = new HashMap<String, Object>();
-		addressMap.put("object_purpose", "PURCHASE");
 		addressMap.put("name", "Shippo Itle");
 		addressMap.put("company", "Shippo");
 		addressMap.put("street1", "215 Clayton St.");
@@ -65,7 +65,7 @@ Below is a brief code example:
 		addressMap.put("zip", "94117");
 		addressMap.put("country", "US");
 		addressMap.put("phone", "+1 555 341 9393");
-		addressMap.put("email", "laura@goshipppo.com");
+		addressMap.put("email", "test@goshipppo.com");
 
         try {
             Address address = Address.create(addressMap);

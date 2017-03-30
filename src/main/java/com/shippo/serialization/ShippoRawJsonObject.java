@@ -1,4 +1,4 @@
-package com.shippo.model;
+package com.shippo.serialization;
 
 import com.google.gson.JsonObject;
 

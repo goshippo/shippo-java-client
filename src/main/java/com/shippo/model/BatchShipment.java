@@ -18,7 +18,7 @@ public final class BatchShipment {
 		INVALID, VALID, INCOMPLETE, TRANSACTION_FAILED
 	}
 
-	@SerializedName("object_status")
+	@SerializedName("status")
 	private Status status;
 
 	@SerializedName("carrier_account")

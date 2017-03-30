@@ -1,11 +1,8 @@
 package com.shippo.model;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.google.gson.Gson;
 
 import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
@@ -14,7 +11,6 @@ import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.RequestTimeoutException;
 import com.shippo.net.APIResource;
-import com.shippo.serialization.GsonFactory;
 
 
 public class Shipment extends APIResource {
@@ -280,10 +276,5 @@ public class Shipment extends APIResource {
 
 	public void setMessages(Object messages) {
 		this.messages = messages;
-	}
-
-	protected static Gson getGson() {
-		System.out.println("GET SHIPMENT GSON");
-    	return GsonFactory.SHIPMENT_GSON;
 	}
 }

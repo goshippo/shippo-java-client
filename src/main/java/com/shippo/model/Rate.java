@@ -9,13 +9,9 @@ import com.shippo.exception.InvalidRequestException;
 import com.shippo.net.APIResource;
 
 public class Rate extends APIResource {
-	String objectState;
-	String objectStatus;
-	String objectPurpose;
 	String objectId;
 	String objectOwner;
 	Object objectCreated;
-	Object objectUpdated;
 	Object shipment;
     Object attributes;
     Object amountLocal;
@@ -25,17 +21,9 @@ public class Rate extends APIResource {
     Object provider;
     Object provider_image_75;
     Object provider_image_200;
-    Object servicelevelName;
-    Object servicelevelTerms;
-    Object servicelevelToken;
+    Object servicelevel;
     Object days;
     Object durationTerms;
-    Object trackable;
-    Object insurance;
-    Object insuranceAmountLocal;
-    Object insuranceCurrencyLocal;
-    Object insuranceAmount;
-    Object insuranceCurrency;
     Object messages;
 
     public static Rate retrieve(String id) throws AuthenticationException, InvalidRequestException,
@@ -47,40 +35,6 @@ public class Rate extends APIResource {
             APIConnectionException, APIException {
         return request(RequestMethod.GET, instanceURL(Rate.class, id), null, Rate.class, apiKey);
     }
-
-    public static RateCollection all(Map<String, Object> params) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return all(params, null);
-    }
-
-    public static RateCollection all(Map<String, Object> params, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.GET, classURL(Rate.class), params, RateCollection.class, apiKey);
-    }
-
-	public String getObjectState() {
-		return objectState;
-	}
-
-	public void setObjectState(String objectState) {
-		this.objectState = objectState;
-	}
-
-	public String getObjectStatus() {
-		return objectStatus;
-	}
-
-	public void setObjectStatus(String objectStatus) {
-		this.objectStatus = objectStatus;
-	}
-
-	public String getObjectPurpose() {
-		return objectPurpose;
-	}
-
-	public void setObject_purpose(String objectPurpose) {
-		this.objectPurpose = objectPurpose;
-	}
 
 	public String getObjectId() {
 		return objectId;
@@ -104,14 +58,6 @@ public class Rate extends APIResource {
 
 	public void setObjectCreated(Object objectCreated) {
 		this.objectCreated = objectCreated;
-	}
-
-	public Object getObjectUpdated() {
-		return objectUpdated;
-	}
-
-	public void setObjectUpdated(Object objectUpdated) {
-		this.objectUpdated = objectUpdated;
 	}
 
 	public Object getShipment() {
@@ -186,20 +132,12 @@ public class Rate extends APIResource {
 		this.provider_image_200 = provider_image_200;
 	}
 
-	public Object getServicelevelName() {
-		return servicelevelName;
+	public Object getServicelevel() {
+		return servicelevel;
 	}
 
-	public void setServicelevelName(Object servicelevelName) {
-		this.servicelevelName = servicelevelName;
-	}
-
-	public Object getServicelevelTerms() {
-		return servicelevelTerms;
-	}
-
-	public void setServicelevelTerms(Object servicelevelTerms) {
-		this.servicelevelTerms = servicelevelTerms;
+	public void setServicelevel(Object servicelevel) {
+		this.servicelevel = servicelevel;
 	}
 
 	public Object getDays() {
@@ -218,54 +156,6 @@ public class Rate extends APIResource {
 		this.durationTerms = durationTerms;
 	}
 
-	public Object getTrackable() {
-		return trackable;
-	}
-
-	public void setTrackable(Object trackable) {
-		this.trackable = trackable;
-	}
-
-	public Object getInsurance() {
-		return insurance;
-	}
-
-	public void setInsurance(Object insurance) {
-		this.insurance = insurance;
-	}
-
-	public Object getInsuranceAmountLocal() {
-		return insuranceAmountLocal;
-	}
-
-	public void setInsuranceAmountLocal(Object insuranceAmountLocal) {
-		this.insuranceAmountLocal = insuranceAmountLocal;
-	}
-
-	public Object getInsuranceCurrencyLocal() {
-		return insuranceCurrencyLocal;
-	}
-
-	public void setInsuranceCurrencyLocal(Object insuranceCurrencyLocal) {
-		this.insuranceCurrencyLocal = insuranceCurrencyLocal;
-	}
-
-	public Object getInsuranceAmount() {
-		return insuranceAmount;
-	}
-
-	public void setInsuranceAmount(Object insuranceAmount) {
-		this.insuranceAmount = insuranceAmount;
-	}
-
-	public Object getInsuranceCurrency() {
-		return insuranceCurrency;
-	}
-
-	public void setInsuranceCurrency(Object insuranceCurrency) {
-		this.insuranceCurrency = insuranceCurrency;
-	}
-
 	public Object getMessages() {
 		return messages;
 	}
@@ -273,13 +163,4 @@ public class Rate extends APIResource {
 	public void setMessages(Object messages) {
 		this.messages = messages;
 	}
-
-	public Object getServicelevelToken() {
-		return servicelevelToken;
-	}
-
-	public void setServicelevelToken(Object servicelevelToken) {
-		this.servicelevelToken = servicelevelToken;
-	}
-
 }

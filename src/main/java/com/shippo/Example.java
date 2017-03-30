@@ -22,7 +22,6 @@ public class Example {
 
 		// to address
 		Map<String, Object> toAddressMap = new HashMap<String, Object>();
-		toAddressMap.put("object_purpose", "PURCHASE");
 		toAddressMap.put("name", "Mr Hippo");
 		toAddressMap.put("company", "Shippo");
 		toAddressMap.put("street1", "215 Clayton St.");
@@ -35,7 +34,6 @@ public class Example {
 
 		// from address
 		Map<String, Object> fromAddressMap = new HashMap<String, Object>();
-		fromAddressMap.put("object_purpose", "PURCHASE");
 		fromAddressMap.put("name", "Ms Hippo");
 		fromAddressMap.put("company", "San Diego Zoo");
 		fromAddressMap.put("street1", "2920 Zoo Drive");
@@ -60,14 +58,13 @@ public class Example {
 		shipmentMap.put("address_to", toAddressMap);
 		shipmentMap.put("address_from", fromAddressMap);
 		shipmentMap.put("parcel", parcelMap);
-		shipmentMap.put("object_purpose", "PURCHASE");
 		shipmentMap.put("async", false);
 
 		Shipment shipment = Shipment.create(shipmentMap);
 
 		// select shipping rate according to your business logic
 		// we select the first rate in this example
-		List<Rate> rates = shipment.getRatesList();
+		List<Rate> rates = shipment.getRates();
 		Rate rate = rates.get(0);
 
 		System.out.println("Getting shipping label..");
@@ -76,7 +73,7 @@ public class Example {
 		transParams.put("async", false);
 		Transaction transaction = Transaction.create(transParams);
 
-		if (transaction.getObjectStatus().equals("SUCCESS")) {
+		if (transaction.getStatus().equals("SUCCESS")) {
 			System.out.println(String.format("Label url : %s", transaction.getLabelUrl()));
 			System.out.println(String.format("Tracking number : %s", transaction.getTrackingNumber()));
 		} else {

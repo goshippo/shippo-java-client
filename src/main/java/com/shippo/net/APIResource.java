@@ -19,26 +19,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
-import com.shippo.model.ShippoObject;
-import com.shippo.model.ShippoRawJsonObject;
-import com.shippo.model.ShippoRawJsonObjectDeserializer;
+import com.shippo.serialization.GsonFactory;
+import com.shippo.serialization.ShippoObject;
+
 
 public abstract class APIResource extends ShippoObject {
-
-	public static final Gson GSON = new GsonBuilder()
-			.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            // find a way to not access Batch here
-			//.registerTypeAdapter(Batch.Shipment.class, new Batch.ShipmentDeserializer())
-			.registerTypeAdapter(ShippoRawJsonObject.class,
-					new ShippoRawJsonObjectDeserializer()).create();
 
 	private static String className(Class<?> clazz) {
 		String className = clazz.getSimpleName().toLowerCase()
@@ -61,7 +52,7 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	protected static String singleClassURL(Class<?> clazz) {
-		return String.format("%s/v1/%s", Shippo.getApiBase(), className(clazz));
+		return String.format("%s/%s", Shippo.getApiBase(), className(clazz));
 	}
 
 	protected static String classURL(Class<?> clazz) {
@@ -116,7 +107,7 @@ public abstract class APIResource extends ShippoObject {
 		return String.format("%s=%s", urlEncode(k), urlEncode(v));
 	}
 
-	static Map<String, String> getHeaders(String apiKey) {
+	static Map<String, String> getHeaders(String apiKey, Class<?> clazz) {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept-Charset", CHARSET);
 		headers.put("User-Agent",
@@ -140,7 +131,8 @@ public abstract class APIResource extends ShippoObject {
 		// propertyMap.put("bindings.version", Shippo.VERSION);
 		// propertyMap.put("lang", "Java");
 		// propertyMap.put("publisher", "Shippo");
-		headers.put("User-Agent", GSON.toJson(propertyMap));
+		headers.put("User-Agent", GsonFactory.getGson(clazz).toJson(propertyMap));
+		headers.put("Content-Type", "application/json");
 		if (Shippo.apiVersion != null) {
 		    headers.put("Shippo-API-Version", Shippo.apiVersion);
 		}
@@ -148,7 +140,7 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	private static java.net.HttpURLConnection createShippoConnection(
-			String url, String apiKey) throws IOException {
+			String url, String apiKey, Class<?> clazz) throws IOException {
 		URL shippoURL;
 		String customURLStreamHandlerClassName = System.getProperty(
 				CUSTOM_URL_STREAM_HANDLER_PROPERTY_NAME, null);
@@ -156,9 +148,9 @@ public abstract class APIResource extends ShippoObject {
 			// instantiate the custom handler provided
 			try {
 				@SuppressWarnings("unchecked")
-				Class<URLStreamHandler> clazz = (Class<URLStreamHandler>) Class
+				Class<URLStreamHandler> urlClass = (Class<URLStreamHandler>) Class
 						.forName(customURLStreamHandlerClassName);
-				Constructor<URLStreamHandler> constructor = clazz
+				Constructor<URLStreamHandler> constructor = urlClass
 						.getConstructor();
 				URLStreamHandler customHandler = constructor.newInstance();
 				shippoURL = new URL(null, url, customHandler);
@@ -185,7 +177,7 @@ public abstract class APIResource extends ShippoObject {
 		conn.setConnectTimeout(30 * 1000);
 		conn.setReadTimeout(80 * 1000);
 		conn.setUseCaches(false);
-		for (Map.Entry<String, String> header : getHeaders(apiKey).entrySet()) {
+		for (Map.Entry<String, String> header : getHeaders(apiKey, clazz).entrySet()) {
 			conn.setRequestProperty(header.getKey(), header.getValue());
 		}
 
@@ -243,13 +235,13 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	private static java.net.HttpURLConnection createGetConnection(String url,
-			String query, String apiKey) throws IOException,
+			String query, String apiKey, Class<?> clazz) throws IOException,
 			APIConnectionException {
 		if (Shippo.isDEBUG()) {
 			System.out.println("GET URL: " + url);
 		}
 		String getURL = formatURL(url, query);
-		java.net.HttpURLConnection conn = createShippoConnection(getURL, apiKey);
+		java.net.HttpURLConnection conn = createShippoConnection(getURL, apiKey, clazz);
 		conn.setRequestMethod("GET");
 
 		checkSSLCert(conn);
@@ -258,13 +250,13 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	private static java.net.HttpURLConnection createPostPutConnection(String url,
-			String query, RequestMethod method, String apiKey) throws IOException,
+			String query, RequestMethod method, String apiKey, Class<?> clazz) throws IOException,
 			APIConnectionException {
 		if (Shippo.isDEBUG()) {
 			System.out.println("POST URL: " + url);
 		}
 
-		java.net.HttpURLConnection conn = createShippoConnection(url, apiKey);
+		java.net.HttpURLConnection conn = createShippoConnection(url, apiKey, clazz);
 		conn.setDoOutput(true);
 		conn.setRequestMethod(method.toString());
 		conn.setRequestProperty("Content-Type", "application/json");
@@ -285,13 +277,13 @@ public abstract class APIResource extends ShippoObject {
 	}
 
 	private static java.net.HttpURLConnection createPutConnection(String url,
-			String query, String apiKey) throws IOException,
+			String query, String apiKey, Class<?> clazz) throws IOException,
 			APIConnectionException {
 		if (Shippo.isDEBUG()) {
 			System.out.println("PUT URL: " + url);
 		}
 
-		java.net.HttpURLConnection conn = createShippoConnection(url, apiKey);
+		java.net.HttpURLConnection conn = createShippoConnection(url, apiKey, clazz);
 		conn.setDoOutput(true);
 		conn.setRequestMethod("PUT");
 		conn.setRequestProperty("Content-Type", "application/json");
@@ -311,16 +303,17 @@ public abstract class APIResource extends ShippoObject {
 
 	}
 
-	private static String mapToJson(Map<String, Object> params) {
+	private static String mapToJson(Map<String, Object> params, Class<?> clazz) {
+		Gson gson = GsonFactory.getGson(clazz);
 		if (params == null) {
-			return GSON.toJson(new HashMap<String, Object>());
+			return gson.toJson(new HashMap<String, Object>());
 		}
         // hack to serialize list instead of object
         Object o = params.get("__list");
         if (o != null) {
-            return GSON.toJson(o);
+            return gson.toJson(o);
         }
-		return GSON.toJson(params);
+		return gson.toJson(params);
 	}
 
 	private static Map<String, String> flattenParams(Map<String, Object> params)
@@ -378,7 +371,7 @@ public abstract class APIResource extends ShippoObject {
 
 	private static ShippoResponse makeURLConnectionRequest(
 			APIResource.RequestMethod method, String url, String query,
-			String apiKey) throws APIConnectionException {
+			String apiKey, Class<?> clazz) throws APIConnectionException {
 		java.net.HttpURLConnection conn = null;
 
 		// Print Information about the Connection
@@ -390,10 +383,10 @@ public abstract class APIResource extends ShippoObject {
 
 		try {
 			if(method.equals(RequestMethod.GET)){
-				conn = createGetConnection(url, query, apiKey);
+				conn = createGetConnection(url, query, apiKey, clazz);
 			}
 			else if (method.equals(RequestMethod.POST) || method.equals(RequestMethod.PUT)) {
-				conn = createPostPutConnection(url, query, method, apiKey);
+				conn = createPostPutConnection(url, query, method, apiKey, clazz);
 			}else{
 				throw new APIConnectionException(
 						String.format(
@@ -496,13 +489,12 @@ public abstract class APIResource extends ShippoObject {
 
 		String query;
 		try {
-			query = createQuery(params, method);
+			query = createQuery(params, method, clazz);
 		} catch (UnsupportedEncodingException e) {
 			 throw new InvalidRequestException("Unable to encode parameters to " + CHARSET
 	                    + ". Please contact support@shippo.com for assistance.", null, e);
 		}
-		ShippoResponse response = makeURLConnectionRequest(method, url, query,
-				apiKey);
+		ShippoResponse response = makeURLConnectionRequest(method, url, query, apiKey, clazz);
 
 		int rCode = response.responseCode;
 		String rBody = response.responseBody;
@@ -510,7 +502,7 @@ public abstract class APIResource extends ShippoObject {
 		if (rCode < 200 || rCode >= 300) {
 			handleAPIError(rBody, rCode);
 		}
-		return GSON.fromJson(rBody, clazz);
+		return GsonFactory.getGson(clazz).fromJson(rBody, clazz);
 	}
 
 	private static void handleAPIError(String rBody, int rCode)
@@ -536,29 +528,28 @@ public abstract class APIResource extends ShippoObject {
 		}
 	}
 
-    private static String createGETQuery(Map<String, Object> params) throws UnsupportedEncodingException,
-    InvalidRequestException {
-Map<String, String> flatParams = flattenParams(params);
-StringBuilder queryStringBuffer = new StringBuilder();
-for (Map.Entry<String, String> entry : flatParams.entrySet()) {
-    if (queryStringBuffer.length() > 0) {
-        queryStringBuffer.append("&");
-    }
-    queryStringBuffer.append(urlEncodePair(entry.getKey(), entry.getValue()));
-}
-return queryStringBuffer.toString();
-}
+    private static String createGETQuery(Map<String, Object> params, Class<?> clazz)
+    		throws UnsupportedEncodingException, InvalidRequestException {
+		Map<String, String> flatParams = flattenParams(params);
+		StringBuilder queryStringBuffer = new StringBuilder();
+		for (Map.Entry<String, String> entry : flatParams.entrySet()) {
+		    if (queryStringBuffer.length() > 0) {
+		        queryStringBuffer.append("&");
+		    }
+		    queryStringBuffer.append(urlEncodePair(entry.getKey(), entry.getValue()));
+		}
+		return queryStringBuffer.toString();
+	}
 
-    private static String createQuery(Map<String, Object> params, APIResource.RequestMethod method) throws UnsupportedEncodingException,
-    InvalidRequestException {
-
+    private static String createQuery(Map<String, Object> params, APIResource.RequestMethod method,
+    		Class<?> clazz) throws UnsupportedEncodingException, InvalidRequestException {
 		switch (method) {
 		case GET:
-			return createGETQuery(params);
+			return createGETQuery(params, clazz);
 		case POST:
-			return mapToJson(params);
+			return mapToJson(params, clazz);
 		default:
-			return mapToJson(params);
+			return mapToJson(params, clazz);
     }
 
 }

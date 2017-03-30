@@ -12,9 +12,7 @@ import com.shippo.net.APIResource;
 
 public class Transaction extends APIResource {
 
-	String objectState;
-	String objectStatus;
-	String object_purpose;
+	String status;
 	String objectId;
 	String objectOwner;
 	Object objectCreated;
@@ -27,8 +25,6 @@ public class Transaction extends APIResource {
 	Object trackingUrlProvider;
 	Object labelUrl;
 	Object messages;
-	Object customsNote;
-	Object submissionNote;
 	Object metadata;
 
 	public static Transaction create(Map<String, Object> params)
@@ -62,17 +58,17 @@ public class Transaction extends APIResource {
 		Transaction transaction = request(RequestMethod.POST,
 				classURL(Transaction.class), params, Transaction.class, apiKey);
 		String object_id = transaction.objectId;
-		String objectStatus = transaction.objectStatus;
+		String status = transaction.status;
 		long startTime = System.currentTimeMillis();
 
-		while (objectStatus.equals("QUEUED")
-				|| objectStatus.equals("WAITING")) {
+		while (status.equals("QUEUED")
+				|| status.equals("WAITING")) {
 			if (System.currentTimeMillis() - startTime > Shippo.TRANSACTION_REQ_TIMEOUT) {
 				throw new RequestTimeoutException(
-						"A timeout has occured while waiting for your label to generate. Try retreiving the Transaction object again and check if objectStatus is updated. If this issue persists, please contact support@goshippo.com");
+						"A timeout has occured while waiting for your label to generate. Try retreiving the Transaction object again and check if status is updated. If this issue persists, please contact support@goshippo.com");
 			}
 			transaction = retrieve(object_id);
-			objectStatus = (String) transaction.objectStatus;
+			status = (String) transaction.status;
 		}
 
 		return transaction;
@@ -105,28 +101,12 @@ public class Transaction extends APIResource {
 				TransactionCollection.class, apiKey);
 	}
 
-	public String getObjectState() {
-		return objectState;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setObjectState(String objectState) {
-		this.objectState = objectState;
-	}
-
-	public String getObjectStatus() {
-		return objectStatus;
-	}
-
-	public void setObjectStatus(String objectStatus) {
-		this.objectStatus = objectStatus;
-	}
-
-	public String getObject_purpose() {
-		return object_purpose;
-	}
-
-	public void setObject_purpose(String object_purpose) {
-		this.object_purpose = object_purpose;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getObjectId() {
@@ -151,14 +131,6 @@ public class Transaction extends APIResource {
 
 	public void setObjectCreated(Object objectCreated) {
 		this.objectCreated = objectCreated;
-	}
-
-	public Object getObjectUpdated() {
-		return objectUpdated;
-	}
-
-	public void setObjectUpdated(Object objectUpdated) {
-		this.objectUpdated = objectUpdated;
 	}
 
 	public Object getWasTest() {
@@ -216,22 +188,6 @@ public class Transaction extends APIResource {
 	public void setMessages(Object messages) {
 		this.messages = messages;
 	}
-
-	public Object getCustomsNote() {
-		return customsNote;
-	}
-
-	public void setCustomsNote(Object customsNote) {
-		this.customsNote = customsNote;
-	}
-
-	public Object getSubmissionNote() {
-		return submissionNote;
-	}
-
-	public void setSubmissionNote(Object submissionNote) {
-		this.submissionNote = submissionNote;
-	}
 	
 	public Object getCommercialInvoiceUrl() {
 		return commercialInvoiceUrl;
@@ -248,6 +204,5 @@ public class Transaction extends APIResource {
 	public void setMetadata(Object metadata) {
 		this.metadata = metadata;
 	}
-
 
 }

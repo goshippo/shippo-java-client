@@ -34,7 +34,7 @@ public final class Batch extends APIResource {
 		VALIDATING, VALID, INVALID, PURCHASING, PURCHASED
 	}
 
-	@SerializedName("object_status")
+	@SerializedName("status")
 	private BatchStatus status;
 
 	@SerializedName("object_created")

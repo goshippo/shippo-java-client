@@ -25,7 +25,7 @@ public class ManifestTest extends ShippoTest {
     public void testValidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         Manifest testObject = (Manifest) getDefaultObject();
-        assertEquals("QUEUED", testObject.getObjectStatus());
+        assertEquals("QUEUED", testObject.getStatus());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -87,7 +87,7 @@ public class ManifestTest extends ShippoTest {
             }
         }
         objectMap.put("carrier_account", usps_account.getObjectId());
-        objectMap.put("submission_date", nowTime);
+        objectMap.put("shipment_date", nowTime);
         objectMap.put("address_from", testAddress.getObjectId());
         objectMap.put("transactions", transactions);
 

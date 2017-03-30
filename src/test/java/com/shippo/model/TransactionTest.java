@@ -77,9 +77,6 @@ public class TransactionTest extends ShippoTest {
 		List<Rate> rateList = rateCollection.getData();
 
 		objectMap.put("rate", rateList.get(0).getObjectId());
-		objectMap.put("notification_email_from", "true");
-		objectMap.put("notification_email_to", "false");
-		objectMap.put("notification_email_other", "max@goshippo.com");
 		objectMap.put("metadata", "Customer ID 123456");
 
 		try {

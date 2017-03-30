@@ -12,11 +12,10 @@ import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.RequestTimeoutException;
 import com.shippo.net.APIResource;
 
+
 public class Shipment extends APIResource {
 
-	String objectState;
-	String objectStatus;
-	String objectPurpose;
+	String status;
 	String objectId;
 	String objectOwner;
 	Object objectCreated;
@@ -25,22 +24,16 @@ public class Shipment extends APIResource {
 	Object addressTo;
 	Object addressReturn;
 	Object parcel;
-	Object submissionType;
-	Object submissionDate;
-	Object insuranceAmount;
-	Object insuranceCurrency;
+	Object shipmentDate;
 	Object extra;
 	Object customsDeclaration;
-	Object reference_1;
-	Object reference_2;
 	Object ratesUrl;
 	Object metadata;
 	Object messages;
-	List<Rate> ratesList;
+	List<Rate> rates;
 
     public static Shipment createForBatch(Address from, Address to, Parcel parcel) {
         Shipment s = new Shipment();
-        s.objectPurpose = "PURCHASE";
         s.addressFrom = from;
         s.addressTo = to;
         s.parcel = parcel;
@@ -85,17 +78,17 @@ public class Shipment extends APIResource {
 			APIConnectionException, APIException, RequestTimeoutException {
 		String object_id = (String) params.get("id");
 		Shipment shipment = retrieve(object_id);
-		String objectStatus = (String) shipment.objectStatus;
+		String status = shipment.status;
 		long startTime = System.currentTimeMillis();
 
-		while (objectStatus.equals("QUEUED")
-				|| objectStatus.equals("WAITING")) {
+		while (status.equals("QUEUED")
+				|| status.equals("WAITING")) {
 			if (System.currentTimeMillis() - startTime > Shippo.RATES_REQ_TIMEOUT) {
 				throw new RequestTimeoutException(
-						"A timeout has occured while waiting for your rates to generate. Try retreiving the Shipment object again and check if objectStatus is updated. If this issue persists, please contact support@goshippo.com");
+						"A timeout has occured while waiting for your rates to generate. Try retreiving the Shipment object again and check if status is updated. If this issue persists, please contact support@goshippo.com");
 			}
 			shipment = retrieve(object_id);
-			objectStatus = (String) shipment.objectStatus;
+			status = (String) shipment.status;
 		}
 
 		return Shipment.getShippingRates(params, apiKey);
@@ -157,28 +150,12 @@ public class Shipment extends APIResource {
 				RateCollection.class, apiKey);
 	}
 
-	public String getObjectState() {
-		return objectState;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setObjectState(String objectState) {
-		this.objectState = objectState;
-	}
-
-	public String getObjectStatus() {
-		return objectStatus;
-	}
-
-	public void setObjectStatus(String objectStatus) {
-		this.objectStatus = objectStatus;
-	}
-
-	public String getObject_purpose() {
-		return objectPurpose;
-	}
-
-	public void setObject_purpose(String object_purpose) {
-		this.objectPurpose = object_purpose;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getObjectId() {
@@ -245,36 +222,12 @@ public class Shipment extends APIResource {
 		this.parcel = parcel;
 	}
 
-	public Object getSubmissionType() {
-		return submissionType;
+	public Object getShipmentDate() {
+		return shipmentDate;
 	}
 
-	public void setSubmissionType(Object submissionType) {
-		this.submissionType = submissionType;
-	}
-
-	public Object getSubmissionDate() {
-		return submissionDate;
-	}
-
-	public void setSubmissionDate(Object submissionDate) {
-		this.submissionDate = submissionDate;
-	}
-
-	public Object getInsuranceAmount() {
-		return insuranceAmount;
-	}
-
-	public void setInsuranceAmount(Object insuranceAmount) {
-		this.insuranceAmount = insuranceAmount;
-	}
-
-	public Object getInsuranceCurrency() {
-		return insuranceCurrency;
-	}
-
-	public void setInsuranceCurrency(Object insuranceCurrency) {
-		this.insuranceCurrency = insuranceCurrency;
+	public void setShipmentDate(Object shipmentDate) {
+		this.shipmentDate = shipmentDate;
 	}
 
 	public Object getExtra() {
@@ -293,22 +246,6 @@ public class Shipment extends APIResource {
 		this.customsDeclaration = customsDeclaration;
 	}
 
-	public Object getReference_1() {
-		return reference_1;
-	}
-
-	public void setReference_1(Object reference_1) {
-		this.reference_1 = reference_1;
-	}
-
-	public Object getReference_2() {
-		return reference_2;
-	}
-
-	public void setReference_2(Object reference_2) {
-		this.reference_2 = reference_2;
-	}
-
 	public Object getRatesUrl() {
 		return ratesUrl;
 	}
@@ -317,12 +254,12 @@ public class Shipment extends APIResource {
 		this.ratesUrl = ratesUrl;
 	}
 
-	public List<Rate> getRatesList() {
-		return ratesList;
+	public List<Rate> getRates() {
+		return rates;
 	}
 
-	public void setRatesList(List<Rate> ratesList) {
-		this.ratesList = ratesList;
+	public void setRates(List<Rate> rates) {
+		this.rates = rates;
 	}
 
 	public Object getMetadata() {
@@ -340,6 +277,4 @@ public class Shipment extends APIResource {
 	public void setMessages(Object messages) {
 		this.messages = messages;
 	}
-
-
 }

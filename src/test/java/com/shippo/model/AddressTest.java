@@ -74,7 +74,7 @@ public class AddressTest extends ShippoTest {
         objectMap.put("zip", "94117");
         objectMap.put("country", "US");
         objectMap.put("phone", "+1 555 341 9393");
-        objectMap.put("email", "laura@goshipppo.com");
+        objectMap.put("email", "test@goshipppo.com");
         objectMap.put("is_residential", false);
         objectMap.put("metadata", "Customer ID 123456");
 

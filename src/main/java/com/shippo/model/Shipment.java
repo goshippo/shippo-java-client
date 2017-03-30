@@ -82,7 +82,7 @@ public class Shipment extends APIResource {
 			APIConnectionException, APIException, RequestTimeoutException {
 		String object_id = (String) params.get("id");
 		Shipment shipment = retrieve(object_id);
-		String status = (String) shipment.status;
+		String status = shipment.status;
 		long startTime = System.currentTimeMillis();
 
 		while (status.equals("QUEUED")

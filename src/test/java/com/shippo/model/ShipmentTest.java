@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -78,10 +80,12 @@ public class ShipmentTest extends ShippoTest {
         TimeZone tz = TimeZone.getTimeZone("PST");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         df.setTimeZone(tz);
+        List<String> parcels = new ArrayList<String>();
+        parcels.add(parcel.getObjectId());
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("address_from", addressFrom.getObjectId());
         objectMap.put("address_to", addressTo.getObjectId());
-        objectMap.put("parcel", parcel.getObjectId());
+        objectMap.put("parcels", parcels);
         objectMap.put("extra", "{\"signature_confirmation\": true}");
         objectMap.put("customs_declaration", null);
         objectMap.put("shipment_date", df.format(new Date()));

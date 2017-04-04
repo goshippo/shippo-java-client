@@ -1,5 +1,6 @@
 package com.shippo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,11 +54,12 @@ public class Example {
 		parcelMap.put("distance_unit", "in");
 		parcelMap.put("weight", "2");
 		parcelMap.put("mass_unit", "lb");
+		List<Map<String, Object>> parcels = new ArrayList<Map<String, Object>>();
 
 		Map<String, Object> shipmentMap = new HashMap<String, Object>();
 		shipmentMap.put("address_to", toAddressMap);
 		shipmentMap.put("address_from", fromAddressMap);
-		shipmentMap.put("parcel", parcelMap);
+		shipmentMap.put("parcels", parcels);
 		shipmentMap.put("async", false);
 
 		Shipment shipment = Shipment.create(shipmentMap);

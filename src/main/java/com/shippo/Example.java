@@ -55,6 +55,7 @@ public class Example {
 		parcelMap.put("weight", "2");
 		parcelMap.put("mass_unit", "lb");
 		List<Map<String, Object>> parcels = new ArrayList<Map<String, Object>>();
+		parcels.add(parcelMap);
 
 		Map<String, Object> shipmentMap = new HashMap<String, Object>();
 		shipmentMap.put("address_to", toAddressMap);

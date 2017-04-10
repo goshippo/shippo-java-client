@@ -23,7 +23,7 @@ public class Shipment extends APIResource {
 	Object addressFrom;
 	Object addressTo;
 	Object addressReturn;
-	Object parcel;
+	List<Parcel> parcels;
 	Object shipmentDate;
 	Object extra;
 	Object customsDeclaration;
@@ -32,11 +32,11 @@ public class Shipment extends APIResource {
 	Object messages;
 	List<Rate> rates;
 
-    public static Shipment createForBatch(Address from, Address to, Parcel parcel) {
+    public static Shipment createForBatch(Address from, Address to, List<Parcel> parcels) {
         Shipment s = new Shipment();
         s.addressFrom = from;
         s.addressTo = to;
-        s.parcel = parcel;
+        s.parcels = parcels;
         return s;
     }
 
@@ -214,12 +214,12 @@ public class Shipment extends APIResource {
 		this.addressReturn = addressReturn;
 	}
 
-	public Object getParcel() {
-		return parcel;
+	public List<Parcel> getParcels() {
+		return parcels;
 	}
 
-	public void setParcel(Object parcel) {
-		this.parcel = parcel;
+	public void setParcels(List<Parcel> parcels) {
+		this.parcels = parcels;
 	}
 
 	public Object getShipmentDate() {

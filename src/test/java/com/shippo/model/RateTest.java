@@ -18,7 +18,7 @@ public class RateTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         RateCollection testObject = (RateCollection) getDefaultObject();
-        assertNotNull(testObject.getCount());
+        assertNotNull(testObject.getHasMore());
     }
 
     @Test(expected = InvalidRequestException.class)

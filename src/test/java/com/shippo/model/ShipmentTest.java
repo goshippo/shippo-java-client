@@ -57,7 +57,6 @@ public class ShipmentTest extends ShippoTest {
     public void testListAll() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         ShipmentCollection objectCollection = Shipment.all(null);
-        assertNotNull(objectCollection.getCount());
         assertNotNull(objectCollection.getData());
     }
 

@@ -52,7 +52,6 @@ public class RefundTest extends ShippoTest {
     public void testListAll() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         RefundCollection objectCollection = Refund.all(null);
-        assertNotNull(objectCollection.getCount());
         assertNotNull(objectCollection.getData());
     }
 

@@ -52,7 +52,6 @@ public class CustomsDeclarationTest extends ShippoTest {
     public void testListAll() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         CustomsDeclarationCollection objectCollection = CustomsDeclaration.all(null);
-        assertNotNull(objectCollection.getCount());
         assertNotNull(objectCollection.getData());
     }
 

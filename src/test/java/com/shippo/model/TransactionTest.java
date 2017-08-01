@@ -55,7 +55,6 @@ public class TransactionTest extends ShippoTest {
 	public void testListAll() throws AuthenticationException,
 			InvalidRequestException, APIConnectionException, APIException {
 		TransactionCollection objectCollection = Transaction.all(null);
-		assertNotNull(objectCollection.getCount());
 		assertNotNull(objectCollection.getData());
 	}
 

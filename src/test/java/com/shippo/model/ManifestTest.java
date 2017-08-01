@@ -55,7 +55,6 @@ public class ManifestTest extends ShippoTest {
     public void testListAll() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         ManifestCollection objectCollection = Manifest.all(null);
-        assertNotNull(objectCollection.getCount());
         assertNotNull(objectCollection.getData());
     }
 

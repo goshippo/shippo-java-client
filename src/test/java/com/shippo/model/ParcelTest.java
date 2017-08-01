@@ -49,7 +49,6 @@ public class ParcelTest extends ShippoTest {
     public void testListAll() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         ParcelCollection objectCollection = Parcel.all(null);
-        assertNotNull(objectCollection.getCount());
         assertNotNull(objectCollection.getData());
     }
 

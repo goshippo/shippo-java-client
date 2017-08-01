@@ -27,7 +27,7 @@ public class ShipmentTest extends ShippoTest {
         Shipment testObject = (Shipment) getDefaultObject();
         assertEquals("SUCCESS", testObject.getStatus());
         Address addressTo = (Address) testObject.getAddressTo();
-        assertTrue(addressTo.getIsComplete());
+        assertFalse(addressTo.getIsComplete());
     }
 
     @Test(expected = InvalidRequestException.class)

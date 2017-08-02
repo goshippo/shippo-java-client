@@ -8,8 +8,6 @@ public abstract class ShippoCollection<T> extends ShippoObject {
     List<T> results;
     Boolean hasMore;
     String url;
-    /** 3/2014: Legacy (from before newstyle pagination API) */
-    Integer count;
 
     public List<T> getData() {
         return results;
@@ -33,13 +31,5 @@ public abstract class ShippoCollection<T> extends ShippoObject {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
     }
 }

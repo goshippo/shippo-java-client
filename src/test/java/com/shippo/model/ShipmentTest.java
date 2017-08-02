@@ -27,7 +27,7 @@ public class ShipmentTest extends ShippoTest {
         Shipment testObject = (Shipment) getDefaultObject();
         assertEquals("SUCCESS", testObject.getStatus());
         Address addressTo = (Address) testObject.getAddressTo();
-        assertTrue(addressTo.getIsComplete());
+        assertFalse(addressTo.getIsComplete());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -57,7 +57,6 @@ public class ShipmentTest extends ShippoTest {
     public void testListAll() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         ShipmentCollection objectCollection = Shipment.all(null);
-        assertNotNull(objectCollection.getCount());
         assertNotNull(objectCollection.getData());
     }
 

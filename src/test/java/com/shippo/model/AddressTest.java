@@ -61,6 +61,21 @@ public class AddressTest extends ShippoTest {
         assertEquals(addressCollection.getData().size(), 1);
     }
 
+    @Test
+    public void testInvalidAddress() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+            APIException {
+        Address testAddress = (Address) getInvalidAddress();
+        assertFalse(testAddress.getValidationResults().is_valid);
+    }
+
+    @Test
+    public void testValidAddress() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+            APIException {
+        Address testAddress = (Address) getDefaultObject();
+        Address validatedAddress = Address.validate(testAddress.getObjectId());
+        assertTrue(validatedAddress.getValidationResults().is_valid);
+    }
+
     public static Object getDefaultObject() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("name", "Undefault New Wu");
@@ -100,6 +115,31 @@ public class AddressTest extends ShippoTest {
         objectMap.put("email", "test@goshipppo.com");
         objectMap.put("is_residential", false);
         objectMap.put("metadata", "Customer ID 1234567");
+
+        try {
+            Address testObject = Address.create(objectMap);
+            return testObject;
+        } catch (ShippoException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Object getInvalidAddress() {
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        objectMap.put("name", "Undefault New Wu");
+        objectMap.put("street1", "Clayton St.");
+        objectMap.put("street_no", "215215");
+        objectMap.put("street2", null);
+        objectMap.put("city", "San Francisco");
+        objectMap.put("state", "CA");
+        objectMap.put("zip", "94117");
+        objectMap.put("country", "US");
+        objectMap.put("phone", "+1 555 341 9393");
+        objectMap.put("email", "test@goshipppo.com");
+        objectMap.put("is_residential", false);
+        objectMap.put("metadata", "Customer ID 123456");
+        objectMap.put("validate", true);
 
         try {
             Address testObject = Address.create(objectMap);

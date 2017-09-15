@@ -66,6 +66,10 @@ public class AddressTest extends ShippoTest {
             APIException {
         Address testAddress = (Address) getInvalidAddress();
         assertFalse(testAddress.getValidationResults().is_valid);
+        assertTrue(testAddress.getValidationResults().messages.size() > 0);
+        assertNotNull(testAddress.getValidationResults().messages.get(0).source);
+        assertNotNull(testAddress.getValidationResults().messages.get(0).code);
+        assertNotNull(testAddress.getValidationResults().messages.get(0).text);
     }
 
     @Test
@@ -74,6 +78,7 @@ public class AddressTest extends ShippoTest {
         Address testAddress = (Address) getDefaultObject();
         Address validatedAddress = Address.validate(testAddress.getObjectId());
         assertTrue(validatedAddress.getValidationResults().is_valid);
+        assertEquals(validatedAddress.getValidationResults().messages.size(), 0);
     }
 
     public static Object getDefaultObject() {

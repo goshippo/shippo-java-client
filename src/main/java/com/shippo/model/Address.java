@@ -1,6 +1,7 @@
 package com.shippo.model;
 
 import java.util.Map;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import com.shippo.exception.APIConnectionException;
@@ -33,6 +34,18 @@ public class Address extends APIResource {
     Object is_residential;
     Object metadata;
     Object messages;
+	ValidationResults validation_results;
+
+    public class ValidationResults {
+    	boolean is_valid;
+    	List<ValidationMessages> messages;
+	}
+
+	public class ValidationMessages {
+		String source;
+		String code;
+		String text;
+	}
 
     public static Address createForPurchase(String name, String street1, String city, String zip, String state,
                                             String country, String email) {
@@ -235,4 +248,7 @@ public class Address extends APIResource {
 		this.messages = messages;
 	}
 
+	public void setValidationResults(ValidationResults validation_results) { this.validation_results = validation_results;	}
+
+	public ValidationResults getValidationResults() {return validation_results;}
 }

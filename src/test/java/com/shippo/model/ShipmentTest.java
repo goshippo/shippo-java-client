@@ -27,7 +27,7 @@ public class ShipmentTest extends ShippoTest {
         Shipment testObject = (Shipment) getDefaultObject();
         assertEquals("SUCCESS", testObject.getStatus());
         Address addressTo = (Address) testObject.getAddressTo();
-        assertFalse(addressTo.getIsComplete());
+        assertTrue(addressTo.getIsComplete());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -79,8 +79,8 @@ public class ShipmentTest extends ShippoTest {
         TimeZone tz = TimeZone.getTimeZone("PST");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         df.setTimeZone(tz);
-        List<String> parcels = new ArrayList<String>();
-        parcels.add(parcel.getObjectId());
+        List<Parcel> parcels = new ArrayList<Parcel>();
+        parcels.add(parcel);
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("address_from", addressFrom.getObjectId());
         objectMap.put("address_to", addressTo.getObjectId());

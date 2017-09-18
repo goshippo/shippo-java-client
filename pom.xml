@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.goshippo</groupId>
     <artifactId>shippo-java-client</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Shippo Java Client</name>
     <description>Shippo Java Bindings</description>
@@ -29,6 +29,12 @@
         <developer>
             <name>Lucas Amaral</name>
             <email>lucas@goshippo.com</email>
+            <organization>Shippo</organization>
+            <organizationUrl>https://www.goshippo.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Richard Moot</name>
+            <email>moot@goshippo.com</email>
             <organization>Shippo</organization>
             <organizationUrl>https://www.goshippo.com</organizationUrl>
         </developer>

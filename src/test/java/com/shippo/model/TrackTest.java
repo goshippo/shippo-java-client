@@ -34,10 +34,13 @@ public class TrackTest extends ShippoTest {
         Track.getTrackingInfo("bad", number, null);
     }
 
-    @Test(expected = InvalidRequestException.class)
+    @Test
     public void testGetInvalidCarrierNumber()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {
-        Track.getTrackingInfo(carrier, "invalid", null);
+        Track track = Track.getTrackingInfo(carrier, "invalid", null);
+        assertEquals(track.getCarrier(), carrier);
+        assertEquals(track.getTrackingNumber(), "invalid");
+        assertEquals(track.getTrackingStatus(), null);
     }
 
     @Test

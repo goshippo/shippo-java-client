@@ -38,13 +38,26 @@ public class Address extends APIResource {
 
     public class ValidationResults {
     	boolean is_valid;
-    	List<ValidationMessages> messages;
+    	List<ValidationMessage> messages;
+
+    	public List<ValidationMessage> getValidationMessages(){ return messages; }
+    	public void setValidationMessages(){ this.messages = messages; }
+    	public boolean getIsValid(){ return is_valid; }
+    	public void setIsValid(){ this.is_valid = is_valid; }
 	}
 
-	public class ValidationMessages {
+	public class ValidationMessage {
 		String source;
 		String code;
 		String text;
+
+		public String getSource(){ return source; }
+		public String getCode(){ return code; }
+		public String getText() { return text; }
+
+		public void setSource(){ this.source = source; }
+		public void setCode(){ this.code = code; }
+		public void setText() { this.text = text; }
 	}
 
     public static Address createForPurchase(String name, String street1, String city, String zip, String state,

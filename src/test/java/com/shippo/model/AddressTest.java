@@ -3,6 +3,7 @@ package com.shippo.model;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -65,11 +66,11 @@ public class AddressTest extends ShippoTest {
     public void testInvalidAddress() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         Address testAddress = (Address) getInvalidAddress();
-        assertFalse(testAddress.getValidationResults().is_valid);
-        assertTrue(testAddress.getValidationResults().messages.size() > 0);
-        assertNotNull(testAddress.getValidationResults().messages.get(0).source);
-        assertNotNull(testAddress.getValidationResults().messages.get(0).code);
-        assertNotNull(testAddress.getValidationResults().messages.get(0).text);
+        assertFalse(testAddress.getValidationResults().getIsValid());
+        assertTrue(testAddress.getValidationResults().getValidationMessages().size() > 0);
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getSource());
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getCode());
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getText());
     }
 
     @Test
@@ -77,8 +78,8 @@ public class AddressTest extends ShippoTest {
             APIException {
         Address testAddress = (Address) getDefaultObject();
         Address validatedAddress = Address.validate(testAddress.getObjectId());
-        assertTrue(validatedAddress.getValidationResults().is_valid);
-        assertEquals(validatedAddress.getValidationResults().messages.size(), 0);
+        assertTrue(validatedAddress.getValidationResults().getIsValid());
+        assertEquals(validatedAddress.getValidationResults().getValidationMessages().size(), 0);
     }
 
     public static Object getDefaultObject() {

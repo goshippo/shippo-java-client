@@ -32,6 +32,7 @@ public class CustomsDeclaration extends APIResource {
     Object incoterm;
     Object items;
     Object metadata;
+    Object addressImport;
 
     public static CustomsDeclaration create(Map<String, Object> params) throws AuthenticationException,
             InvalidRequestException, APIConnectionException, APIException {
@@ -243,5 +244,13 @@ public class CustomsDeclaration extends APIResource {
 
 	public void setMetadata(Object metadata) {
 		this.metadata = metadata;
+	}
+
+	public Object getAdressImport() {
+		return metadata;
+	}
+
+	public void setAddressImport(Object addressImport) {
+		this.addressImport = addressImport;
 	}
 }

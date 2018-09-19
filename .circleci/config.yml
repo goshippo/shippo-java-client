@@ -1,0 +1,61 @@
+version: 2
+job_defaults: &job_defaults
+  machine:
+    image: circleci/openjdk:8-jdk
+    docker_layer_caching: true
+  working_directory: ~/scratch
+jobs:
+  setup:
+    <<: *job_defaults
+    steps:
+      - run: |
+      #catching all the dependencies- restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "pom.xml" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: mvn dependency:go-offline
+
+      - save_cache:
+        paths:
+          - ~/.m2
+        key: v1-dependencies-{{ checksum "pom.xml" }}
+
+  validation:
+    <<: *job_defaults
+    steps:
+      - attach_workspace:
+        at: /tmp/workspace
+      - checkout
+      - run: mvn clean test
+  build:
+    <<: *job_defaults
+    steps:
+      - attach_workspace:
+        at: /tmp/workspace
+      - checkout
+      - run: mvn release:clean release:prepare
+  deploy:
+    <<: *job_defaults
+    steps:
+      - checkout
+      - run: mvn release:perform
+workflows:
+  build-and-deploy:
+    jobs:
+      - setup
+      - validation:
+        requires: 
+          - setup
+      - build:
+        requires: 
+          - validation
+      - hold:
+        type: approval
+        requires: 
+          - build
+      - deploy:
+        requires: 
+          - hold
+

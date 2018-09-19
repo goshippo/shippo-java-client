@@ -23,7 +23,7 @@ public class BatchTest extends ShippoTest {
 	final String id = "dd442663c24843068977704b1bd7d91d";
 
 /*
-	@Test
+	@Test 
 	public void testAll() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException,
 			UnsupportedEncodingException, MalformedURLException {
 		Batch[] batches = Batch.all();

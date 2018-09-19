@@ -1,8 +1,7 @@
 version: 2
 job_defaults: &job_defaults
-  machine:
-    image: circleci/openjdk:8-jdk
-    docker_layer_caching: true
+  docker:
+    - image: circleci/openjdk:8-jdk-node-browsers
   working_directory: ~/scratch
 jobs:
   setup:

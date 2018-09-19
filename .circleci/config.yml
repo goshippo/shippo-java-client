@@ -42,6 +42,7 @@ jobs:
       - checkout
       - run: mvn release:perform
 workflows:
+  version: 2
   build-and-deploy:
     jobs:
       - setup

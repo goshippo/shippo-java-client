@@ -12,7 +12,7 @@ import com.shippo.exception.InvalidRequestException;
 
 public class TrackTest extends ShippoTest {
 
-    final static String carrier = "usps";
+    final static String carrier = "shippo";
     final static String number = "9200190195851637950376";
 
     private void checkTrack(Track track) {

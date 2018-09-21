@@ -136,6 +136,13 @@ public class BatchTest extends ShippoTest {
 			if (batch.getStatus().equals(status)) {
 				return;
 			}
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
+
 			times--;
 		}
 		throw new TimeoutException(String.format("Timed out waiting for batch %s to become %s", batchId, status));

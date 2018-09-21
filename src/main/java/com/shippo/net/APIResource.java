@@ -401,11 +401,20 @@ public abstract class APIResource extends ShippoObject {
 
 			String rBody;
 			Map<String, List<String>> headers;
-
+			
 			if (rCode >= 200 && rCode < 300) {
 				rBody = getResponseBody(conn.getInputStream());
-			} else {
+			}
+			else if(rCode == 429){
+				rBody = "Too many requests";
+			}
+			else {
+				try{
 				rBody = getResponseBody(conn.getErrorStream());
+				}
+				catch(NullPointerException e){
+					rBody = "";
+				}
 			}
 			headers = conn.getHeaderFields();
 

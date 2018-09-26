@@ -32,7 +32,11 @@ jobs:
             keys:
               - v1-dependencies-{{ checksum "pom.xml" }}
               - v1-dependencies-
-        - run: mvn -B release:clean release:prepare
+#        - run: python increment.py VERSION
+        - run: echo $gpg_secret | gpg --batch --yes --passphrase=$gpg_password --pinentry-mode loopback --import
+        - run: mvn deploy -Dgpg.passphrase=$gpg_password
+        - run: mvn release:clean
+        - run: mvn --batch-mode -Dtag=v$(cat VERSION) release:prepare -DreleaseVersion=$(cat VERSION)
     deploy:
       <<: *job_defaults
       steps:
@@ -44,11 +48,19 @@ jobs:
             # fallback to using the latest cache if no exact match is found
               - v1-dependencies-
         - run: mvn release:perform
+        - run: apt-get install jq
+        - run:
+            name: Deploying to Github
+            command: |
+                rid=$(curl -H "Content-Type: application/json" -H "Authorization: token $API_Token_Github" -X POST -d '{"tag_name":"v'$(cat VERSION)'", "target_commitish":"env/dev-main","name":"v'$(cat VERSION)'","body":"", "draft":true, "prerelease":false}' https://api.github.com/repos/goshippo/shippo-java-client/releases | jq '.id')
+                curl -H "Content-Type: application/octet-stream" -H "Authorization: token $API_Token_Github" -X POST --data-binary @target/shippo-java-client-v$(cat VERSION)-javadoc.jar https://uploads.github.com/repos/goshippo/shippo-java-client/releases/$rid/assets?name=shippo-java-client-v$(cat VERSION)-javadoc.jar
+                curl -H "Content-Type: application/octet-stream" -H "Authorization: token $API_Token_Github" -X POST --data-binary @target/shippo-java-client-v$(cat VERSION)-sources.jar https://uploads.github.com/repos/goshippo/shippo-java-client/releases/$rid/assets?name=shippo-java-client-v$(cat VERSION)-sources.jar
+                curl -H "Content-Type: application/octet-stream" -H "Authorization: token $API_Token_Github" -X POST --data-binary @target/shippo-java-client-v$(cat VERSION).jar https://uploads.github.com/repos/goshippo/shippo-java-client/releases/$rid/assets?name=shippo-java-client-v$(cat VERSION).jar
 
-prod_filter: &prod_filter
+release_filter: &release_filter
     filters:
         branches:
-            only: release
+            only: env/dev-main
 
 workflows:
     version: 2
@@ -60,14 +72,15 @@ workflows:
                 - setup
         - build:
             requires:
-                - validation
-            <<: *prod_filter
+            #    - validation
+                - setup
+            <<: *release_filter
         - hold:
             type: approval
             requires: 
                 - build
-            <<: *prod_filter
+            <<: *release_filter
         - deploy:
             requires: 
                 - hold
-            <<: *prod_filter
+            <<: *release_filter

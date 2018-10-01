@@ -21,13 +21,13 @@ public class TrackTest extends ShippoTest {
         assertEquals(track.getTrackingStatus().getStatus(), Track.TrackingStatus.DELIVERED);
     }
 
-    @Test
+/*    @Test
     public void testGet()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {
         Track track = Track.getTrackingInfo(carrier, number, null);
         checkTrack(track);
     }
-
+*/
     @Test(expected = InvalidRequestException.class)
     public void testGetInvalidCarrier()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {
@@ -45,11 +45,11 @@ public class TrackTest extends ShippoTest {
         assertEquals(track.getTrackingStatus(), null);
        
     }
-
+/*
     @Test
     public void testRegisterWebhook()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {
         Track track = Track.registerTrackingWebhook(carrier, number, "meta", null);
         checkTrack(track);
-    }
+    }*/
 }

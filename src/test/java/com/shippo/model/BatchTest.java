@@ -23,7 +23,7 @@ public class BatchTest extends ShippoTest {
 	final String id = "dd442663c24843068977704b1bd7d91d";
 
 /*
-	@Test
+	@Test 
 	public void testAll() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException,
 			UnsupportedEncodingException, MalformedURLException {
 		Batch[] batches = Batch.all();
@@ -136,6 +136,13 @@ public class BatchTest extends ShippoTest {
 			if (batch.getStatus().equals(status)) {
 				return;
 			}
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
+
 			times--;
 		}
 		throw new TimeoutException(String.format("Timed out waiting for batch %s to become %s", batchId, status));

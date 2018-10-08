@@ -10,3 +10,4 @@ release.properties
 .project
 .settings/
 .idea/
+.DS_Store

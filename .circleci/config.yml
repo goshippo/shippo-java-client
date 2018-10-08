@@ -1,0 +1,95 @@
+version: 2
+job_defaults: &job_defaults
+    docker:
+        - image: circleci/openjdk:10-jdk-sid-node-browsers-legacy
+    working_directory: ~/scratch
+
+jobs:
+    setup:
+      <<: *job_defaults
+      steps:
+        - checkout
+        - run: mvn dependency:go-offline
+        - save_cache:
+            paths:
+              - ~/.m2
+            key: v1-dependencies-{{ checksum "pom.xml" }}
+
+    validation:
+      <<: *job_defaults
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "pom.xml" }}
+              - v1-dependencies-
+        - run: mvn clean test
+    build:
+      <<: *job_defaults
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - v1-dependencies-{{ checksum "pom.xml" }}
+              - v1-dependencies-
+        - run: printf "$mvn_setting" > ~/.m2/settings.xml
+        - run: printf -- "$gpg_secret" | gpg --batch --yes --passphrase=$gpg_password --pinentry-mode loopback --import
+#   Enabling the following command if we want to also deploy to snapshot repo
+#        - run: mvn deploy -Dgpg.passphrase=$gpg_password
+        - run: mvn release:clean
+        - save_cache:
+            paths:
+              - ~/.m2
+              - ~/scratch
+              - ~/.gnupg
+            key: v2-dependencies-{{ checksum "pom.xml" }}
+    deploy:
+      <<: *job_defaults
+      steps:
+        - checkout
+        - restore_cache:
+        #catching all the dependencies- restore_cache:
+            keys:
+              - v2-dependencies-{{ checksum "pom.xml" }}
+            # fallback to using the latest cache if no exact match is found
+              - v2-dependencies-
+        - run: printf "scm.url=scm:git:https://github.com/goshippo/shippo-java-client.git\nscm.tag=release" > release.properties
+        - run: mvn release:perform -Darguments=-Dgpg.passphrase=$gpg_password
+        - run: sudo apt-get install jq
+        - run: sudo apt-get install libxml2-utils
+        - run: version=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' pom.xml)
+        - run:
+            name: Deploying to Github
+            command: |
+                rid=$(curl -H "Content-Type: application/json" -H "Authorization: token $API_Token_Github" -X POST -d '{"tag_name":"Shippo Java Client '$version'", "target_commitish":"release","name":"'$version'","body":"", "draft":true, "prerelease":false}' https://api.github.com/repos/goshippo/shippo-java-client/releases | jq '.id')
+                curl -H "Content-Type: application/octet-stream" -H "Authorization: token $API_Token_Github" -X POST --data-binary @target/shippo-java-client-$version-javadoc.jar https://uploads.github.com/repos/goshippo/shippo-java-client/releases/$rid/assets?name=shippo-java-client-$version-javadoc.jar
+                curl -H "Content-Type: application/octet-stream" -H "Authorization: token $API_Token_Github" -X POST --data-binary @target/shippo-java-client-$version-sources.jar https://uploads.github.com/repos/goshippo/shippo-java-client/releases/$rid/assets?name=shippo-java-client-$version-sources.jar
+                curl -H "Content-Type: application/octet-stream" -H "Authorization: token $API_Token_Github" -X POST --data-binary @target/shippo-java-client-$version.jar https://uploads.github.com/repos/goshippo/shippo-java-client/releases/$rid/assets?name=shippo-java-client-$version.jar
+
+release_filter: &release_filter
+    filters:
+        branches:
+            only: release
+
+workflows:
+    version: 2
+    build-and-deploy:
+        jobs:
+        - setup
+        - validation:
+            requires: 
+                - setup
+        - build:
+            requires:
+#                - validation
+                - setup
+            <<: *release_filter
+        - hold:
+            type: approval
+            requires: 
+                - build
+            <<: *release_filter
+        - deploy:
+            requires: 
+                - hold
+            <<: *release_filter

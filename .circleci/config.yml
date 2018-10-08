@@ -87,6 +87,7 @@ workflows:
         - hold:
             type: approval
             requires: 
+                - validation
                 - build
             <<: *release_filter
         - deploy:

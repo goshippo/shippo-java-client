@@ -16,7 +16,7 @@ public class Address extends APIResource {
 	@SerializedName("is_complete")
 	boolean isComplete;
 
-	String objectId;
+	public String objectId;
 	String objectOwner;
 	Object objectCreated;
 	Object objectUpdated;
@@ -37,14 +37,14 @@ public class Address extends APIResource {
 	ValidationResults validation_results;
 
     public class ValidationResults {
-    	boolean is_valid;
-    	List<ValidationMessages> messages;
+    	public boolean is_valid;
+    	public List<ValidationMessages> messages;
 	}
 
 	public class ValidationMessages {
-		String source;
-		String code;
-		String text;
+		public String source;
+		public String code;
+		public String text;
 	}
 
     public static Address createForPurchase(String name, String street1, String city, String zip, String state,

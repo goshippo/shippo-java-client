@@ -1,10 +1,13 @@
-package com.shippo.model;
+package com.shippo.model.test;
 
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.shippo.model.Address;
+import com.shippo.model.AddressCollection;
+import com.shippo.model.ShippoTest;
 import org.junit.Test;
 
 import com.shippo.exception.APIConnectionException;

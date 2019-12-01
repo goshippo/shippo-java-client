@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.shippo.model.test.AddressTest;
 import org.junit.Test;
 
 import com.shippo.exception.APIConnectionException;

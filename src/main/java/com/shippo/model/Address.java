@@ -39,6 +39,11 @@ public class Address extends APIResource {
     public class ValidationResults {
     	boolean is_valid;
     	List<ValidationMessage> messages;
+
+    	public List<ValidationMessage> getValidationMessages(){ return messages; }
+     	public void setValidationMessages(){ this.messages = messages; }
+     	public boolean getIsValid(){ return is_valid; }
+     	public void setIsValid(){ this.is_valid = is_valid; }
 	}
 
 	public class ValidationMessage {

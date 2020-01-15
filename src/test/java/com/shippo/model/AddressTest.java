@@ -68,9 +68,9 @@ public class AddressTest extends ShippoTest {
         Address testAddress = (Address) getInvalidAddress();
         assertFalse(testAddress.getValidationResults().getIsValid());
         assertTrue(testAddress.getValidationResults().getValidationMessages().size() > 0);
-        assertNotNull(testAddress.getValidationResults().getValidationMessages().getSource());
-        assertNotNull(testAddress.getValidationResults().getValidationMessages().getCode());
-        assertNotNull(testAddress.getValidationResults().getValidationMessages().getText());
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getSource());
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getCode());
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getText());
     }
 
     @Test

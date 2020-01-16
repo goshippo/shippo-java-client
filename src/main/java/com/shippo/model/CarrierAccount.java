@@ -1,5 +1,6 @@
 package com.shippo.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.shippo.exception.APIConnectionException;
@@ -68,6 +69,20 @@ public class CarrierAccount extends APIResource {
 			InvalidRequestException, APIConnectionException, APIException {
 		return request(RequestMethod.GET, classURL(CarrierAccount.class),
 				null, CarrierAccountCollection.class, apiKey);
+	}
+
+	public static CarrierAccount getByCarrier(String carrierName) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return getByCarrier(null, carrierName);
+	}
+
+	public static CarrierAccount getByCarrier(String apiKey, String carrierName) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("carrier", carrierName);
+		CarrierAccountCollection carrierAccountCollection = request(RequestMethod.GET, classURL(CarrierAccount.class),
+				params, CarrierAccountCollection.class, apiKey);
+		return carrierAccountCollection.results.get(0);
 	}
 
 	public String getInstanceURL() {

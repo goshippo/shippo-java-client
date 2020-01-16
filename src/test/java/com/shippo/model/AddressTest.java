@@ -3,7 +3,6 @@ package com.shippo.model;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -34,8 +33,8 @@ public class AddressTest extends ShippoTest {
         Address testObject = (Address) getDefaultObject();
         Address retrievedObject;
 
-        retrievedObject = Address.retrieve((String) testObject.objectId);
-        assertEquals(testObject.objectId, retrievedObject.objectId);
+        retrievedObject = Address.retrieve((String) testObject.getObjectId());
+        assertEquals(testObject.getObjectId(), retrievedObject.getObjectId());
 
     }
 

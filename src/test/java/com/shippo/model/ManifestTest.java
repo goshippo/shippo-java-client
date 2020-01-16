@@ -78,14 +78,7 @@ public class ManifestTest extends ShippoTest {
         Address testAddress = (Address) AddressTest.getDefaultObject();
         Transaction transaction = (Transaction) TransactionTest.getDefaultObject();
         List<String> transactions = new ArrayList<String>();
-        CarrierAccountCollection carrier_accounts = CarrierAccount.all();
-        CarrierAccount usps_account = null;
-        System.out.println(carrier_accounts.toString());
-        for (CarrierAccount account : carrier_accounts.getData()) {
-            if (account.getCarrier().equals("usps")) {
-                usps_account = account;
-            }
-        }
+        CarrierAccount usps_account = CarrierAccount.getByCarrier("usps");
         objectMap.put("carrier_account", usps_account.getObjectId());
         objectMap.put("shipment_date", nowTime);
         objectMap.put("address_from", testAddress.getObjectId());

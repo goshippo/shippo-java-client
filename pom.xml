@@ -21,12 +21,6 @@
     </licenses>
     <developers>
         <developer>
-            <name>Bruce Wang</name>
-            <email>batman@goshippo.com</email>
-            <organization>Shippo</organization>
-            <organizationUrl>https://www.goshippo.com</organizationUrl>
-        </developer>
-        <developer>
             <name>Lucas Amaral</name>
             <email>lucas@goshippo.com</email>
             <organization>Shippo</organization>
@@ -149,6 +143,11 @@
                     <releaseProfiles>release</releaseProfiles>
                     <goals>deploy</goals>
                 </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <version>2.19.1</version>
             </plugin>
         </plugins>
     </build>

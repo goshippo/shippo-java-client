@@ -80,6 +80,7 @@ public class ManifestTest extends ShippoTest {
         List<String> transactions = new ArrayList<String>();
         CarrierAccountCollection carrier_accounts = CarrierAccount.all();
         CarrierAccount usps_account = null;
+        System.out.println(carrier_accounts.toString());
         for (CarrierAccount account : carrier_accounts.getData()) {
             if (account.getCarrier().equals("usps")) {
                 usps_account = account;

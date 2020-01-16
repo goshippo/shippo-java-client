@@ -33,8 +33,8 @@ public class AddressTest extends ShippoTest {
         Address testObject = (Address) getDefaultObject();
         Address retrievedObject;
 
-        retrievedObject = Address.retrieve((String) testObject.objectId);
-        assertEquals(testObject.objectId, retrievedObject.objectId);
+        retrievedObject = Address.retrieve((String) testObject.getObjectId());
+        assertEquals(testObject.getObjectId(), retrievedObject.getObjectId());
 
     }
 
@@ -65,11 +65,11 @@ public class AddressTest extends ShippoTest {
     public void testInvalidAddress() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
         Address testAddress = (Address) getInvalidAddress();
-        assertFalse(testAddress.getValidationResults().is_valid);
-        assertTrue(testAddress.getValidationResults().messages.size() > 0);
-        assertNotNull(testAddress.getValidationResults().messages.get(0).source);
-        assertNotNull(testAddress.getValidationResults().messages.get(0).code);
-        assertNotNull(testAddress.getValidationResults().messages.get(0).text);
+        assertFalse(testAddress.getValidationResults().getIsValid());
+        assertTrue(testAddress.getValidationResults().getValidationMessages().size() > 0);
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getSource());
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getCode());
+        assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getText());
     }
 
     @Test
@@ -77,8 +77,8 @@ public class AddressTest extends ShippoTest {
             APIException {
         Address testAddress = (Address) getDefaultObject();
         Address validatedAddress = Address.validate(testAddress.getObjectId());
-        assertTrue(validatedAddress.getValidationResults().is_valid);
-        assertEquals(validatedAddress.getValidationResults().messages.size(), 0);
+        assertTrue(validatedAddress.getValidationResults().getIsValid());
+        assertEquals(validatedAddress.getValidationResults().getValidationMessages().size(), 0);
     }
 
     public static Object getDefaultObject() {

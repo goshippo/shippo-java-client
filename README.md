@@ -24,7 +24,7 @@ Add this dependency to your project's POM:
     <dependency>
         <groupId>com.goshippo</groupId>
         <artifactId>shippo-java-client</artifactId>
-        <version>2.1.2</version>
+        <version>2.1.3</version>
     </dependency>
 ```
 

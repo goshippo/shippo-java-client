@@ -25,6 +25,8 @@ public class CustomsItem extends APIResource {
     Object valueCurrency;
     Object originCountry;
     Object tariffNumber;
+    Object skuCode;
+    Object eccnEar99;
     Object metadata;
 
     public static CustomsItem create(Map<String, Object> params) throws AuthenticationException,
@@ -179,6 +181,22 @@ public class CustomsItem extends APIResource {
 
 	public void setTariffNumber(Object tariffNumber) {
 		this.tariffNumber = tariffNumber;
+	}
+
+    public Object getSkuCode() {
+        return skuCode;
+    }
+
+    public void setSkuCode(Object skuCode) {
+        this.skuCode = skuCode;
+    }
+
+	public Object getEccnEar99() {
+	    return eccnEar99;
+	}
+
+	public void setEccnEar99(Object eccnEar99) {
+	    this.eccnEar99 = eccnEar99;
 	}
 
 	public Object getMetadata() {

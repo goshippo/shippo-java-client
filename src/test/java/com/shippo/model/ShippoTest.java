@@ -24,4 +24,8 @@ public class ShippoTest {
 		Map<String, Object> map = new HashMap<String, Object>();
 		return map;
 	}
+
+    public static Object nullToEmptyString(Object value) {
+        return value == null ? "" : value;
+    }
 }

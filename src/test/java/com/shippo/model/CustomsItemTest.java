@@ -15,10 +15,38 @@ import com.shippo.exception.ShippoException;
 
 public class CustomsItemTest extends ShippoTest {
 
+    // test data
+    private static Map<String, Object> objectMap;
+    static {
+        objectMap = new HashMap<String, Object>();
+        objectMap.put("description", "T-Shirt");
+        objectMap.put("quantity", "2");
+        objectMap.put("net_weight", "400");
+        objectMap.put("mass_unit", "g");
+        objectMap.put("value_amount", "20");
+        objectMap.put("value_currency", "USD");
+        objectMap.put("origin_country", "US");
+        objectMap.put("tariff_number", null);
+        objectMap.put("sku_code", null);
+        objectMap.put("eccn_ear99", "3A001");
+        objectMap.put("metadata", "Order ID #123123");
+    }
+
     @Test
     public void testValidCreate() {
         CustomsItem testObject = (CustomsItem) getDefaultObject();
         assertEquals(testObject.getObjectState(), "VALID");
+        assertEquals(testObject.getDescription(), objectMap.get("description"));
+        assertEquals(testObject.getQuantity(), Double.parseDouble((String) objectMap.get("quantity")));
+        assertEquals(testObject.getNetWeight(), objectMap.get("net_weight"));
+        assertEquals(testObject.getMassUnit(), objectMap.get("mass_unit"));
+        assertEquals(testObject.getValueAmount(), objectMap.get("value_amount"));
+        assertEquals(testObject.getValueCurrency(), objectMap.get("value_currency"));
+        assertEquals(testObject.getOriginCountry(), objectMap.get("origin_country"));
+        assertEquals(testObject.getTariffNumber(), nullToEmptyString(objectMap.get("tariff_number")));
+        assertEquals(testObject.getSkuCode(), objectMap.get("sku_code"));
+        assertEquals(testObject.getEccnEar99(), nullToEmptyString(objectMap.get("eccn_ear99")));
+        assertEquals(testObject.getMetadata(), nullToEmptyString(objectMap.get("metadata")));
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -62,17 +90,6 @@ public class CustomsItemTest extends ShippoTest {
     }
 
     public static Object getDefaultObject() {
-        Map<String, Object> objectMap = new HashMap<String, Object>();
-        objectMap.put("description", "T-Shirt");
-        objectMap.put("quantity", "2");
-        objectMap.put("net_weight", "400");
-        objectMap.put("mass_unit", "g");
-        objectMap.put("value_amount", "20");
-        objectMap.put("value_currency", "USD");
-        objectMap.put("tariff_number", null);
-        objectMap.put("origin_country", "US");
-        objectMap.put("metadata", "Order ID #123123");
-
         try {
             CustomsItem testObject = CustomsItem.create(objectMap);
             return testObject;

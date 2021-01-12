@@ -10,9 +10,9 @@ import com.shippo.net.APIResource;
 
 public class CustomsDeclaration extends APIResource {
 
-	String objectState;
-	String objectId;
-	String objectOwner;
+    String objectState;
+    String objectId;
+    String objectOwner;
     Object objectCreated;
     Object objectUpdated;
     Object exporterReference;
@@ -33,6 +33,8 @@ public class CustomsDeclaration extends APIResource {
     Object items;
     Object metadata;
     Object addressImport;
+    Object b13aFilingOption;
+    Object b13aNumber;
 
     public static CustomsDeclaration create(Map<String, Object> params) throws AuthenticationException,
             InvalidRequestException, APIConnectionException, APIException {
@@ -252,5 +254,21 @@ public class CustomsDeclaration extends APIResource {
 
 	public void setAddressImport(Object addressImport) {
 		this.addressImport = addressImport;
+	}
+
+	public Object getB13aFilingOption() {
+		return b13aFilingOption;
+	}
+
+	public void setB13aFilingOption(Object b13aFilingOption) {
+		this.b13aFilingOption = b13aFilingOption;
+	}
+
+	public Object getB13aNumber() {
+		return b13aNumber;
+	}
+
+	public void setB13aNumber(Object b13aNumber) {
+		this.b13aNumber = b13aNumber;
 	}
 }

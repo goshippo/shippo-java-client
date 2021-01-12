@@ -17,7 +17,7 @@ public class ShippoTest {
 
 	@Before
     public void setVersion() {
-        Shippo.apiVersion = "2017-08-01";
+        Shippo.apiVersion = "2018-02-08";
     }
 
 	public Map<String, Object> getInvalidObjectMap() {

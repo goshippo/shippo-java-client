@@ -83,8 +83,9 @@ public class CustomsDeclarationTest extends ShippoTest {
         objectMap.put("certify_signer", "Laura Behrens Wu");
         objectMap.put("disclaimer", null);
         objectMap.put("incoterm", null);
+        objectMap.put("b13a_filing_option", "FILED_ELECTRONICALLY");
+        objectMap.put("b13a_number", "AA9999202008311");
 
-        Map<String, Object> customsItemsMap = new HashMap<String, Object>();
         String[] arr = {customsItem.getObjectId()};
         objectMap.put("items", arr);
 

@@ -9,8 +9,8 @@ Print a shipping label in 10 mins using our default USPS and DHL Express account
 Requirements
 ============
 
-* Shippo API Version: 2017-08-01. For older versions, please use an older release.
-* Java 1.5 and later
+* Shippo API Version: 2018-02-08. For older versions, please use an older release.
+* Java 1.7 and later
 
 * [Shippo account](https://goshippo.com/) - free to sign up, free to use the API. Only pay to print a live label, test labels are free.
 

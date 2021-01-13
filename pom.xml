@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.goshippo</groupId>
     <artifactId>shippo-java-client</artifactId>
-    <version>v2.1.6</version>
+    <version>v3.0.0</version>
     <packaging>jar</packaging>
     <name>Shippo Java Client</name>
     <description>Shippo Java Bindings</description>
@@ -31,7 +31,7 @@
         <connection>scm:git:git@github.com:goshippo/shippo-java-clienta.git</connection>
         <developerConnection>scm:git:git@github.com:goshippo/shippo-java-client.git</developerConnection>
         <url>git@github.com:goshippo/shippo-java-client.git</url>
-        <tag>2.0.1</tag>
+        <tag>3.0.0</tag>
     </scm>
     <dependencies>
         <dependency>
@@ -92,8 +92,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>

@@ -35,6 +35,8 @@ public class CustomsDeclaration extends APIResource {
     Object addressImport;
     Object b13aFilingOption;
     Object b13aNumber;
+    Object invoicedCharges;
+    Object addressImporter;
 
     public static CustomsDeclaration create(Map<String, Object> params) throws AuthenticationException,
             InvalidRequestException, APIConnectionException, APIException {
@@ -248,12 +250,12 @@ public class CustomsDeclaration extends APIResource {
 		this.metadata = metadata;
 	}
 
-	public Object getAdressImport() {
+	public Object getAddressImporter() {
 		return metadata;
 	}
 
-	public void setAddressImport(Object addressImport) {
-		this.addressImport = addressImport;
+	public void setAddressImporter(Object addressImporter) {
+		this.addressImporter = addressImporter;
 	}
 
 	public Object getB13aFilingOption() {
@@ -270,5 +272,13 @@ public class CustomsDeclaration extends APIResource {
 
 	public void setB13aNumber(Object b13aNumber) {
 		this.b13aNumber = b13aNumber;
+	}
+
+	public Object getInvoicedCharges() {
+        return invoicedCharges;
+	}
+
+	public void setInvoicedCharges(Object invoicedCharges) {
+	    this.invoicedCharges = invoicedCharges;
 	}
 }

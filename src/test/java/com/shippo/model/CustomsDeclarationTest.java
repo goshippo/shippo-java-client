@@ -73,6 +73,7 @@ public class CustomsDeclarationTest extends ShippoTest {
         assertEquals(testObject.getIncoterm(), nullToEmptyString(objectMap.get("incoterm")));
         assertEquals(testObject.getB13aFilingOption(), nullToEmptyString(objectMap.get("b13a_filing_option")));
         assertEquals(testObject.getB13aNumber(), nullToEmptyString(objectMap.get("b13a_number")));
+        assertEquals(testObject.getMetadata(), nullToEmptyString(objectMap.get("metadata")));
         assertEquals(testObject.getInvoicedCharges(), objectMap.get("invoiced_charges"));
 
         // address_importer should return a new Address ID, which is a nonempty string

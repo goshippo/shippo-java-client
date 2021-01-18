@@ -46,7 +46,9 @@ jobs:
     deploy:
       <<: *job_defaults
       steps:
-        - checkout
+        - checkout:
+            keys:
+              - path: target
         - restore_cache:
         #catching all the dependencies- restore_cache:
             keys:

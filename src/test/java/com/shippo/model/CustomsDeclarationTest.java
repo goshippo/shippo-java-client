@@ -25,19 +25,30 @@ public class CustomsDeclarationTest extends ShippoTest {
         objectMap.put("non_delivery_option", "ABANDON");
         objectMap.put("contents_type", "MERCHANDISE");
         objectMap.put("contents_explanation", "T-Shirt purchase");
-        objectMap.put("exporter_reference", null);
-        objectMap.put("importer_reference", null);
+        objectMap.put("exporter_reference", "Exporter Reference");
+        objectMap.put("importer_reference", "Importer Reference");
         objectMap.put("invoice", "#123123");
-        objectMap.put("license", null);
-        objectMap.put("certificate", null);
-        objectMap.put("notes", null);
+        objectMap.put("license", "License");
+        objectMap.put("certificate", "Certificate");
+        objectMap.put("notes", "Notes");
         objectMap.put("eel_pfc", "NOEEI_30_37_a");
-        objectMap.put("aes_itn", null);
-        objectMap.put("incoterm", null);
+        objectMap.put("aes_itn", "X20180426506889");
+        objectMap.put("incoterm", "DDP");
         objectMap.put("b13a_filing_option", "FILED_ELECTRONICALLY");
         objectMap.put("b13a_number", "AA9999202008311");
         objectMap.put("metadata", "Order ID #123123");
-        objectMap.put("disclaimer", null);
+
+        Map<String, Object> invoicedChargesMap = new HashMap<String, Object>();
+        invoicedChargesMap.put("total_shipping", "1.23");
+        invoicedChargesMap.put("total_taxes", "4.56");
+        invoicedChargesMap.put("total_duties", "78.90");
+        invoicedChargesMap.put("other_fees", "9.87");
+        invoicedChargesMap.put("currency", "USD");
+        objectMap.put("invoiced_charges", invoicedChargesMap);
+
+        Map<String, Object> addressImporterMap = new HashMap<String, Object>();
+        addressImporterMap.put("country", "US");
+        objectMap.put("address_importer", addressImporterMap);
     }
 
     @Test
@@ -63,7 +74,11 @@ public class CustomsDeclarationTest extends ShippoTest {
         assertEquals(testObject.getB13aFilingOption(), nullToEmptyString(objectMap.get("b13a_filing_option")));
         assertEquals(testObject.getB13aNumber(), nullToEmptyString(objectMap.get("b13a_number")));
         assertEquals(testObject.getMetadata(), nullToEmptyString(objectMap.get("metadata")));
-        assertEquals(testObject.getDisclaimer(), nullToEmptyString(objectMap.get("disclaimer")));
+        assertEquals(testObject.getInvoicedCharges(), objectMap.get("invoiced_charges"));
+
+        // address_importer should return a new Address ID, which is a nonempty string
+        Object addressImporter = testObject.getAddressImporter();
+        assertTrue(addressImporter instanceof String && ((String) addressImporter).length() > 0);
     }
 
     @Test(expected = InvalidRequestException.class)

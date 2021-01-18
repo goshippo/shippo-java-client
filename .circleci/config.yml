@@ -54,6 +54,8 @@ jobs:
             # fallback to using the latest cache if no exact match is found
               - v2-dependencies-
         - run: printf "scm.url=scm:git:https://github.com/goshippo/shippo-java-client.git\nscm.tag=release" > release.properties
+        # load the GPG key again as this is a new shell
+        - run: printf -- "$gpg_secret" | gpg --batch --yes --passphrase=$gpg_password --pinentry-mode loopback --import
         - run: mvn release:perform -Darguments=-Dgpg.passphrase=$gpg_password
         - run: sudo apt-get install jq
         - run: sudo apt-get install libxml2-utils

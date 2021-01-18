@@ -57,6 +57,7 @@ jobs:
         # load the GPG key again as this is a new shell
         - run: printf -- "$gpg_secret" | gpg --batch --yes --passphrase=$gpg_password --pinentry-mode loopback --import
         - run: mvn release:perform -Darguments=-Dgpg.passphrase=$gpg_password
+        - run: sudo apt update
         - run: sudo apt-get install jq
         - run: sudo apt-get install libxml2-utils
         - run:

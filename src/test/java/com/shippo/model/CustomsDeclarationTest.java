@@ -45,6 +45,10 @@ public class CustomsDeclarationTest extends ShippoTest {
         invoicedChargesMap.put("other_fees", "9.87");
         invoicedChargesMap.put("currency", "USD");
         objectMap.put("invoiced_charges", invoicedChargesMap);
+
+        Map<String, Object> addressImporterMap = new HashMap<String, Object>();
+        addressImporterMap.put("country", "US");
+        objectMap.put("address_importer", addressImporterMap);
     }
 
     @Test
@@ -70,6 +74,10 @@ public class CustomsDeclarationTest extends ShippoTest {
         assertEquals(testObject.getB13aFilingOption(), nullToEmptyString(objectMap.get("b13a_filing_option")));
         assertEquals(testObject.getB13aNumber(), nullToEmptyString(objectMap.get("b13a_number")));
         assertEquals(testObject.getInvoicedCharges(), objectMap.get("invoiced_charges"));
+
+        // address_importer should return a new Address ID, which is a nonempty string
+        Object addressImporter = testObject.getAddressImporter();
+        assertTrue(addressImporter instanceof String && ((String) addressImporter).length() > 0);
     }
 
     @Test(expected = InvalidRequestException.class)

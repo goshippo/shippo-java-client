@@ -251,7 +251,7 @@ public class CustomsDeclaration extends APIResource {
 	}
 
 	public Object getAddressImporter() {
-		return metadata;
+		return addressImporter;
 	}
 
 	public void setAddressImporter(Object addressImporter) {

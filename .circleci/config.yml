@@ -1,7 +1,7 @@
 version: 2
 job_defaults: &job_defaults
     docker:
-        - image: circleci/openjdk:10-jdk-sid-node-browsers-legacy
+        - image: cimg/15.0
     working_directory: ~/scratch
 
 jobs:

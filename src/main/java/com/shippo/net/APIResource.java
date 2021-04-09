@@ -174,8 +174,8 @@ public abstract class APIResource extends ShippoObject {
 		}
 		java.net.HttpURLConnection conn = (java.net.HttpURLConnection) shippoURL
 				.openConnection();
-		conn.setConnectTimeout(30 * 1000);
-		conn.setReadTimeout(80 * 1000);
+		conn.setConnectTimeout(Shippo.httpConnectTimeout);
+		conn.setReadTimeout(Shippo.httpReadTimeout);
 		conn.setUseCaches(false);
 		for (Map.Entry<String, String> header : getHeaders(apiKey, clazz).entrySet()) {
 			conn.setRequestProperty(header.getKey(), header.getValue());

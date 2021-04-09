@@ -9,6 +9,9 @@ public abstract class Shippo {
     public static int RATES_REQ_TIMEOUT = 25000; //  milliseconds
     public static int TRANSACTION_REQ_TIMEOUT = 25000; // milliseconds
 
+    public static int httpConnectTimeout = 30 * 1000; // milliseconds
+    public static int httpReadTimeout = 80 * 1000; // milliseconds
+
     public static volatile String apiKey;
     public static volatile String apiVersion;
 
@@ -62,5 +65,21 @@ public abstract class Shippo {
 
     public static void setApiVersion(String apiVersion) {
         Shippo.apiVersion = apiVersion;
+    }
+
+    public static int getHttpConnectTimeout() {
+        return httpConnectTimeout;
+    }
+
+    public static void setHttpConnectTimeout(int httpConnectTimeout) {
+        Shippo.httpConnectTimeout = httpConnectTimeout;
+    }
+
+    public static int getHttpReadTimeout() {
+        return httpReadTimeout;
+    }
+
+    public static void setHttpReadTimeout(int httpReadTimeout) {
+        Shippo.httpReadTimeout = httpReadTimeout;
     }
 }

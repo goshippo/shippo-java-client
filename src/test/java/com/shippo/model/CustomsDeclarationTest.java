@@ -49,6 +49,10 @@ public class CustomsDeclarationTest extends ShippoTest {
         Map<String, Object> addressImporterMap = new HashMap<String, Object>();
         addressImporterMap.put("country", "US");
         objectMap.put("address_importer", addressImporterMap);
+
+        Map<String, Object> exporterIdentificationMap = new HashMap<String, Object>();
+        exporterIdentificationMap.put("eori_number", "PL123456789");
+        objectMap.put("exporter_identification", exporterIdentificationMap);
     }
 
     @Test
@@ -75,6 +79,7 @@ public class CustomsDeclarationTest extends ShippoTest {
         assertEquals(testObject.getB13aNumber(), nullToEmptyString(objectMap.get("b13a_number")));
         assertEquals(testObject.getMetadata(), nullToEmptyString(objectMap.get("metadata")));
         assertEquals(testObject.getInvoicedCharges(), objectMap.get("invoiced_charges"));
+        assertEquals(testObject.getExporterIdentification(), objectMap.get("exporter_identification"));
 
         // address_importer should return a new Address ID, which is a nonempty string
         Object addressImporter = testObject.getAddressImporter();

@@ -50,7 +50,11 @@ public class CustomsDeclarationTest extends ShippoTest {
         addressImporterMap.put("country", "US");
         objectMap.put("address_importer", addressImporterMap);
 
+        Map<String, Object> taxIdMap = new HashMap<String, Object>();
+        taxIdMap.put("number", "123456789");
+        taxIdMap.put("type", "EIN");
         Map<String, Object> exporterIdentificationMap = new HashMap<String, Object>();
+        exporterIdentificationMap.put("tax_id", taxIdMap);
         exporterIdentificationMap.put("eori_number", "PL123456789");
         objectMap.put("exporter_identification", exporterIdentificationMap);
     }

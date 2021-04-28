@@ -78,6 +78,7 @@ public class ManifestTest extends ShippoTest {
         Address testAddress = (Address) AddressTest.getDefaultObject();
         Transaction transaction = (Transaction) TransactionTest.getDefaultObject();
         List<String> transactions = new ArrayList<String>();
+        transactions.add(transaction.objectId);
         CarrierAccount usps_account = CarrierAccount.getByCarrier("usps");
         objectMap.put("carrier_account", usps_account.getObjectId());
         objectMap.put("shipment_date", nowTime);

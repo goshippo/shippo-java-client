@@ -79,7 +79,7 @@ public class TransactionTest extends ShippoTest {
 		objectMap.put("metadata", "Customer ID 123456");
 
 		try {
-			Transaction testObject = Transaction.create(objectMap);
+			Transaction testObject = Transaction.createSync(objectMap);
 			return testObject;
 		} catch (ShippoException e) {
 			e.printStackTrace();

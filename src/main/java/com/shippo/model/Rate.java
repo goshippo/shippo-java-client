@@ -141,7 +141,11 @@ public class Rate extends APIResource {
 	}
 
 	public Object getDays() {
-		return days;
+		if ( version.compareTo("2017-08-01") < 0) { 
+  			return days;
+		} else {
+  			return estimated_days;
+		}
 	}
 
 	public void setDays(Object days) {

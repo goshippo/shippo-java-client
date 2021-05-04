@@ -7,7 +7,7 @@ import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.net.APIResource;
-import com.shippo.Shippo
+import com.shippo.Shippo;
 
 public class Rate extends APIResource {
 	String objectId;

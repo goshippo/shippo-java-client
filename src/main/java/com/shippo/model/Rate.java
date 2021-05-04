@@ -7,6 +7,7 @@ import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.net.APIResource;
+import com.shippo.Shippo
 
 public class Rate extends APIResource {
 	String objectId;
@@ -23,6 +24,7 @@ public class Rate extends APIResource {
     Object provider_image_200;
     Object servicelevel;
     Object days;
+    Object estimated_days;
     Object durationTerms;
     Object messages;
 
@@ -139,9 +141,9 @@ public class Rate extends APIResource {
 	public void setServicelevel(Object servicelevel) {
 		this.servicelevel = servicelevel;
 	}
-
+	
 	public Object getDays() {
-		if ( version.compareTo("2017-08-01") < 0) { 
+		if ( Shippo.apiVersion.compareTo("2017-08-01") < 0) { 
   			return days;
 		} else {
   			return estimated_days;

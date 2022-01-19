@@ -12,14 +12,14 @@ import com.shippo.model.Order;
 public class ExampleOrder {
 
 	public static void main(String[] args) throws ShippoException {
-		
+
 		// replace with your Shippo Token
 		// don't have one? get more info here (https://goshippo.com/docs/#overview)
-		Shippo.setApiKey("shippo_test_cf1b6d0655e59fc6316880580765066038ef20d8");
+		Shippo.setApiKey("<API-KEY>");
 		Shippo.setApiVersion("2018-02-08");
 
 		// Optional defaults to false
-		//Shippo.setDEBUG(true);
+		// Shippo.setDEBUG(true);
 
 		// to address
 		Map<String, Object> toAddressMap = new HashMap<String, Object>();
@@ -50,35 +50,35 @@ public class ExampleOrder {
 
 		// parcel
 		Map<String, Object> lineItem = new HashMap<String, Object>();
-        lineItem.put("title", "Demo Line Item Object");
-        lineItem.put("sku", "demo_1234");
-        lineItem.put("quantity", 2);
-        lineItem.put("total_price", 2.34);
-        lineItem.put("currency", "USD");
-        lineItem.put("weight", 25.45);
-        lineItem.put("weight_unit", "lb");
-        lineItem.put("manufacture_country", "US");
+		lineItem.put("title", "Demo Line Item Object");
+		lineItem.put("sku", "demo_1234");
+		lineItem.put("quantity", 2);
+		lineItem.put("total_price", 2.34);
+		lineItem.put("currency", "USD");
+		lineItem.put("weight", 25.45);
+		lineItem.put("weight_unit", "lb");
+		lineItem.put("manufacture_country", "US");
 		List<Map<String, Object>> lineItems = new ArrayList<Map<String, Object>>();
 		lineItems.add(lineItem);
 
 		LocalDateTime now = LocalDateTime.now();
 		Map<String, Object> orderParams = new HashMap<String, Object>();
 		orderParams.put("name", "Ms Hippo");
-        orderParams.put("order_number", now.toString());
-        orderParams.put("order_status", "PAID");
-        orderParams.put("to_address", toAddressMap);
-        orderParams.put("from_address", fromAddressMap);
-        orderParams.put("line_items", lineItems);
-        orderParams.put("placed_at", String.join("", now.toString(), "Z"));
-        orderParams.put("weight", 10.0);
-        orderParams.put("weight_unit", "lb");
-        orderParams.put("shipping_method", "ground");
-        orderParams.put("shipping_cost", 1.23);
-        orderParams.put("shipping_cost_currency", "USD");
-        orderParams.put("subtotal_price", 2.34);
-        orderParams.put("total_price", 6.14);
-        orderParams.put("total_tax", 2.57);
-        orderParams.put("currency", "USD");
+		orderParams.put("order_number", now.toString());
+		orderParams.put("order_status", "PAID");
+		orderParams.put("to_address", toAddressMap);
+		orderParams.put("from_address", fromAddressMap);
+		orderParams.put("line_items", lineItems);
+		orderParams.put("placed_at", String.join("", now.toString(), "Z"));
+		orderParams.put("weight", 10.0);
+		orderParams.put("weight_unit", "lb");
+		orderParams.put("shipping_method", "ground");
+		orderParams.put("shipping_cost", 1.23);
+		orderParams.put("shipping_cost_currency", "USD");
+		orderParams.put("subtotal_price", 2.34);
+		orderParams.put("total_price", 6.14);
+		orderParams.put("total_tax", 2.57);
+		orderParams.put("currency", "USD");
 
 		Order order = Order.create(orderParams);
 		System.out.println(String.format("An order has been created: %s", order.getObjectId()));

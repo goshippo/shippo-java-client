@@ -10,8 +10,8 @@ import com.shippo.net.APIResource;
 
 /**
  * Use this class to schedule a pickup. Represents object defined in
- * https://api.goshippo.com/pickups endpoint. The endpoint's documentation can be
- * found in https://goshippo.com/docs/reference#pickups
+ * https://api.goshippo.com/pickups endpoint. The endpoint's documentation can
+ * be found in https://goshippo.com/docs/reference#pickups
  */
 public class Pickup extends APIResource {
 	String objectId;
@@ -27,14 +27,14 @@ public class Pickup extends APIResource {
 	Object cancelByTime;
 	Object status;
 	Object confirmationCode;
-    Object timezone;
-    Object messages;
-    Object metadata;
+	Object timezone;
+	Object messages;
+	Object metadata;
 
 	public static Pickup create(Map<String, Object> params)
-		throws AuthenticationException, InvalidRequestException,
-		APIConnectionException, APIException {
-	return create(params, null);
+			throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return create(params, null);
 	}
 
 	public static Pickup create(Map<String, Object> params, String apiKey)

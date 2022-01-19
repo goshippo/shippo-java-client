@@ -38,9 +38,9 @@ public class Order extends APIResource {
 	Object metadata;
 
 	public static Order create(Map<String, Object> params)
-		throws AuthenticationException, InvalidRequestException,
-		APIConnectionException, APIException {
-	return create(params, null);
+			throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return create(params, null);
 	}
 
 	public static Order create(Map<String, Object> params, String apiKey)
@@ -99,7 +99,7 @@ public class Order extends APIResource {
 		this.orderNumber = orderNumber;
 	}
 
-	public static enum OrderStatus {
+	public enum OrderStatus {
 		UNKNOWN, AWAITPAY, PAID, REFUNDED, CANCELLED, PARTIALLY_FULFILLED, SHIPPED
 	}
 
@@ -148,7 +148,7 @@ public class Order extends APIResource {
 		String manufactureCountry;
 		Object maxShipTime;
 		Object maxDeliveryTime;
-			
+
 		public String getObjectId() {
 			return objectId;
 		}

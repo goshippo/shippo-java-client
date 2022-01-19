@@ -27,25 +27,25 @@ public class PickupTest extends ShippoTest {
 	 *
 	 * To use this test, please make sure that test mode is enabled for the
 	 * default rate object used
-     *
+	 *
 	 * @Test
-	 * public void testValidCreate() {
-     *     try {
-	 * 	    Pickup testObject = (Pickup) getDefaultObject();
-     *         assertEquals("SUCCESS", testObject.getStatus());
-     *     } catch (InvalidRequestException e) {
-	 * 		assertTrue(true);
-     *     } catch (Exception e){
-     *         assertTrue(false);
-     *     }
-	 * }
+	 *       public void testValidCreate() {
+	 *       try {
+	 *       Pickup testObject = (Pickup) getDefaultObject();
+	 *       assertEquals("SUCCESS", testObject.getStatus());
+	 *       } catch (InvalidRequestException e) {
+	 *       assertTrue(true);
+	 *       } catch (Exception e){
+	 *       assertTrue(false);
+	 *       }
+	 *       }
 	 **/
 
-    @Test(expected = InvalidRequestException.class)
-    public void testInvalidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
-            APIException {
-        Shipment.create(getInvalidObjectMap());
-    }
+	@Test(expected = InvalidRequestException.class)
+	public void testInvalidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+			APIException {
+		Shipment.create(getInvalidObjectMap());
+	}
 
 	public static Object getDefaultObject() throws InvalidRequestException {
 		Map<String, Object> objectMap = new HashMap<String, Object>();
@@ -56,7 +56,7 @@ public class PickupTest extends ShippoTest {
 		objectMap.put("metadata", "Customer ID 123456");
 
 		List<Rate> filteredRates = new ArrayList<Rate>();
-		for (Rate rate: rateList) {
+		for (Rate rate : rateList) {
 			String rateString = ((String) rate.getProvider()).toUpperCase();
 			if (rateString.contains("USPS") || rateString.contains("DHL Express")) {
 				filteredRates.add(rate);
@@ -74,18 +74,18 @@ public class PickupTest extends ShippoTest {
 
 		List<String> transactions = new ArrayList<String>();
 		try {
-		    Transaction transaction = Transaction.createSync(transParams);
-		    transactions.add(transaction.getObjectId());
+			Transaction transaction = Transaction.createSync(transParams);
+			transactions.add(transaction.getObjectId());
 		} catch (ShippoException e) {
 			e.printStackTrace();
-            return null;
+			return null;
 		}
 
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startTime = now.plusDays(1);
-        LocalDateTime endTime = now.plusDays(2);
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime startTime = now.plusDays(1);
+		LocalDateTime endTime = now.plusDays(2);
 
-        Address addressFrom = (Address) AddressTest.getDefaultObject();
+		Address addressFrom = (Address) AddressTest.getDefaultObject();
 		Map<String, Object> locationParams = new HashMap<String, Object>();
 		locationParams.put("building_location_type", "Knock on Door");
 		locationParams.put("address", addressFrom);
@@ -100,9 +100,9 @@ public class PickupTest extends ShippoTest {
 		try {
 			Pickup pickup = Pickup.create(pickupParams);
 			return pickup;
-        } catch (InvalidRequestException e) {
-			 throw new InvalidRequestException("Pickup already scheduled.", null, e);
-		 } catch (ShippoException e) {
+		} catch (InvalidRequestException e) {
+			throw new InvalidRequestException("Pickup already scheduled.", null, e);
+		} catch (ShippoException e) {
 			e.printStackTrace();
 		}
 		return null;

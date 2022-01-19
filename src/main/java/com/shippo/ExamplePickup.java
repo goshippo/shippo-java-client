@@ -17,14 +17,14 @@ import com.shippo.model.Pickup;
 public class ExamplePickup {
 
 	public static void main(String[] args) throws ShippoException {
-		
+
 		// replace with your Shippo Token
 		// don't have one? get more info here (https://goshippo.com/docs/#overview)
-		Shippo.setApiKey("shippo_test_cf1b6d0655e59fc6316880580765066038ef20d8");
+		Shippo.setApiKey("<API-KEY>");
 		Shippo.setApiVersion("2018-02-08");
 
 		// Optional defaults to false
-		//Shippo.setDEBUG(true);
+		// Shippo.setDEBUG(true);
 
 		// to address
 		Map<String, Object> toAddressMap = new HashMap<String, Object>();
@@ -86,7 +86,7 @@ public class ExamplePickup {
 		customsDeclarationMap.put("certify_signer", "Mr Hippo");
 		customsDeclarationMap.put("items", customsItem);
 		System.out.println("Creating customs declaration...");
-        CustomsDeclaration customsDeclaration = CustomsDeclaration.create(customsDeclarationMap);
+		CustomsDeclaration customsDeclaration = CustomsDeclaration.create(customsDeclarationMap);
 
 		Map<String, Object> shipmentMap = new HashMap<String, Object>();
 		shipmentMap.put("address_to", toAddressMap);
@@ -100,14 +100,15 @@ public class ExamplePickup {
 		// select shipping rate for USPS or DHL express
 		List<Rate> rates = shipment.getRates();
 		List<Rate> filteredRates = new ArrayList<Rate>();
-		for (Rate rate: rates) {
+		for (Rate rate : rates) {
 			String rateString = ((String) rate.getProvider()).toUpperCase();
 			if (rateString.contains("USPS") || rateString.contains("DHL Express")) {
 				filteredRates.add(rate);
 			}
 		}
 		if (filteredRates.size() == 0) {
-			System.out.println("Unable to find a carrier for pickup, check USPS and/or DHL Express is active. Messages.");
+			System.out
+					.println("Unable to find a carrier for pickup, check USPS and/or DHL Express is active. Messages.");
 			System.exit(0);
 		}
 		Rate rate = filteredRates.get(0);
@@ -121,10 +122,10 @@ public class ExamplePickup {
 		List<String> transactions = new ArrayList<String>();
 		transactions.add(transaction.getObjectId());
 
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startTime = now.plusDays(3);
-        LocalDateTime endTime = now.plusDays(4);
-    
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime startTime = now.plusDays(3);
+		LocalDateTime endTime = now.plusDays(4);
+
 		Map<String, Object> locationParams = new HashMap<String, Object>();
 		locationParams.put("building_location_type", "Knock on Door");
 		locationParams.put("address", fromAddressMap);

@@ -12,30 +12,30 @@ public class Rate extends APIResource {
 	String objectOwner;
 	Object objectCreated;
 	Object shipment;
-    Object attributes;
-    Object amountLocal;
-    Object currencyLocal;
-    Object amount;
-    Object currency;
-    Object provider;
-    Object provider_image_75;
-    Object provider_image_200;
-    Object carrier_account;
-    Object servicelevel;
-    Object days;
-    Object estimated_days;
-    Object durationTerms;
-    Object messages;
+	Object attributes;
+	Object amountLocal;
+	Object currencyLocal;
+	Object amount;
+	Object currency;
+	Object provider;
+	Object provider_image_75;
+	Object provider_image_200;
+	Object carrier_account;
+	Object servicelevel;
+	Object days;
+	Object estimated_days;
+	Object durationTerms;
+	Object messages;
 
-    public static Rate retrieve(String id) throws AuthenticationException, InvalidRequestException,
-            APIConnectionException, APIException {
-        return retrieve(id, null);
-    }
+	public static Rate retrieve(String id) throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return retrieve(id, null);
+	}
 
-    public static Rate retrieve(String id, String apiKey) throws AuthenticationException, InvalidRequestException,
-            APIConnectionException, APIException {
-        return request(RequestMethod.GET, instanceURL(Rate.class, id), null, Rate.class, apiKey);
-    }
+	public static Rate retrieve(String id, String apiKey) throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return request(RequestMethod.GET, instanceURL(Rate.class, id), null, Rate.class, apiKey);
+	}
 
 	public String getObjectId() {
 		return objectId;
@@ -148,12 +148,12 @@ public class Rate extends APIResource {
 	public void setServicelevel(Object servicelevel) {
 		this.servicelevel = servicelevel;
 	}
-	
+
 	public Object getDays() {
-		if ( Shippo.apiVersion.compareTo("2017-08-01") < 0) { 
-  			return days;
+		if (Shippo.apiVersion.compareTo("2017-08-01") < 0) {
+			return days;
 		} else {
-  			return estimated_days;
+			return estimated_days;
 		}
 	}
 

@@ -15,12 +15,11 @@ import com.shippo.model.BatchShipment;
 import com.shippo.model.LabelFileType;
 import com.shippo.model.Parcel;
 import com.shippo.model.Shipment;
-// import com.shippo.model.Transaction;
 
 public class ExampleBatchShipment {
 
 	public static void main(String[] args) throws ShippoException {
-		
+
 		// replace with your Shippo Token
 		// don't have one? get more info here (https://goshippo.com/docs/#overview)
 		Shippo.setApiKey("<API-KEY>");
@@ -29,7 +28,7 @@ public class ExampleBatchShipment {
 		String defaultCarrierAccount = "<YOUR CARRIER ACCOUNT PRIVATE KEY>";
 
 		// Optional defaults to false
-		//Shippo.setDEBUG(true);
+		// Shippo.setDEBUG(true);
 
 		// to address
 		Map<String, Object> toAddressMap = new HashMap<String, Object>();
@@ -73,7 +72,6 @@ public class ExampleBatchShipment {
 		// shipment
 		Shipment firstShipment = Shipment.createForBatch(fromAddress, toAddress, parcels);
 		BatchShipment[] batchShipments = { BatchShipment.createForShipment(firstShipment, null, null) };
-		
 
 		// batch shipment
 		String serviceLevelToken = "usps_priority";
@@ -122,7 +120,6 @@ public class ExampleBatchShipment {
 		List<Map<String, Object>> parcels2 = new ArrayList<Map<String, Object>>();
 		parcels2.add(parcel2Map);
 
-
 		// 2nd shipment
 		Map<String, Object> secondShipmentMap = new HashMap<String, Object>();
 		secondShipmentMap.put("address_to", toAddressMap);
@@ -133,15 +130,17 @@ public class ExampleBatchShipment {
 		if (shipment2.getStatus().equals("SUCCESS")) {
 			System.out.println(String.format("Shipment created with id: %s", shipment2.getObjectId()));
 		} else {
-			System.out.println(String.format("An Error has occured while creating the 2nd shipment. Messages : %s", shipment2.getMessages()));
+			System.out.println(String.format("An Error has occured while creating the 2nd shipment. Messages : %s",
+					shipment2.getMessages()));
 			System.exit(0);
 		}
 
-
-		//Example of retrieving a batch object to check its validation status
-		//For complete reference to the retrieve endpoint: https://goshippo.com/docs/reference#batches-retrieve
-		//This method of polling the batch validation status is for demo purposes only
-		//In practice it is advised to use the batch-create webhook in the user api dashboard: https://app.goshippo.com/api/
+		// Example of retrieving a batch object to check its validation status
+		// For complete reference to the retrieve endpoint:
+		// https://goshippo.com/docs/reference#batches-retrieve
+		// This method of polling the batch validation status is for demo purposes only
+		// In practice it is advised to use the batch-create webhook in the user api
+		// dashboard: https://app.goshippo.com/api/
 		int maxTimeout = 10;
 		int counter = 0;
 		while (counter < maxTimeout) {
@@ -159,7 +158,8 @@ public class ExampleBatchShipment {
 		}
 		Batch retrievedBatch2 = Batch.get(batch.getId(), 0, null);
 		if (retrievedBatch2.getStatus().equals(BatchStatus.VALID)) {
-			System.out.println(String.format("Batch object %s has status %s ", retrievedBatch2.getId(), retrievedBatch2.getStatus()));
+			System.out.println(String.format("Batch object %s has status %s ", retrievedBatch2.getId(),
+					retrievedBatch2.getStatus()));
 		} else {
 			System.out.println(String.format("An Error has occured validating the batch."));
 			System.exit(0);
@@ -169,7 +169,8 @@ public class ExampleBatchShipment {
 		String[] shipmentsToAdd = { shipment2.getObjectId() };
 		Batch addedShipment = Batch.addShipments(batch.getId(), shipmentsToAdd);
 		if (addedShipment.getStatus().equals(BatchStatus.VALID)) {
-			System.out.println(String.format("Batch now contains shipments : %s ", addedShipment.getBatchShipments().toString()));
+			System.out.println(
+					String.format("Batch now contains shipments : %s ", addedShipment.getBatchShipments().toString()));
 		} else {
 			System.out.println(String.format("An Error has occured adding a shipment."));
 			System.exit(0);
@@ -181,7 +182,8 @@ public class ExampleBatchShipment {
 		String[] shipmentsToRemove = { batchShipment[0].getId().toString() };
 		Batch removedShipment = Batch.removeShipments(batch.getId(), shipmentsToRemove);
 		if (removedShipment.getStatus().equals(BatchStatus.VALID)) {
-			System.out.println(String.format("Batch now contains shipments : %s ", removedShipment.getBatchShipments().toString()));
+			System.out.println(String.format("Batch now contains shipments : %s ",
+					removedShipment.getBatchShipments().toString()));
 		} else {
 			System.out.println(String.format("An Error has occured removing a shipment."));
 			System.exit(0);
@@ -205,7 +207,8 @@ public class ExampleBatchShipment {
 
 		Batch retrievedBatch4 = Batch.get(batch.getId(), 0, null);
 		if (retrievedBatch4.getStatus().equals(BatchStatus.PURCHASED)) {
-			System.out.println(String.format("Batch object %s has status %s ", retrievedBatch2.getId(), retrievedBatch4.getStatus()));
+			System.out.println(String.format("Batch object %s has status %s ", retrievedBatch4.getId(),
+					retrievedBatch4.getStatus()));
 		} else {
 			System.out.println(String.format("An Error has occured purchasing the batch shipment."));
 			System.exit(0);

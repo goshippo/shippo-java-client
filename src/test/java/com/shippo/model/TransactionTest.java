@@ -24,10 +24,10 @@ public class TransactionTest extends ShippoTest {
 	 * default rate object used
 	 *
 	 * @Test
-	 * public void testValidCreate() {
-	 * 	 Transaction testObject = (Transaction) getDefaultObject();
-	 * 	 assertEquals("SUCCESS", testObject.getStatus());
-	 * }
+	 *       public void testValidCreate() {
+	 *       Transaction testObject = (Transaction) getDefaultObject();
+	 *       assertEquals("SUCCESS", testObject.getStatus());
+	 * 
 	 **/
 
 	@Test(expected = InvalidRequestException.class)

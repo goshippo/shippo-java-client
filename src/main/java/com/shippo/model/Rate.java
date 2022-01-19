@@ -1,7 +1,5 @@
 package com.shippo.model;
 
-import java.util.Map;
-
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -22,6 +20,7 @@ public class Rate extends APIResource {
     Object provider;
     Object provider_image_75;
     Object provider_image_200;
+    Object carrier_account;
     Object servicelevel;
     Object days;
     Object estimated_days;
@@ -116,6 +115,14 @@ public class Rate extends APIResource {
 
 	public void setProvider(Object provider) {
 		this.provider = provider;
+	}
+
+	public Object getCarrierAccount() {
+		return carrier_account;
+	}
+
+	public void setCarrierAccount(Object carrier_account) {
+		this.carrier_account = carrier_account;
 	}
 
 	public Object getProviderImage75() {

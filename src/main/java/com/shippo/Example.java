@@ -17,6 +17,7 @@ public class Example {
 		// replace with your Shippo Token
 		// don't have one? get more info here (https://goshippo.com/docs/#overview)
 		Shippo.setApiKey("<API-KEY>");
+		Shippo.setApiVersion("2018-02-08");
 
 		// Optional defaults to false
 		//Shippo.setDEBUG(true);

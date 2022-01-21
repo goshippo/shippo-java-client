@@ -81,7 +81,7 @@ Below is a brief code example:
 Testing
 =======
 
-You must have Maven installed. To run the tests, simply run `mvn test`. You can run particular tests by passing `-D test=Class#method` -- for example, `-D test=ShippoTest#testAddressCreate`.
+You must have Maven installed. To run the tests, simply run `mvn test`. You can run particular tests by passing `-D test=Class#method` -- for example, `-D test=ShippoTest#testAddressCreate` or for an entire file `-D test=AddressTest`.
 
 You can also run the tests in eclipse.
 

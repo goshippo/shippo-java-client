@@ -130,6 +130,30 @@ public class AddressTest extends ShippoTest {
         return null;
     }
 
+    public static Object getInternationalObject() {
+        Map<String, Object> objectMap = new HashMap<String, Object>();
+        objectMap.put("name", "Ms Hippo");
+        objectMap.put("company", "Regents Park");
+        objectMap.put("street1", "Outer Cir");
+        objectMap.put("street2", null);
+        objectMap.put("city", "London");
+        objectMap.put("state", null);
+        objectMap.put("zip", "NW1 4RY");
+        objectMap.put("country", "GB");
+        objectMap.put("phone", "+1 555 341 9393");
+        objectMap.put("email", "ms-hippo@goshipppo.com");
+        objectMap.put("is_residential", false);
+        objectMap.put("metadata", "For Order Number 123");
+
+        try {
+            Address testObject = Address.create(objectMap);
+            return testObject;
+        } catch (ShippoException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static Object getInvalidAddress() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("name", "Undefault New Wu");

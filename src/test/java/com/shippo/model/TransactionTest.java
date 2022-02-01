@@ -23,9 +23,11 @@ public class TransactionTest extends ShippoTest {
 	 * To use this test, please make sure that test mode is enabled for the
 	 * default rate object used
 	 *
-	 * @Test public void testValidCreate() { Transaction testObject =
-	 *       (Transaction) getDefaultObject(); assertEquals("VALID",
-	 *       testObject.getObjectState()); }
+	 * @Test
+	 *       public void testValidCreate() {
+	 *       Transaction testObject = (Transaction) getDefaultObject();
+	 *       assertEquals("SUCCESS", testObject.getStatus());
+	 * 
 	 **/
 
 	@Test(expected = InvalidRequestException.class)

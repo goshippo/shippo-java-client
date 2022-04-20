@@ -20,7 +20,7 @@ public class OrderTest extends ShippoTest {
 
 	@Test
 	public void testValidCreate() {
-		Order testObject = (Order) getDefaultObject();
+		Order testObject = createOrderFixture();
 		assertEquals("PAID", testObject.getOrderStatus().toString());
 	}
 
@@ -33,7 +33,7 @@ public class OrderTest extends ShippoTest {
 	@Test
 	public void testRetrieve() throws AuthenticationException,
 			InvalidRequestException, APIConnectionException, APIException {
-		Order testObject = (Order) getDefaultObject();
+		Order testObject = createOrderFixture();
 		Order retrievedObject = Order.retrieve((String) testObject.getObjectId());
 		assertEquals(testObject.getObjectId(), retrievedObject.getObjectId());
 	}
@@ -62,7 +62,7 @@ public class OrderTest extends ShippoTest {
 		assertEquals(OrderCollection.getData().size(), 1);
 	}
 
-	public static Object getDefaultObject() {
+	public static Order createOrderFixture() {
 		Address addressFrom = AddressTest.createAddressFixture1();
 		Address addressTo = AddressTest.createAddressFixture2();
 
@@ -98,8 +98,7 @@ public class OrderTest extends ShippoTest {
 		orderParams.put("currency", "USD");
 
 		try {
-			Order testObject = Order.create(orderParams);
-			return testObject;
+			return Order.create(orderParams);
 		} catch (ShippoException e) {
 			e.printStackTrace();
 		}

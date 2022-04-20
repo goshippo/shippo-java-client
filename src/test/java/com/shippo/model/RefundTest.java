@@ -17,7 +17,7 @@ public class RefundTest extends ShippoTest {
 
     @Test
     public void testValidCreate() {
-        Refund testObject = (Refund) getDefaultObject();
+        Refund testObject = createRefundFixture();
         assertEquals("QUEUED", testObject.getStatus());
     }
 
@@ -47,7 +47,7 @@ public class RefundTest extends ShippoTest {
     public void testRetrieve() throws AuthenticationException,
             InvalidRequestException, APIConnectionException,
             APIException {
-        Refund testObject = (Refund) getDefaultObject();
+        Refund testObject = createRefundFixture();
         Refund retrievedObject;
 
         retrievedObject = Refund.retrieve((String) testObject.object_id);
@@ -79,14 +79,13 @@ public class RefundTest extends ShippoTest {
         assertEquals(RefundCollection.getData().size(), 1);
     }
 
-    public static Object getDefaultObject() {
+    public static Refund createRefundFixture() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         Transaction transaction = TransactionTest.createTransactionFixture();
         objectMap.put("transaction", transaction.getObjectId());
 
         try {
-            Refund testObject = Refund.create(objectMap);
-            return testObject;
+            return Refund.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }

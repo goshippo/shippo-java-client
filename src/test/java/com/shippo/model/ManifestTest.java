@@ -76,7 +76,7 @@ public class ManifestTest extends ShippoTest {
         String nowTime = df.format(new Date());
         Map<String, Object> objectMap = new HashMap<String, Object>();
         Address testAddress = (Address) AddressTest.getDefaultObject();
-        Transaction transaction = (Transaction) TransactionTest.getDefaultObject();
+        Transaction transaction = TransactionTest.createTransactionFixture();
         List<String> transactions = new ArrayList<String>();
         transactions.add(transaction.objectId);
         CarrierAccount usps_account = CarrierAccount.getByCarrier("usps");

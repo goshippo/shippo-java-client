@@ -24,7 +24,7 @@ public class RefundTest extends ShippoTest {
     @Test(expected = DuplicateRefundRequestException.class)
     public void testDoubleRefundRequest() throws ShippoException {
         // GIVEN a transaction
-        Transaction transaction = (Transaction) TransactionTest.getDefaultObject();
+        Transaction transaction = TransactionTest.createTransactionFixture();
         
         // AND a refund has already been requested for that transaction
         Map<String, Object> objectMap = new HashMap<String, Object>();
@@ -81,7 +81,7 @@ public class RefundTest extends ShippoTest {
 
     public static Object getDefaultObject() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        Transaction transaction = (Transaction) TransactionTest.getDefaultObject();
+        Transaction transaction = TransactionTest.createTransactionFixture();
         objectMap.put("transaction", transaction.getObjectId());
 
         try {

@@ -20,7 +20,7 @@ public class TransactionTest extends ShippoTest {
 
 	@Test
 	public void testValidCreate() {
-		Transaction testObject = (Transaction) getDefaultObject();
+		Transaction testObject = createTransactionFixture();
 		assertEquals("SUCCESS", testObject.getStatus());
 	}
 
@@ -33,7 +33,7 @@ public class TransactionTest extends ShippoTest {
 	@Test
 	public void testRetrieve() throws AuthenticationException,
 			InvalidRequestException, APIConnectionException, APIException {
-		Transaction testObject = (Transaction) getDefaultObject();
+		Transaction testObject = createTransactionFixture();
 		Transaction retrievedObject;
 
 		retrievedObject = Transaction.retrieve((String) testObject.objectId);
@@ -65,7 +65,7 @@ public class TransactionTest extends ShippoTest {
 		assertEquals(TransactionCollection.getData().size(), 1);
 	}
 
-	public static Object getDefaultObject() {
+	public static Transaction createTransactionFixture() {
 		Map<String, Object> objectMap = new HashMap<String, Object>();
 		RateCollection rateCollection = (RateCollection) RateTest
 				.getDefaultObject();
@@ -85,8 +85,7 @@ public class TransactionTest extends ShippoTest {
 		objectMap.put("metadata", "Customer ID 123456");
 
 		try {
-			Transaction testObject = Transaction.createSync(objectMap);
-			return testObject;
+			return Transaction.createSync(objectMap);
 		} catch (ShippoException e) {
 			e.printStackTrace();
 		}

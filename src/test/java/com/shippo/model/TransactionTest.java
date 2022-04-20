@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.junit.Test;
 
@@ -69,7 +71,17 @@ public class TransactionTest extends ShippoTest {
 				.getDefaultObject();
 		List<Rate> rateList = rateCollection.getData();
 
-		objectMap.put("rate", rateList.get(0).getObjectId());
+		// Make sure we get a test rate.  We are using a test auth token, so it should not be possible to get a non-test rate back,
+		// but previous author was uncertain, and I don't know enough about the underlying implementation to be sure.
+		Optional<Rate> testRateOptional = rateList.stream().filter(new Predicate<Rate>() {
+			@Override
+			public boolean test(Rate rate) {
+				return rate.test != null && rate.test == true;
+			}
+		}).findAny();
+		Rate selectedRate = testRateOptional.orElseThrow();
+
+		objectMap.put("rate", selectedRate.getObjectId());
 		objectMap.put("metadata", "Customer ID 123456");
 
 		try {

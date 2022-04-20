@@ -1,24 +1,18 @@
 package com.shippo.model;
 
-import static org.junit.Assert.*;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
-import java.time.LocalDateTime;
-
-import org.junit.Test;
 
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.ShippoException;
+
+import org.junit.Test;
 
 public class PickupTest extends ShippoTest {
 	/**

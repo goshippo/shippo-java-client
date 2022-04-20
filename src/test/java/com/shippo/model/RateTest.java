@@ -1,17 +1,16 @@
 package com.shippo.model;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
+
+import org.junit.Test;
 
 public class RateTest extends ShippoTest {
 

@@ -3,12 +3,9 @@ package com.shippo.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.junit.Before;
-
 import com.shippo.Shippo;
+
+import org.junit.Before;
 
 public class ShippoTest {
 	@Before

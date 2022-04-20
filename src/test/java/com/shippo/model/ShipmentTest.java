@@ -24,7 +24,7 @@ public class ShipmentTest extends ShippoTest {
     @Test
     public void testValidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Shipment testObject = (Shipment) getDefaultObject();
+        Shipment testObject = (Shipment) createShipmentFixture();
         assertEquals("SUCCESS", testObject.getStatus());
         Address addressTo = (Address) testObject.getAddressTo();
         assertTrue(addressTo.getIsComplete());
@@ -39,7 +39,7 @@ public class ShipmentTest extends ShippoTest {
     @Test
     public void testRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Shipment testObject = (Shipment) getDefaultObject();
+        Shipment testObject = (Shipment) createShipmentFixture();
         Shipment retrievedObject;
 
         retrievedObject = Shipment.retrieve((String) testObject.objectId);
@@ -70,7 +70,7 @@ public class ShipmentTest extends ShippoTest {
         assertEquals(ShipmentCollection.getData().size(), 1);
     }
 
-    public static Object getDefaultObject() {
+    public static Shipment createShipmentFixture() {
         // Create prerequisite helper objects
         Address addressFrom = AddressTest.createAddressFixture1();
         Address addressTo = AddressTest.createAddressFixture2();
@@ -92,8 +92,7 @@ public class ShipmentTest extends ShippoTest {
         objectMap.put("async", false);
 
         try {
-            Shipment testObject = Shipment.create(objectMap);
-            return testObject;
+            return Shipment.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }

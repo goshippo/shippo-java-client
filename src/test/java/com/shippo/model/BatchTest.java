@@ -63,7 +63,7 @@ public class BatchTest extends ShippoTest {
 
 	private BatchShipment addShipment()
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		Shipment shipment = (Shipment) ShipmentTest.getDefaultObject();
+		Shipment shipment = ShipmentTest.createShipmentFixture();
 		String[] ids = { (String) shipment.getObjectId() };
 		Batch batch = Batch.addShipments(id, ids);
 		for (BatchShipment bs : batch.getBatchShipments().getShipments()) {

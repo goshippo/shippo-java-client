@@ -31,7 +31,7 @@ public class PickupTest extends ShippoTest {
 	 * @Test
 	 *       public void testValidCreate() {
 	 *       try {
-	 *       Pickup testObject = (Pickup) getDefaultObject();
+	 *       Pickup testObject = createPickupFixture();
 	 *       assertEquals("SUCCESS", testObject.getStatus());
 	 *       } catch (InvalidRequestException e) {
 	 *       assertTrue(true);
@@ -47,7 +47,7 @@ public class PickupTest extends ShippoTest {
 		Shipment.create(getInvalidObjectMap());
 	}
 
-	public static Object getDefaultObject() throws InvalidRequestException {
+	public static Pickup createPickupFixture() throws InvalidRequestException {
 		Map<String, Object> objectMap = new HashMap<String, Object>();
 		RateCollection rateCollection = RateTest.createRateCollectionFixture();
 		List<Rate> rateList = rateCollection.getData();
@@ -97,8 +97,7 @@ public class PickupTest extends ShippoTest {
 		pickupParams.put("requested_end_time", String.join("", endTime.toString(), "Z"));
 		pickupParams.put("is_test", false);
 		try {
-			Pickup pickup = Pickup.create(pickupParams);
-			return pickup;
+			return Pickup.create(pickupParams);
 		} catch (InvalidRequestException e) {
 			throw new InvalidRequestException("Pickup already scheduled.", null, e);
 		} catch (ShippoException e) {

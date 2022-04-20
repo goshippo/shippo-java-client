@@ -8,11 +8,10 @@ import org.junit.Before;
 import com.shippo.Shippo;
 
 public class ShippoTest {
-	static boolean VERBOSE_TESTING = true;
-
 	@Before
 	public void setAPIKey() {
 		Shippo.apiKey = "shippo_test_cf1b6d0655e59fc6316880580765066038ef20d8";
+		Shippo.DEBUG = true;
 	}
 
 	@Before

@@ -16,19 +16,11 @@ import com.shippo.exception.ShippoException;
 
 public class TransactionTest extends ShippoTest {
 
-	/**
-	 * Intentionally commented out as this test could result in a purchase of a
-	 * non test label depending on your carrier account settings
-	 *
-	 * To use this test, please make sure that test mode is enabled for the
-	 * default rate object used
-	 *
-	 * @Test
-	 *       public void testValidCreate() {
-	 *       Transaction testObject = (Transaction) getDefaultObject();
-	 *       assertEquals("SUCCESS", testObject.getStatus());
-	 * 
-	 **/
+	@Test
+	public void testValidCreate() {
+		Transaction testObject = (Transaction) getDefaultObject();
+		assertEquals("SUCCESS", testObject.getStatus());
+	}
 
 	@Test(expected = InvalidRequestException.class)
 	public void testInvalidCreate() throws AuthenticationException,

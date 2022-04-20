@@ -67,8 +67,7 @@ public class TransactionTest extends ShippoTest {
 
 	public static Transaction createTransactionFixture() {
 		Map<String, Object> objectMap = new HashMap<String, Object>();
-		RateCollection rateCollection = (RateCollection) RateTest
-				.getDefaultObject();
+		RateCollection rateCollection = RateTest.createRateCollectionFixture();
 		List<Rate> rateList = rateCollection.getData();
 
 		Rate selectedRate = selectTestRate(rateList);

@@ -49,8 +49,7 @@ public class PickupTest extends ShippoTest {
 
 	public static Object getDefaultObject() throws InvalidRequestException {
 		Map<String, Object> objectMap = new HashMap<String, Object>();
-		RateCollection rateCollection = (RateCollection) RateTest
-				.getDefaultObject();
+		RateCollection rateCollection = RateTest.createRateCollectionFixture();
 		List<Rate> rateList = rateCollection.getData();
 		objectMap.put("rate", rateList.get(0).getObjectId());
 		objectMap.put("metadata", "Customer ID 123456");

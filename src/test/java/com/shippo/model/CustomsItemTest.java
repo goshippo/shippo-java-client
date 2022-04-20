@@ -34,7 +34,7 @@ public class CustomsItemTest extends ShippoTest {
 
     @Test
     public void testValidCreate() {
-        CustomsItem testObject = (CustomsItem) getDefaultObject();
+        CustomsItem testObject = createCustomsItemFixture();
         assertEquals(testObject.getObjectState(), "VALID");
         assertEquals(testObject.getDescription(), objectMap.get("description"));
         assertEquals(testObject.getQuantity(), Double.parseDouble((String) objectMap.get("quantity")));
@@ -58,7 +58,7 @@ public class CustomsItemTest extends ShippoTest {
     @Test
     public void testRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        CustomsItem testObject = (CustomsItem) getDefaultObject();
+        CustomsItem testObject = createCustomsItemFixture();
         CustomsItem retrievedObject;
 
         retrievedObject = CustomsItem.retrieve((String) testObject.objectId);
@@ -89,10 +89,9 @@ public class CustomsItemTest extends ShippoTest {
         assertEquals(CustomsItemCollection.getData().size(), 1);
     }
 
-    public static Object getDefaultObject() {
+    public static CustomsItem createCustomsItemFixture() {
         try {
-            CustomsItem testObject = CustomsItem.create(objectMap);
-            return testObject;
+            return CustomsItem.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }

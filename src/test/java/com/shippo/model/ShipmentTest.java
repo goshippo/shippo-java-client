@@ -74,7 +74,7 @@ public class ShipmentTest extends ShippoTest {
         // Create prerequisite helper objects
         Address addressFrom = AddressTest.createAddressFixture1();
         Address addressTo = AddressTest.createAddressFixture2();
-        Parcel parcel = (Parcel) ParcelTest.getDefaultObject();
+        Parcel parcel = ParcelTest.createParcelFixture();
 
         TimeZone tz = TimeZone.getTimeZone("PST");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");

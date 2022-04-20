@@ -1,3 +1,6 @@
+=== 3.2.0
+- Added DuplicateRefundException thrown when multiple refunds are reqested for the same transaction
+
 === 3.1.0
 - Added pickups
 - Added orders

@@ -72,8 +72,8 @@ public class ShipmentTest extends ShippoTest {
 
     public static Object getDefaultObject() {
         // Create prerequisite helper objects
-        Address addressFrom = (Address) AddressTest.getDefaultObject();
-        Address addressTo = (Address) AddressTest.getSecondObject();
+        Address addressFrom = AddressTest.createAddressFixture1();
+        Address addressTo = AddressTest.createAddressFixture2();
         Parcel parcel = (Parcel) ParcelTest.getDefaultObject();
 
         TimeZone tz = TimeZone.getTimeZone("PST");

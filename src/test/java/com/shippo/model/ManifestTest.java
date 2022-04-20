@@ -75,7 +75,7 @@ public class ManifestTest extends ShippoTest {
         df.setTimeZone(tz);
         String nowTime = df.format(new Date());
         Map<String, Object> objectMap = new HashMap<String, Object>();
-        Address testAddress = (Address) AddressTest.getDefaultObject();
+        Address testAddress = AddressTest.createAddressFixture1();
         Transaction transaction = TransactionTest.createTransactionFixture();
         List<String> transactions = new ArrayList<String>();
         transactions.add(transaction.objectId);

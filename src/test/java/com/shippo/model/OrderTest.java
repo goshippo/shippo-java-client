@@ -63,8 +63,8 @@ public class OrderTest extends ShippoTest {
 	}
 
 	public static Object getDefaultObject() {
-		Address addressFrom = (Address) AddressTest.getDefaultObject();
-		Address addressTo = (Address) AddressTest.getSecondObject();
+		Address addressFrom = AddressTest.createAddressFixture1();
+		Address addressTo = AddressTest.createAddressFixture2();
 
 		Map<String, Object> lineItem = new HashMap<String, Object>();
 		lineItem.put("title", "Demo Line Item Object");

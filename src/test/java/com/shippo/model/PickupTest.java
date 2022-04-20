@@ -85,7 +85,7 @@ public class PickupTest extends ShippoTest {
 		LocalDateTime startTime = now.plusDays(1);
 		LocalDateTime endTime = now.plusDays(2);
 
-		Address addressFrom = (Address) AddressTest.getDefaultObject();
+		Address addressFrom = AddressTest.createAddressFixture1();
 		Map<String, Object> locationParams = new HashMap<String, Object>();
 		locationParams.put("building_location_type", "Knock on Door");
 		locationParams.put("address", addressFrom);

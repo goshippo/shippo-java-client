@@ -24,7 +24,7 @@ public class ManifestTest extends ShippoTest {
     @Test
     public void testValidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Manifest testObject = (Manifest) getDefaultObject();
+        Manifest testObject = createManifestFixture();
         assertEquals("QUEUED", testObject.getStatus());
     }
 
@@ -37,7 +37,7 @@ public class ManifestTest extends ShippoTest {
     @Test
     public void testRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Manifest testObject = (Manifest) getDefaultObject();
+        Manifest testObject = createManifestFixture();
         Manifest retrievedObject;
 
         retrievedObject = Manifest.retrieve((String) testObject.objectId);
@@ -68,8 +68,7 @@ public class ManifestTest extends ShippoTest {
         assertEquals(ManifestCollection.getData().size(), 1);
     }
 
-    public static Object getDefaultObject() throws AuthenticationException, InvalidRequestException, APIConnectionException,
-            APIException {
+    public static Manifest createManifestFixture() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
         TimeZone tz = TimeZone.getTimeZone("PST");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         df.setTimeZone(tz);
@@ -86,8 +85,7 @@ public class ManifestTest extends ShippoTest {
         objectMap.put("transactions", transactions);
 
         try {
-            Manifest testObject = Manifest.create(objectMap);
-            return testObject;
+            return Manifest.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }

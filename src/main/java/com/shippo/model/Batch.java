@@ -55,6 +55,8 @@ public final class Batch extends APIResource {
 	@SerializedName("label_filetype")
 	private LabelFileType labelFileType;
 
+	Boolean test;
+
 	public static class BatchShipmentCollection {
 		private int count;
 		private String next;

@@ -1,6 +1,7 @@
 package com.shippo.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,19 @@ public class BatchTest extends ShippoTest {
 	@Test
 	public void testPurchase() throws AuthenticationException, InvalidRequestException, APIConnectionException,
 			APIException, TimeoutException {
-		String batchId = createBatchFixture().getId();
+		// GIVEN
+		Batch batch = createBatchFixture();
+
+		// EXPECT
+		assertTrue(Boolean.TRUE.equals(batch.test));
+
+		// WHEN
+		String batchId = batch.getId();
 		waitForBatchStatus(batchId, Batch.BatchStatus.VALID, 60);
-		Batch batch = Batch.purchase(batchId);
-		assertEquals(batch.getStatus(), Batch.BatchStatus.PURCHASING);
+		Batch purchasedBatch = Batch.purchase(batchId);
+
+		// THEN
+		assertEquals(purchasedBatch.getStatus(), Batch.BatchStatus.PURCHASING);
 	}
 
 /*

@@ -32,7 +32,7 @@ public class RateTest extends ShippoTest {
     }
 
     public static RateCollection createRateCollectionFixture() {
-        Shipment testObject = (Shipment) ShipmentTest.createShipmentFixture();
+        Shipment testObject = ShipmentTest.createShipmentFixture();
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("id", testObject.getObjectId());
         objectMap.put("currency_code", "USD");

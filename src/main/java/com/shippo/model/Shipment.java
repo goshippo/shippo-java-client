@@ -31,6 +31,7 @@ public class Shipment extends APIResource {
 	Object metadata;
 	Object messages;
 	List<Rate> rates;
+	private boolean test;
 
     public static Shipment createForBatch(Address from, Address to, List<Parcel> parcels) {
         Shipment s = new Shipment();
@@ -276,5 +277,13 @@ public class Shipment extends APIResource {
 
 	public void setMessages(Object messages) {
 		this.messages = messages;
+	}
+
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
 	}
 }

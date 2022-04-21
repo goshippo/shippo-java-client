@@ -38,13 +38,22 @@ public class CustomsDeclaration extends APIResource {
     Object invoicedCharges;
     Object addressImporter;
     Object exporterIdentification;
+	private boolean test;
 
     public static CustomsDeclaration create(Map<String, Object> params) throws AuthenticationException,
             InvalidRequestException, APIConnectionException, APIException {
         return create(params, null);
     }
 
-    public String getInstanceURL() {
+    public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
+	public String getInstanceURL() {
         return "";
     }
 

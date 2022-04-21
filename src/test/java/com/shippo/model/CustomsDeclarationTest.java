@@ -64,6 +64,7 @@ public class CustomsDeclarationTest extends ShippoTest {
 		Shippo.setDEBUG(true);
         CustomsDeclaration testObject = createCustomsDeclarationFixture();
         assertEquals(testObject.getObjectState(), "VALID");
+		assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
 
         assertEquals(testObject.getCertifySigner(), customsDeclarationRequestMap.get("certify_signer"));
         assertEquals(testObject.getCertify(), Boolean.parseBoolean((String) customsDeclarationRequestMap.get("certify")));

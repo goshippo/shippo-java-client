@@ -18,6 +18,7 @@ public class Refund extends APIResource {
     Object object_created;
     Object object_updated;
     Object transaction;
+    private boolean test;
 
     public static Refund create(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
             DuplicateRefundRequestException, APIConnectionException, APIException {
@@ -107,4 +108,13 @@ public class Refund extends APIResource {
     public void setTransaction(Object transaction) {
         this.transaction = transaction;
     }
+
+    public boolean isTest() {
+        return test;
+    }
+
+    public void setTest(boolean test) {
+        this.test = test;
+    }
+
 }

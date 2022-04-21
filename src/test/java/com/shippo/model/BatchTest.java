@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -24,7 +25,7 @@ public class BatchTest extends ShippoTest {
 		Batch batch = createBatchFixture();
 
 		// EXPECT
-		assertTrue(Boolean.TRUE.equals(batch.test));
+		assertEquals(Shippo.apiKeyIsTest, batch.test);
 
 		// WHEN
 		String batchId = batch.getId();

@@ -11,6 +11,8 @@ public class ShippoTest {
 	@Before
 	public void setAPIKey() {
 		Shippo.apiKey = "shippo_test_cf1b6d0655e59fc6316880580765066038ef20d8";
+		// Some tests make assertions on response models based on whether a test api key is used
+		Shippo.apiKeyIsTest = true;
 		Shippo.DEBUG = true;
 	}
 

@@ -13,6 +13,7 @@ public abstract class Shippo {
     public static int httpReadTimeout = 80000; // milliseconds
 
     public static volatile String apiKey;
+    public static boolean apiKeyIsTest;
     public static volatile String apiVersion;
 
     private static volatile boolean verifySSL = true;

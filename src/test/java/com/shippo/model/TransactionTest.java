@@ -89,7 +89,7 @@ public class TransactionTest extends ShippoTest {
 		return rateList.stream().filter(new Predicate<Rate>() {
 			@Override
 			public boolean test(Rate rate) {
-				return rate.test != null && rate.test == true;
+				return Boolean.TRUE.equals(rate.test);
 			}
 		}).findAny().orElseThrow();
 	}

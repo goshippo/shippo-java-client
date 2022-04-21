@@ -36,11 +36,20 @@ public class Order extends APIResource {
 	String notes;
 	Object messages;
 	Object metadata;
+	private boolean test;
 
 	public static Order create(Map<String, Object> params)
 			throws AuthenticationException, InvalidRequestException,
 			APIConnectionException, APIException {
 		return create(params, null);
+	}
+
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
 	}
 
 	public static Order create(Map<String, Object> params, String apiKey)

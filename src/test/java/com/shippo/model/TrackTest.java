@@ -1,13 +1,14 @@
 package com.shippo.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
+
+import org.junit.Test;
 
 
 public class TrackTest extends ShippoTest {
@@ -25,6 +26,7 @@ public class TrackTest extends ShippoTest {
     public void testGet()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {
         Track track = Track.getTrackingInfo(carrier, number, null);
+        assertEquals(Shippo.apiKeyIsTest, track.isTest());
         checkTrack(track);
     }
     

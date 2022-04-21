@@ -23,6 +23,7 @@ public final class Track extends APIResource {
 
 	private String carrier;
 	private String trackingNumber;
+	private boolean test;
 
 	public static class Address {
 		private String city;
@@ -157,6 +158,14 @@ public final class Track extends APIResource {
 
 	public TrackingEvent[] getTrackingHistory() {
 		return trackingHistory;
+	}
+
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
 	}
 
 	/**

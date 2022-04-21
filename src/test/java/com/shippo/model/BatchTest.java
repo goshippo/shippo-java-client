@@ -1,16 +1,10 @@
 package com.shippo.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeoutException;
 import java.util.List;
-
-import org.junit.Test;
+import java.util.concurrent.TimeoutException;
 
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
@@ -18,11 +12,22 @@ import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.model.Batch.BatchStatus;
 
+import org.junit.Test;
+
 public class BatchTest extends ShippoTest {
 
-	final String id = "dd442663c24843068977704b1bd7d91d";
+	@Test
+	public void testPurchase() throws AuthenticationException, InvalidRequestException, APIConnectionException,
+			APIException, TimeoutException {
+		String batchId = createBatchFixture().getId();
+		waitForBatchStatus(batchId, Batch.BatchStatus.VALID, 60);
+		Batch batch = Batch.purchase(batchId);
+		assertEquals(batch.getStatus(), Batch.BatchStatus.PURCHASING);
+	}
 
 /*
+	final String id = "dd442663c24843068977704b1bd7d91d";
+
 	@Test 
 	public void testAll() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException,
 			UnsupportedEncodingException, MalformedURLException {
@@ -100,6 +105,13 @@ public class BatchTest extends ShippoTest {
 		assertEquals(beforeRemoveCount - 1, afterRemoveCount);
 	}
 */
+/*
+	@Test
+	public void testCreate()
+			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+		assertEquals(createBatch().getStatus(), Batch.BatchStatus.VALIDATING);
+	}
+*/
 	private Batch createBatchFixture()
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
 		Address from = Address.createForPurchase("Undefault New Wu", "Clayton St.", "San Francisco", "94117", "CA",
@@ -112,21 +124,6 @@ public class BatchTest extends ShippoTest {
 		Shipment shipment = Shipment.createForBatch(from, to, parcels);
 		BatchShipment[] shipments = { BatchShipment.createForShipment(shipment, null, null) };
 		return Batch.create("09a25c72f0df461ea8fea8b755356aaf", "usps_priority", LabelFileType.PDF, null, shipments);
-	}
-/*
-	@Test
-	public void testCreate()
-			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		assertEquals(createBatch().getStatus(), Batch.BatchStatus.VALIDATING);
-	}
-*/
-	@Test
-	public void testPurchase() throws AuthenticationException, InvalidRequestException, APIConnectionException,
-			APIException, TimeoutException {
-		String batchId = createBatchFixture().getId();
-		waitForBatchStatus(batchId, Batch.BatchStatus.VALID, 60);
-		Batch batch = Batch.purchase(batchId);
-		assertEquals(batch.getStatus(), Batch.BatchStatus.PURCHASING);
 	}
 
 	private void waitForBatchStatus(String batchId, BatchStatus status, int times) throws TimeoutException,

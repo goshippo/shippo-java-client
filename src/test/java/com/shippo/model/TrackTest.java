@@ -13,7 +13,7 @@ import com.shippo.exception.InvalidRequestException;
 public class TrackTest extends ShippoTest {
 
     final static String carrier = "shippo";
-    final static String number = "SHIPPO_TRANSIT";
+    final static String number = "SHIPPO_DELIVERED";
 
     private void checkTrack(Track track) {
         assertEquals(track.getCarrier(), carrier);
@@ -21,13 +21,13 @@ public class TrackTest extends ShippoTest {
         assertEquals(track.getTrackingStatus().getStatus(), Track.TrackingStatus.DELIVERED);
     }
 
-/*    @Test
+    @Test
     public void testGet()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {
         Track track = Track.getTrackingInfo(carrier, number, null);
         checkTrack(track);
     }
-*/
+    
     @Test(expected = InvalidRequestException.class)
     public void testGetInvalidCarrier()  throws AuthenticationException, InvalidRequestException, 
             APIConnectionException, APIException {

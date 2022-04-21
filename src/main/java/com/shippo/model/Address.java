@@ -37,7 +37,15 @@ public class Address extends APIResource {
 	ValidationResults validation_results;
 	Boolean test;
 
-    public class ValidationResults {
+    public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(Boolean test) {
+		this.test = test;
+	}
+
+	public class ValidationResults {
     	boolean is_valid;
     	List<ValidationMessage> messages;
 

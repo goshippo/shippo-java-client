@@ -55,7 +55,7 @@ public final class Batch extends APIResource {
 	@SerializedName("label_filetype")
 	private LabelFileType labelFileType;
 
-	Boolean test;
+	private boolean test;
 
 	public static class BatchShipmentCollection {
 		private int count;
@@ -140,6 +140,14 @@ public final class Batch extends APIResource {
 				+ ", defaultServiceLevelToken=" + defaultServiceLevelToken + ", labelFileType=" + labelFileType
 				+ ", batchShipments=" + batchShipments + ", labelURLs=" + Arrays.toString(labelURLs)
 				+ ", objectResults=" + objectResults + "]";
+	}
+
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
 	}
 
 	private static class BatchCollection {

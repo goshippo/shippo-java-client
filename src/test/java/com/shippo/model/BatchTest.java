@@ -25,7 +25,7 @@ public class BatchTest extends ShippoTest {
 		Batch batch = createBatchFixture();
 
 		// EXPECT
-		assertEquals(Shippo.apiKeyIsTest, batch.test);
+		assertEquals(Shippo.apiKeyIsTest, batch.isTest());
 
 		// WHEN
 		String batchId = batch.getId();

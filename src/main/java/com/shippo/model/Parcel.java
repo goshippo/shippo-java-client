@@ -23,6 +23,7 @@ public class Parcel extends APIResource {
     Object weight;
     Object massUnit;
     Object metadata;
+	private boolean test;
 
     public static Parcel createForShipment(double length, double width, double height, String distanceUnit,
                                            double weight, String massUnit) {
@@ -36,7 +37,15 @@ public class Parcel extends APIResource {
         return p;
     }
 
-    public static Parcel create(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
+    public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
+	public static Parcel create(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException {
         return create(params, null);
     }

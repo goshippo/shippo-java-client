@@ -35,6 +35,7 @@ public class Address extends APIResource {
     Object metadata;
     Object messages;
 	ValidationResults validation_results;
+	Boolean test;
 
     public class ValidationResults {
     	boolean is_valid;

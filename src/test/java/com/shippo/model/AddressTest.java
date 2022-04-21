@@ -19,6 +19,7 @@ public class AddressTest extends ShippoTest {
     public void testValidCreate() {
         Address testObject = createAddressFixture1();
         assertTrue(testObject.getIsComplete());
+        assertTrue(Boolean.TRUE.equals(testObject.test));
     }
 
     @Test(expected = InvalidRequestException.class)

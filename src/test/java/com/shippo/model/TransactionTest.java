@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -22,6 +23,7 @@ public class TransactionTest extends ShippoTest {
 	public void testValidCreate() {
 		Transaction testObject = createTransactionFixture();
 		assertEquals("SUCCESS", testObject.getStatus());
+        assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
 	}
 
 	@Test(expected = InvalidRequestException.class)

@@ -376,6 +376,7 @@ public abstract class APIResource extends ShippoObject {
 
 		// Print Information about the Connection
 		if (Shippo.isDEBUG()) {
+			System.out.println("--------------- REQUEST ----------------------------------------------");
 			System.out.println("URL: " + url);
 			System.out.println("Query: " + query);
 			System.out.println("API Key: " + apiKey);

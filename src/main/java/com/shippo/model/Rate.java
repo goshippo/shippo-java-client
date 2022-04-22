@@ -26,6 +26,7 @@ public class Rate extends APIResource {
 	Object estimated_days;
 	Object durationTerms;
 	Object messages;
+	Boolean test;
 
 	public static Rate retrieve(String id) throws AuthenticationException, InvalidRequestException,
 			APIConnectionException, APIException {
@@ -176,4 +177,14 @@ public class Rate extends APIResource {
 	public void setMessages(Object messages) {
 		this.messages = messages;
 	}
+
+	public Boolean getTest() {
+		return test;
+	}
+
+	public void setTest(Boolean test) {
+		this.test = test;
+	}
+
+	
 }

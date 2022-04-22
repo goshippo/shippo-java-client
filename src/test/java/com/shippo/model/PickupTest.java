@@ -1,24 +1,18 @@
 package com.shippo.model;
 
-import static org.junit.Assert.*;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
-import java.time.LocalDateTime;
-
-import org.junit.Test;
 
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.ShippoException;
+
+import org.junit.Test;
 
 public class PickupTest extends ShippoTest {
 	/**
@@ -31,7 +25,7 @@ public class PickupTest extends ShippoTest {
 	 * @Test
 	 *       public void testValidCreate() {
 	 *       try {
-	 *       Pickup testObject = (Pickup) getDefaultObject();
+	 *       Pickup testObject = createPickupFixture();
 	 *       assertEquals("SUCCESS", testObject.getStatus());
 	 *       } catch (InvalidRequestException e) {
 	 *       assertTrue(true);
@@ -47,10 +41,9 @@ public class PickupTest extends ShippoTest {
 		Shipment.create(getInvalidObjectMap());
 	}
 
-	public static Object getDefaultObject() throws InvalidRequestException {
+	public static Pickup createPickupFixture() throws InvalidRequestException {
 		Map<String, Object> objectMap = new HashMap<String, Object>();
-		RateCollection rateCollection = (RateCollection) RateTest
-				.getDefaultObject();
+		RateCollection rateCollection = RateTest.createRateCollectionFixture();
 		List<Rate> rateList = rateCollection.getData();
 		objectMap.put("rate", rateList.get(0).getObjectId());
 		objectMap.put("metadata", "Customer ID 123456");
@@ -85,7 +78,7 @@ public class PickupTest extends ShippoTest {
 		LocalDateTime startTime = now.plusDays(1);
 		LocalDateTime endTime = now.plusDays(2);
 
-		Address addressFrom = (Address) AddressTest.getDefaultObject();
+		Address addressFrom = AddressTest.createAddressFixture1();
 		Map<String, Object> locationParams = new HashMap<String, Object>();
 		locationParams.put("building_location_type", "Knock on Door");
 		locationParams.put("address", addressFrom);
@@ -98,8 +91,7 @@ public class PickupTest extends ShippoTest {
 		pickupParams.put("requested_end_time", String.join("", endTime.toString(), "Z"));
 		pickupParams.put("is_test", false);
 		try {
-			Pickup pickup = Pickup.create(pickupParams);
-			return pickup;
+			return Pickup.create(pickupParams);
 		} catch (InvalidRequestException e) {
 			throw new InvalidRequestException("Pickup already scheduled.", null, e);
 		} catch (ShippoException e) {

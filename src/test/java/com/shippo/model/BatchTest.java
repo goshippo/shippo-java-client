@@ -63,7 +63,7 @@ public class BatchTest extends ShippoTest {
 
 	private BatchShipment addShipment()
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		Shipment shipment = (Shipment) ShipmentTest.getDefaultObject();
+		Shipment shipment = ShipmentTest.createShipmentFixture();
 		String[] ids = { (String) shipment.getObjectId() };
 		Batch batch = Batch.addShipments(id, ids);
 		for (BatchShipment bs : batch.getBatchShipments().getShipments()) {
@@ -100,7 +100,7 @@ public class BatchTest extends ShippoTest {
 		assertEquals(beforeRemoveCount - 1, afterRemoveCount);
 	}
 */
-	private Batch createBatch()
+	private Batch createBatchFixture()
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
 		Address from = Address.createForPurchase("Undefault New Wu", "Clayton St.", "San Francisco", "94117", "CA",
 				"USA", "random@example.com");
@@ -123,7 +123,7 @@ public class BatchTest extends ShippoTest {
 	@Test
 	public void testPurchase() throws AuthenticationException, InvalidRequestException, APIConnectionException,
 			APIException, TimeoutException {
-		String batchId = createBatch().getId();
+		String batchId = createBatchFixture().getId();
 		waitForBatchStatus(batchId, Batch.BatchStatus.VALID, 60);
 		Batch batch = Batch.purchase(batchId);
 		assertEquals(batch.getStatus(), Batch.BatchStatus.PURCHASING);

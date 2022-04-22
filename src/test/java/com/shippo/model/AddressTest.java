@@ -17,7 +17,7 @@ public class AddressTest extends ShippoTest {
 
     @Test
     public void testValidCreate() {
-        Address testObject = (Address) getDefaultObject();
+        Address testObject = createAddressFixture1();
         assertTrue(testObject.getIsComplete());
     }
 
@@ -30,7 +30,7 @@ public class AddressTest extends ShippoTest {
     @Test
     public void testRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Address testObject = (Address) getDefaultObject();
+        Address testObject = createAddressFixture1();
         Address retrievedObject;
 
         retrievedObject = Address.retrieve((String) testObject.getObjectId());
@@ -64,7 +64,7 @@ public class AddressTest extends ShippoTest {
     @Test
     public void testInvalidAddress() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Address testAddress = (Address) getInvalidAddress();
+        Address testAddress = createInvalidAddressFixture();
         assertFalse(testAddress.getValidationResults().getIsValid());
         assertTrue(testAddress.getValidationResults().getValidationMessages().size() > 0);
         assertNotNull(testAddress.getValidationResults().getValidationMessages().get(0).getSource());
@@ -75,13 +75,13 @@ public class AddressTest extends ShippoTest {
     @Test
     public void testValidAddress() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Address testAddress = (Address) getDefaultObject();
+        Address testAddress = createAddressFixture1();
         Address validatedAddress = Address.validate(testAddress.getObjectId());
         assertTrue(validatedAddress.getValidationResults().getIsValid());
         assertEquals(validatedAddress.getValidationResults().getValidationMessages().size(), 0);
     }
 
-    public static Object getDefaultObject() {
+    public static Address createAddressFixture1() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("name", "Undefault New Wu");
         objectMap.put("company", "Shippo");
@@ -98,15 +98,14 @@ public class AddressTest extends ShippoTest {
         objectMap.put("metadata", "Customer ID 123456");
 
         try {
-            Address testObject = Address.create(objectMap);
-            return testObject;
+            return Address.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static Object getSecondObject() {
+    public static Address createAddressFixture2() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("name", "Second New Wu");
         objectMap.put("company", "Hippo");
@@ -122,15 +121,14 @@ public class AddressTest extends ShippoTest {
         objectMap.put("metadata", "Customer ID 1234567");
 
         try {
-            Address testObject = Address.create(objectMap);
-            return testObject;
+            return Address.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static Object getInternationalObject() {
+    public static Address createInternationalAddressFixture() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("name", "Ms Hippo");
         objectMap.put("company", "Regents Park");
@@ -146,15 +144,15 @@ public class AddressTest extends ShippoTest {
         objectMap.put("metadata", "For Order Number 123");
 
         try {
-            Address testObject = Address.create(objectMap);
-            return testObject;
+            return Address.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static Object getInvalidAddress() {
+    // this address does not exist
+    public static Address createInvalidAddressFixture() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("name", "Undefault New Wu");
         objectMap.put("street1", "Clayton St.");
@@ -171,8 +169,7 @@ public class AddressTest extends ShippoTest {
         objectMap.put("validate", true);
 
         try {
-            Address testObject = Address.create(objectMap);
-            return testObject;
+            return Address.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }

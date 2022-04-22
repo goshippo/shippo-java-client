@@ -1,7 +1,9 @@
 package com.shippo.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import com.shippo.Shippo;
 
@@ -29,4 +31,15 @@ public class ShippoTest {
     public static Object nullToEmptyString(Object value) {
         return value == null ? "" : value;
     }
+
+	// Make sure we get a test rate.  We are using a test auth token, so it should not be possible to get a non-test rate back,
+	// but previous author was uncertain, and I don't know enough about the underlying implementation to be sure.
+	static Rate selectTestRate(List<Rate> rateList) {
+		return rateList.stream().filter(new Predicate<Rate>() {
+			@Override
+			public boolean test(Rate rate) {
+				return rate.isTest();
+			}
+		}).findAny().orElseThrow();
+	}
 }

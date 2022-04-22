@@ -18,4 +18,14 @@ public class CarrierAccountTest extends ShippoTest {
         assertEquals(Shippo.apiKeyIsTest, usps_account.isTest());
     }
 
+    // TODO: throw a better exception
+    // Ideally something like CarrierAccountNotFound, but at least InvalidRequest
+	@Test(expected = IndexOutOfBoundsException.class)
+    public void testRetrieveInvalid() throws ShippoException {
+        // WHEN
+        CarrierAccount.getByCarrier("rando-bad");
+
+        // EXPECT exception
+    }
+
 }

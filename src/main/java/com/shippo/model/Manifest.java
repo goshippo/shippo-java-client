@@ -19,6 +19,7 @@ public class Manifest extends APIResource {
     Object shipmentDate;
     Object addressFrom;
     Object documents;
+	// TODO: add private boolean test attribute.  Today response payload does not include test attribute.
 
     public static Manifest create(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException {

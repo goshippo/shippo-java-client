@@ -30,6 +30,7 @@ public class Pickup extends APIResource {
 	Object timezone;
 	Object messages;
 	Object metadata;
+	// TODO: add private boolean test attribute.  Today response payload does not include test attribute.
 
 	public static Pickup create(Map<String, Object> params)
 			throws AuthenticationException, InvalidRequestException,

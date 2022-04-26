@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,9 @@ public class GsonTest extends ShippoTest {
         assertTrue(pickup.isTest());
     }
 
-    static String getResourceFileAsString(String fileName) {
-        return new Scanner(GsonTest.class.getResourceAsStream(fileName), "UTF-8").useDelimiter("\\A").next();
+    static String getResourceFileAsString(String fileName) throws IOException {
+        URL resource = GsonTest.class.getResource(fileName);
+        System.out.println("Found test resource:"+resource);
+        return new Scanner(resource.openStream(), "UTF-8").useDelimiter("\\A").next();
     }
 }

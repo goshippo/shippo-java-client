@@ -2,6 +2,7 @@ package com.shippo.model;
 
 import java.util.Map;
 
+import com.google.gson.annotations.SerializedName;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -30,6 +31,7 @@ public class Pickup extends APIResource {
 	Object timezone;
 	Object messages;
 	Object metadata;
+	@SerializedName("is_test")
 	private boolean test;
 
 	public static Pickup create(Map<String, Object> params)

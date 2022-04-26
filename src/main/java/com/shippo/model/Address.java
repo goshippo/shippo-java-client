@@ -49,8 +49,8 @@ public class Address extends APIResource {
     	boolean is_valid;
     	List<ValidationMessage> messages;
 
-    	public List<ValidationMessage> getValidationMessages(){ return messages; }
-     	public boolean getIsValid(){ return is_valid; }
+		public List<ValidationMessage> getValidationMessages(){ return messages; }
+		public boolean getIsValid(){ return is_valid; }
 	}
 
 	public class ValidationMessage {

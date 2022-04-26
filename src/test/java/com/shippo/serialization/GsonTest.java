@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import com.shippo.model.Address;
@@ -32,7 +33,7 @@ public class GsonTest extends ShippoTest {
     @Test
     public void deserialize_is_test_to_test() throws IOException {
         // GIVEN a Pickup payload with is_test = true
-        String payload = getResourceFileAsString("com/shippo/serialization/pickup_response_body.json");
+        String payload = getResourceFileAsString("pickup_response_body.json");
 
         // WHEN
         Pickup pickup = GsonFactory.getGson(Pickup.class).fromJson(payload, Pickup.class);
@@ -41,14 +42,7 @@ public class GsonTest extends ShippoTest {
         assertTrue(pickup.isTest());
     }
 
-    static String getResourceFileAsString(String fileName) throws IOException {
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        try (InputStream is = classLoader.getResourceAsStream(fileName)) {
-            if (is == null) return null;
-            try (InputStreamReader isr = new InputStreamReader(is);
-                 BufferedReader reader = new BufferedReader(isr)) {
-                return reader.lines().collect(Collectors.joining(System.lineSeparator()));
-            }
-        }
+    static String getResourceFileAsString(String fileName) {
+        return new Scanner(GsonTest.class.getResourceAsStream(fileName), "UTF-8").useDelimiter("\\A").next();
     }
 }

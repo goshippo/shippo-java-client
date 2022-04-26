@@ -3,13 +3,9 @@ package com.shippo.serialization;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import com.shippo.model.Address;
 import com.shippo.model.Pickup;

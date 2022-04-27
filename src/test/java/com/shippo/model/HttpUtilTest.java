@@ -10,14 +10,14 @@ import org.junit.Test;
 import com.shippo.util.HttpUtil;
 
 public class HttpUtilTest {
-		
+
 	@Test
 	public void testOne() throws UnsupportedEncodingException {
 		Map<String, String> params = HttpUtil.queryToParams("page=1");
 		assertEquals(params.size(), 1);
 		assertEquals(params.get("page"), "1");
 	}
-	
+
 	@Test
 	public void testMany() throws UnsupportedEncodingException {
 		Map<String, String> params = HttpUtil.queryToParams("page=1&results=completed");

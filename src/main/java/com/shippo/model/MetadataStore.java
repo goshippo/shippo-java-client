@@ -11,13 +11,13 @@ import com.shippo.exception.InvalidRequestException;
  * Common interface for Shippo objects that can store metadata.
  */
 public interface MetadataStore<T> {
-    Map<String, String> getMetadata();
+        Map<String, String> getMetadata();
 
-    void setMetadata(Map<String, String> metadata);
+        void setMetadata(Map<String, String> metadata);
 
-    MetadataStore<T> update(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
-            APIConnectionException, APIException;
+        MetadataStore<T> update(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
+                        APIConnectionException, APIException;
 
-    MetadataStore<T> update(Map<String, Object> params, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException;
+        MetadataStore<T> update(Map<String, Object> params, String apiKey) throws AuthenticationException,
+                        InvalidRequestException, APIConnectionException, APIException;
 }

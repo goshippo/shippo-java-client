@@ -189,18 +189,21 @@ public final class Batch extends APIResource {
 	 * https://goshippo.com/docs/reference#batches-create
 	 *
 	 * @param carrierAccount
-	 *            Carrier account ID used if not provided in individual
-	 *            shipments
+	 *                          Carrier account ID used if not provided in
+	 *                          individual
+	 *                          shipments
 	 * @param serviceLevelToken
-	 *            Associated service level token used if not provided in
-	 *            shipments
+	 *                          Associated service level token used if not provided
+	 *                          in
+	 *                          shipments
 	 * @param labelFileType
-	 *            Print format of the label
+	 *                          Print format of the label
 	 * @param metadata
-	 *            Optional user content associated with the batch
+	 *                          Optional user content associated with the batch
 	 * @param shipments
-	 *            Array of {@link BatchShipment} objects that will be added to
-	 *            the batch
+	 *                          Array of {@link BatchShipment} objects that will be
+	 *                          added to
+	 *                          the batch
 	 * @return The newly created Batch object
 	 */
 	public static Batch create(String carrierAccount, String serviceLevelToken, LabelFileType labelFileType,
@@ -216,7 +219,8 @@ public final class Batch extends APIResource {
 
 	public static enum ShipmentStatus {
 		PURCHASE_SUCCEEDED("purchase_succeeded"), PURCHASE_FAILED("purchase_failed"), CREATION_SUCCEEDED(
-				"creation_succeeded"), CREATION_FAILED("creation_failed");
+				"creation_succeeded"),
+		CREATION_FAILED("creation_failed");
 
 		private final String apiText;
 
@@ -233,16 +237,17 @@ public final class Batch extends APIResource {
 	/**
 	 * Get batch based on its ID. Optionally filter shipments inside the batch
 	 * using <code>page</code> and <code>objectResults</code> parameter. This
-	 * function corresponds to https://api.goshippo.com/batches/<i>BATCH OBJECT ID</i>
+	 * function corresponds to https://api.goshippo.com/batches/<i>BATCH OBJECT
+	 * ID</i>
 	 * endpoint documented at https://goshippo.com/docs/reference#batches-retrieve
 	 *
 	 * @param id
-	 *            ID of batch to retrieve
+	 *                      ID of batch to retrieve
 	 * @param page:
-	 *            the page to return. Is ignored if it is 0.
+	 *                      the page to return. Is ignored if it is 0.
 	 * @param objectResults
-	 *            filter shipments that have this status. Can be null if
-	 *            filtering is not required.
+	 *                      filter shipments that have this status. Can be null if
+	 *                      filtering is not required.
 	 * @return The Batch object
 	 */
 	public static Batch get(String id, int page, ShipmentStatus objectResults)
@@ -270,13 +275,14 @@ public final class Batch extends APIResource {
 	 * Add shipments to an existing batch provided by id. This takes shipment
 	 * IDs which means shipments should have been already been created using
 	 * {@link Shipment#create}. This method corresponds to
-	 * https://api.goshippo.com/batches/<i>BATCH OBJECT ID</i>/add_shipments endpoint
+	 * https://api.goshippo.com/batches/<i>BATCH OBJECT ID</i>/add_shipments
+	 * endpoint
 	 * defined in https://goshippo.com/docs/reference#batches-add-shipments
 	 *
 	 * @param id
-	 *            Batch object ID
+	 *                    Batch object ID
 	 * @param shipmentIds
-	 *            Array of shipment Ids to be added to the batch
+	 *                    Array of shipment Ids to be added to the batch
 	 * @return The Batch object after shipments have been added
 	 */
 	public static Batch addShipments(String id, String[] shipmentIds)
@@ -292,13 +298,15 @@ public final class Batch extends APIResource {
 
 	/**
 	 * Remove shipments to an existing batch provided by id. This method
-	 * corresponds to https://api.goshippo.com/batches/<i>BATCH OBJECT ID</i>/remove_shipments
-	 * endpoint defined in https://goshippo.com/docs/reference#batches-remove-shipments
+	 * corresponds to https://api.goshippo.com/batches/<i>BATCH OBJECT
+	 * ID</i>/remove_shipments
+	 * endpoint defined in
+	 * https://goshippo.com/docs/reference#batches-remove-shipments
 	 *
 	 * @param id
-	 *            Batch object ID
+	 *                    Batch object ID
 	 * @param shipmentIds
-	 *            Array of shipment Ids to be removed from the batch
+	 *                    Array of shipment Ids to be removed from the batch
 	 * @return The Batch object after shipments have been removed
 	 */
 	public static Batch removeShipments(String id, String[] shipmentIds)
@@ -315,7 +323,7 @@ public final class Batch extends APIResource {
 	 * defined in https://goshippo.com/docs/reference#batches-purchase
 	 *
 	 * @param id
-	 *            Batch object ID
+	 *           Batch object ID
 	 * @return The Batch object after purchasing
 	 */
 	public static Batch purchase(String id)

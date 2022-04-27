@@ -16,28 +16,28 @@ public class Parcel extends APIResource {
 	String objectOwner;
 	Object objectCreated;
 	Object objectUpdated;
-    Object length;
-    Object width;
-    Object height;
-    Object distanceUnit;
-    Object weight;
-    Object massUnit;
-    Object metadata;
+	Object length;
+	Object width;
+	Object height;
+	Object distanceUnit;
+	Object weight;
+	Object massUnit;
+	Object metadata;
 	private boolean test;
 
-    public static Parcel createForShipment(double length, double width, double height, String distanceUnit,
-                                           double weight, String massUnit) {
-        Parcel p = new Parcel();
-        p.length = length;
-        p.width = width;
-        p.height = height;
-        p.distanceUnit = (Object)distanceUnit.toString();
-        p.weight = weight;
-        p.massUnit = (Object)massUnit.toString();
-        return p;
-    }
+	public static Parcel createForShipment(double length, double width, double height, String distanceUnit,
+			double weight, String massUnit) {
+		Parcel p = new Parcel();
+		p.length = length;
+		p.width = width;
+		p.height = height;
+		p.distanceUnit = (Object) distanceUnit.toString();
+		p.weight = weight;
+		p.massUnit = (Object) massUnit.toString();
+		return p;
+	}
 
-    public boolean isTest() {
+	public boolean isTest() {
 		return test;
 	}
 
@@ -46,38 +46,38 @@ public class Parcel extends APIResource {
 	}
 
 	public static Parcel create(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
-            APIConnectionException, APIException {
-        return create(params, null);
-    }
+			APIConnectionException, APIException {
+		return create(params, null);
+	}
 
-    public String getInstanceURL() {
-        return "";
-    }
+	public String getInstanceURL() {
+		return "";
+	}
 
-    public static Parcel create(Map<String, Object> params, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.POST, classURL(Parcel.class), params, Parcel.class, apiKey);
-    }
+	public static Parcel create(Map<String, Object> params, String apiKey) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.POST, classURL(Parcel.class), params, Parcel.class, apiKey);
+	}
 
-    public static Parcel retrieve(String id) throws AuthenticationException, InvalidRequestException,
-            APIConnectionException, APIException {
-        return retrieve(id, null);
-    }
+	public static Parcel retrieve(String id) throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return retrieve(id, null);
+	}
 
-    public static Parcel retrieve(String id, String apiKey) throws AuthenticationException, InvalidRequestException,
-            APIConnectionException, APIException {
-        return request(RequestMethod.GET, instanceURL(Parcel.class, id), null, Parcel.class, apiKey);
-    }
+	public static Parcel retrieve(String id, String apiKey) throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return request(RequestMethod.GET, instanceURL(Parcel.class, id), null, Parcel.class, apiKey);
+	}
 
-    public static ParcelCollection all(Map<String, Object> params) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return all(params, null);
-    }
+	public static ParcelCollection all(Map<String, Object> params) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return all(params, null);
+	}
 
-    public static ParcelCollection all(Map<String, Object> params, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.GET, classURL(Parcel.class), params, ParcelCollection.class, apiKey);
-    }
+	public static ParcelCollection all(Map<String, Object> params, String apiKey) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.GET, classURL(Parcel.class), params, ParcelCollection.class, apiKey);
+	}
 
 	public String getObjectState() {
 		return objectState;

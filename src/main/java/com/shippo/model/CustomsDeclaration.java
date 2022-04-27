@@ -10,42 +10,42 @@ import com.shippo.net.APIResource;
 
 public class CustomsDeclaration extends APIResource {
 
-    String objectState;
-    String objectId;
-    String objectOwner;
-    Object objectCreated;
-    Object objectUpdated;
-    Object exporterReference;
-    Object importerReference;
-    Object contentsType;
-    Object contentsExplanation;
-    Object invoice;
-    Object license;
-    Object certificate;
-    Object notes;
-    Object eelPfc;
-    Object aesItn;
-    Object nonDeliveryOption;
-    Object certify;
-    Object certifySigner;
-    Object disclaimer;
-    Object incoterm;
-    Object items;
-    Object metadata;
-    Object addressImport;
-    Object b13aFilingOption;
-    Object b13aNumber;
-    Object invoicedCharges;
-    Object addressImporter;
-    Object exporterIdentification;
+	String objectState;
+	String objectId;
+	String objectOwner;
+	Object objectCreated;
+	Object objectUpdated;
+	Object exporterReference;
+	Object importerReference;
+	Object contentsType;
+	Object contentsExplanation;
+	Object invoice;
+	Object license;
+	Object certificate;
+	Object notes;
+	Object eelPfc;
+	Object aesItn;
+	Object nonDeliveryOption;
+	Object certify;
+	Object certifySigner;
+	Object disclaimer;
+	Object incoterm;
+	Object items;
+	Object metadata;
+	Object addressImport;
+	Object b13aFilingOption;
+	Object b13aNumber;
+	Object invoicedCharges;
+	Object addressImporter;
+	Object exporterIdentification;
 	private boolean test;
 
-    public static CustomsDeclaration create(Map<String, Object> params) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return create(params, null);
-    }
+	public static CustomsDeclaration create(Map<String, Object> params) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return create(params, null);
+	}
 
-    public boolean isTest() {
+	public boolean isTest() {
 		return test;
 	}
 
@@ -54,35 +54,36 @@ public class CustomsDeclaration extends APIResource {
 	}
 
 	public String getInstanceURL() {
-        return "";
-    }
+		return "";
+	}
 
-    public static CustomsDeclaration create(Map<String, Object> params, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.POST, classURL(CustomsDeclaration.class), params, CustomsDeclaration.class, apiKey);
-    }
+	public static CustomsDeclaration create(Map<String, Object> params, String apiKey) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.POST, classURL(CustomsDeclaration.class), params, CustomsDeclaration.class,
+				apiKey);
+	}
 
-    public static CustomsDeclaration retrieve(String id) throws AuthenticationException, InvalidRequestException,
-            APIConnectionException, APIException {
-        return retrieve(id, null);
-    }
+	public static CustomsDeclaration retrieve(String id) throws AuthenticationException, InvalidRequestException,
+			APIConnectionException, APIException {
+		return retrieve(id, null);
+	}
 
-    public static CustomsDeclaration retrieve(String id, String apiKey) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.GET, instanceURL(CustomsDeclaration.class, id), null, CustomsDeclaration.class,
-                apiKey);
-    }
+	public static CustomsDeclaration retrieve(String id, String apiKey) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.GET, instanceURL(CustomsDeclaration.class, id), null, CustomsDeclaration.class,
+				apiKey);
+	}
 
-    public static CustomsDeclarationCollection all(Map<String, Object> params) throws AuthenticationException,
-            InvalidRequestException, APIConnectionException, APIException {
-        return all(params, null);
-    }
+	public static CustomsDeclarationCollection all(Map<String, Object> params) throws AuthenticationException,
+			InvalidRequestException, APIConnectionException, APIException {
+		return all(params, null);
+	}
 
-    public static CustomsDeclarationCollection all(Map<String, Object> params, String apiKey)
-            throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-        return request(RequestMethod.GET, classURL(CustomsDeclaration.class), params,
-                CustomsDeclarationCollection.class, apiKey);
-    }
+	public static CustomsDeclarationCollection all(Map<String, Object> params, String apiKey)
+			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+		return request(RequestMethod.GET, classURL(CustomsDeclaration.class), params,
+				CustomsDeclarationCollection.class, apiKey);
+	}
 
 	public String getObjectState() {
 		return objectState;
@@ -285,18 +286,18 @@ public class CustomsDeclaration extends APIResource {
 	}
 
 	public Object getInvoicedCharges() {
-        return invoicedCharges;
+		return invoicedCharges;
 	}
 
 	public void setInvoicedCharges(Object invoicedCharges) {
-	    this.invoicedCharges = invoicedCharges;
+		this.invoicedCharges = invoicedCharges;
 	}
 
 	public Object getExporterIdentification() {
-        return exporterIdentification;
+		return exporterIdentification;
 	}
 
 	public void setExporterIdentification(Object exporterIdentification) {
-	    this.exporterIdentification = exporterIdentification;
+		this.exporterIdentification = exporterIdentification;
 	}
 }

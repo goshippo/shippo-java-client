@@ -20,7 +20,7 @@ public class AddressTest extends ShippoTest {
     public void testValidCreate() {
         Address address = createAddressFixture1();
         assertTrue(address.getIsComplete());
-		assertEquals(Shippo.apiKeyIsTest, address.isTest());
+        assertEquals(Shippo.apiKeyIsTest, address.isTest());
     }
 
     @Test(expected = InvalidRequestException.class)

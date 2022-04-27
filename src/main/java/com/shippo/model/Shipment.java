@@ -12,7 +12,6 @@ import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.RequestTimeoutException;
 import com.shippo.net.APIResource;
 
-
 public class Shipment extends APIResource {
 
 	String status;
@@ -33,13 +32,13 @@ public class Shipment extends APIResource {
 	List<Rate> rates;
 	private boolean test;
 
-    public static Shipment createForBatch(Address from, Address to, List<Parcel> parcels) {
-        Shipment s = new Shipment();
-        s.addressFrom = from;
-        s.addressTo = to;
-        s.parcels = parcels;
-        return s;
-    }
+	public static Shipment createForBatch(Address from, Address to, List<Parcel> parcels) {
+		Shipment s = new Shipment();
+		s.addressFrom = from;
+		s.addressTo = to;
+		s.parcels = parcels;
+		return s;
+	}
 
 	public static Shipment create(Map<String, Object> params)
 			throws AuthenticationException, InvalidRequestException,
@@ -147,7 +146,8 @@ public class Shipment extends APIResource {
 			InvalidRequestException, APIConnectionException, APIException {
 		return request(RequestMethod.GET,
 				instanceURL(Shipment.class, (String) params.get("id"))
-						+ "/rates/" + params.get("currency_code"), null,
+						+ "/rates/" + params.get("currency_code"),
+				null,
 				RateCollection.class, apiKey);
 	}
 

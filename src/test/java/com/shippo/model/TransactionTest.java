@@ -23,7 +23,7 @@ public class TransactionTest extends ShippoTest {
 	public void testValidCreate() {
 		Transaction testObject = createTransactionFixture();
 		assertEquals("SUCCESS", testObject.getStatus());
-        assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
+		assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
 	}
 
 	@Test(expected = InvalidRequestException.class)

@@ -61,18 +61,21 @@ public class CustomsDeclarationTest extends ShippoTest {
 
     @Test
     public void testValidCreate() {
-		Shippo.setDEBUG(true);
+        Shippo.setDEBUG(true);
         CustomsDeclaration testObject = createCustomsDeclarationFixture();
         assertEquals(testObject.getObjectState(), "VALID");
-		assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
+        assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
 
         assertEquals(testObject.getCertifySigner(), customsDeclarationRequestMap.get("certify_signer"));
-        assertEquals(testObject.getCertify(), Boolean.parseBoolean((String) customsDeclarationRequestMap.get("certify")));
+        assertEquals(testObject.getCertify(),
+                Boolean.parseBoolean((String) customsDeclarationRequestMap.get("certify")));
         assertEquals(testObject.getNonDeliveryOption(), customsDeclarationRequestMap.get("non_delivery_option"));
         assertEquals(testObject.getContentsType(), customsDeclarationRequestMap.get("contents_type"));
         assertEquals(testObject.getContentsExplanation(), customsDeclarationRequestMap.get("contents_explanation"));
-        assertEquals(testObject.getExporterReference(), nullToEmptyString(customsDeclarationRequestMap.get("exporter_reference")));
-        assertEquals(testObject.getImporterReference(), nullToEmptyString(customsDeclarationRequestMap.get("importer_reference")));
+        assertEquals(testObject.getExporterReference(),
+                nullToEmptyString(customsDeclarationRequestMap.get("exporter_reference")));
+        assertEquals(testObject.getImporterReference(),
+                nullToEmptyString(customsDeclarationRequestMap.get("importer_reference")));
         assertEquals(testObject.getInvoice(), nullToEmptyString(customsDeclarationRequestMap.get("invoice")));
         assertEquals(testObject.getLicense(), nullToEmptyString(customsDeclarationRequestMap.get("license")));
         assertEquals(testObject.getCertificate(), nullToEmptyString(customsDeclarationRequestMap.get("certificate")));
@@ -80,11 +83,13 @@ public class CustomsDeclarationTest extends ShippoTest {
         assertEquals(testObject.getEelPfc(), nullToEmptyString(customsDeclarationRequestMap.get("eel_pfc")));
         assertEquals(testObject.getAesItn(), nullToEmptyString(customsDeclarationRequestMap.get("aes_itn")));
         assertEquals(testObject.getIncoterm(), nullToEmptyString(customsDeclarationRequestMap.get("incoterm")));
-        assertEquals(testObject.getB13aFilingOption(), nullToEmptyString(customsDeclarationRequestMap.get("b13a_filing_option")));
+        assertEquals(testObject.getB13aFilingOption(),
+                nullToEmptyString(customsDeclarationRequestMap.get("b13a_filing_option")));
         assertEquals(testObject.getB13aNumber(), nullToEmptyString(customsDeclarationRequestMap.get("b13a_number")));
         assertEquals(testObject.getMetadata(), nullToEmptyString(customsDeclarationRequestMap.get("metadata")));
         assertEquals(testObject.getInvoicedCharges(), customsDeclarationRequestMap.get("invoiced_charges"));
-        assertEquals(testObject.getExporterIdentification(), customsDeclarationRequestMap.get("exporter_identification"));
+        assertEquals(testObject.getExporterIdentification(),
+                customsDeclarationRequestMap.get("exporter_identification"));
 
         // address_importer should return a new Address ID, which is a nonempty string
         Object addressImporter = testObject.getAddressImporter();
@@ -100,7 +105,7 @@ public class CustomsDeclarationTest extends ShippoTest {
     @Test
     public void testRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-		Shippo.setDEBUG(true);
+        Shippo.setDEBUG(true);
         CustomsDeclaration testObject = createCustomsDeclarationFixture();
         CustomsDeclaration retrievedObject;
 
@@ -135,7 +140,7 @@ public class CustomsDeclarationTest extends ShippoTest {
 
     public static CustomsDeclaration createCustomsDeclarationFixture() {
         CustomsItem customsItem = CustomsItemTest.createCustomsItemFixture();
-        String[] arr = {customsItem.getObjectId()};
+        String[] arr = { customsItem.getObjectId() };
         customsDeclarationRequestMap.put("items", arr);
 
         try {

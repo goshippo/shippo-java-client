@@ -36,93 +36,105 @@ public class BatchTest extends ShippoTest {
 		assertEquals(purchasedBatch.getStatus(), Batch.BatchStatus.PURCHASING);
 	}
 
-/*
-	final String id = "dd442663c24843068977704b1bd7d91d";
-
-	@Test 
-	public void testAll() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException,
-			UnsupportedEncodingException, MalformedURLException {
-		Batch[] batches = Batch.all();
-		Batch batch = null;
-		for (Batch b : batches) {
-			if (b.getId().equals(id)) {
-				batch = b;
-				break;
-			}
-		}
-		assertEquals(batch.getStatus(), Batch.BatchStatus.VALID);
-	}
-
-	@Test
-	public void testValidGet()
-			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		Batch batch = Batch.get(id, 0, null);
-		assertEquals(batch.getStatus(), Batch.BatchStatus.VALID);
-	}
-
-	@Test
-	public void testValidGetParams()
-			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		Batch batch = Batch.get(id, 1, Batch.ShipmentStatus.CREATION_SUCCEEDED);
-		for (BatchShipment bs : batch.getBatchShipments().getShipments()) {
-			if (bs.getStatus() != BatchShipment.Status.VALID) {
-				fail(String.format("BatchShipment %s is not VALID. Its status is %s", bs.getId(), bs.getStatus()));
-			}
-		}
-	}
-
-	@Test(expected = InvalidRequestException.class)
-	public void testInvalidGet()
-			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		Batch.get("invalid_id", 0, null);
-	}
-
-	private BatchShipment addShipment()
-			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		Shipment shipment = ShipmentTest.createShipmentFixture();
-		String[] ids = { (String) shipment.getObjectId() };
-		Batch batch = Batch.addShipments(id, ids);
-		for (BatchShipment bs : batch.getBatchShipments().getShipments()) {
-			if (bs.getShipment().equals(ids[0])) {
-				return bs;
-			}
-		}
-		return null;
-	}
-
-	@Test
-	public void testAddShipments()
-			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		int beforeAddCount = Batch.get(id, 0, null).getBatchShipments().getCount();
-		assertNotNull(addShipment());
-		int afterAddCount = Batch.get(id, 0, null).getBatchShipments().getCount();
-		assertEquals(beforeAddCount + 1, afterAddCount);
-	}
-
-	@Test
-	public void testRemoveShipments()
-			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		BatchShipment batchShipment = addShipment();
-		String[] bsObjectIds = { batchShipment.getId() };
-		int beforeRemoveCount = Batch.get(id, 0, null).getBatchShipments().getCount();
-		Batch batch = Batch.removeShipments(id, bsObjectIds);
-		for (BatchShipment bs : batch.getBatchShipments().getShipments()) {
-			if (bs.getId().equals(bsObjectIds[0])) {
-				fail(String.format("BatchShipment with object ID %s not removed from batch %s", bsObjectIds[0],
-						batch.getId()));
-			}
-		}
-		int afterRemoveCount = Batch.get(id, 0, null).getBatchShipments().getCount();
-		assertEquals(beforeRemoveCount - 1, afterRemoveCount);
-	}
-*/
-/*
-	@Test
-	public void testCreate()
-			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
-		assertEquals(createBatch().getStatus(), Batch.BatchStatus.VALIDATING);
-	}
-*/
+	/*
+	 * final String id = "dd442663c24843068977704b1bd7d91d";
+	 * 
+	 * @Test
+	 * public void testAll() throws AuthenticationException,
+	 * InvalidRequestException, APIConnectionException, APIException,
+	 * UnsupportedEncodingException, MalformedURLException {
+	 * Batch[] batches = Batch.all();
+	 * Batch batch = null;
+	 * for (Batch b : batches) {
+	 * if (b.getId().equals(id)) {
+	 * batch = b;
+	 * break;
+	 * }
+	 * }
+	 * assertEquals(batch.getStatus(), Batch.BatchStatus.VALID);
+	 * }
+	 * 
+	 * @Test
+	 * public void testValidGet()
+	 * throws AuthenticationException, InvalidRequestException,
+	 * APIConnectionException, APIException {
+	 * Batch batch = Batch.get(id, 0, null);
+	 * assertEquals(batch.getStatus(), Batch.BatchStatus.VALID);
+	 * }
+	 * 
+	 * @Test
+	 * public void testValidGetParams()
+	 * throws AuthenticationException, InvalidRequestException,
+	 * APIConnectionException, APIException {
+	 * Batch batch = Batch.get(id, 1, Batch.ShipmentStatus.CREATION_SUCCEEDED);
+	 * for (BatchShipment bs : batch.getBatchShipments().getShipments()) {
+	 * if (bs.getStatus() != BatchShipment.Status.VALID) {
+	 * fail(String.format("BatchShipment %s is not VALID. Its status is %s",
+	 * bs.getId(), bs.getStatus()));
+	 * }
+	 * }
+	 * }
+	 * 
+	 * @Test(expected = InvalidRequestException.class)
+	 * public void testInvalidGet()
+	 * throws AuthenticationException, InvalidRequestException,
+	 * APIConnectionException, APIException {
+	 * Batch.get("invalid_id", 0, null);
+	 * }
+	 * 
+	 * private BatchShipment addShipment()
+	 * throws AuthenticationException, InvalidRequestException,
+	 * APIConnectionException, APIException {
+	 * Shipment shipment = ShipmentTest.createShipmentFixture();
+	 * String[] ids = { (String) shipment.getObjectId() };
+	 * Batch batch = Batch.addShipments(id, ids);
+	 * for (BatchShipment bs : batch.getBatchShipments().getShipments()) {
+	 * if (bs.getShipment().equals(ids[0])) {
+	 * return bs;
+	 * }
+	 * }
+	 * return null;
+	 * }
+	 * 
+	 * @Test
+	 * public void testAddShipments()
+	 * throws AuthenticationException, InvalidRequestException,
+	 * APIConnectionException, APIException {
+	 * int beforeAddCount = Batch.get(id, 0, null).getBatchShipments().getCount();
+	 * assertNotNull(addShipment());
+	 * int afterAddCount = Batch.get(id, 0, null).getBatchShipments().getCount();
+	 * assertEquals(beforeAddCount + 1, afterAddCount);
+	 * }
+	 * 
+	 * @Test
+	 * public void testRemoveShipments()
+	 * throws AuthenticationException, InvalidRequestException,
+	 * APIConnectionException, APIException {
+	 * BatchShipment batchShipment = addShipment();
+	 * String[] bsObjectIds = { batchShipment.getId() };
+	 * int beforeRemoveCount = Batch.get(id, 0,
+	 * null).getBatchShipments().getCount();
+	 * Batch batch = Batch.removeShipments(id, bsObjectIds);
+	 * for (BatchShipment bs : batch.getBatchShipments().getShipments()) {
+	 * if (bs.getId().equals(bsObjectIds[0])) {
+	 * fail(String.
+	 * format("BatchShipment with object ID %s not removed from batch %s",
+	 * bsObjectIds[0],
+	 * batch.getId()));
+	 * }
+	 * }
+	 * int afterRemoveCount = Batch.get(id, 0, null).getBatchShipments().getCount();
+	 * assertEquals(beforeRemoveCount - 1, afterRemoveCount);
+	 * }
+	 */
+	/*
+	 * @Test
+	 * public void testCreate()
+	 * throws AuthenticationException, InvalidRequestException,
+	 * APIConnectionException, APIException {
+	 * assertEquals(createBatch().getStatus(), Batch.BatchStatus.VALIDATING);
+	 * }
+	 */
 	private Batch createBatchFixture()
 			throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
 		Address from = Address.createForPurchase("Undefault New Wu", "Clayton St.", "San Francisco", "94117", "CA",
@@ -144,11 +156,11 @@ public class BatchTest extends ShippoTest {
 			if (batch.getStatus().equals(status)) {
 				return;
 			}
-			
+
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				
+
 			}
 
 			times--;

@@ -21,7 +21,7 @@ public class ParcelTest extends ShippoTest {
     public void testValidCreate() {
         Parcel testObject = createParcelFixture();
         assertEquals("VALID", testObject.getObjectState());
-		assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
+        assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
     }
 
     @Test(expected = InvalidRequestException.class)

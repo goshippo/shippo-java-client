@@ -189,7 +189,7 @@ public class Transaction extends APIResource {
 	public void setMessages(Object messages) {
 		this.messages = messages;
 	}
-	
+
 	public Object getCommercialInvoiceUrl() {
 		return commercialInvoiceUrl;
 	}
@@ -213,5 +213,5 @@ public class Transaction extends APIResource {
 	public void setTest(boolean test) {
 		this.test = test;
 	}
-	
+
 }

@@ -36,7 +36,7 @@ public class CustomsItemTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         CustomsItem testObject = createCustomsItemFixture();
-		assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
+        assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
         assertEquals(testObject.getObjectState(), "VALID");
         assertEquals(testObject.getDescription(), objectMap.get("description"));
         assertEquals(testObject.getQuantity(), Double.parseDouble((String) objectMap.get("quantity")));

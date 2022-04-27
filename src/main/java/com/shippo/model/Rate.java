@@ -186,5 +186,4 @@ public class Rate extends APIResource {
 		this.test = test;
 	}
 
-	
 }

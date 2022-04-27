@@ -41,7 +41,7 @@ public class GsonTest extends ShippoTest {
 
     static String getResourceFileAsString(String fileName) throws IOException {
         URL resource = GsonTest.class.getResource(fileName);
-        System.out.println("Found test resource:"+resource);
+        System.out.println("Found test resource:" + resource);
         return new Scanner(resource.openStream(), "UTF-8").useDelimiter("\\A").next();
     }
 }

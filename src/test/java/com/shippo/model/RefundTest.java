@@ -29,7 +29,7 @@ public class RefundTest extends ShippoTest {
     public void testDoubleRefundRequest() throws ShippoException {
         // GIVEN a transaction
         Transaction transaction = TransactionTest.createTransactionFixture();
-        
+
         // AND a refund has already been requested for that transaction
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("transaction", transaction.getObjectId());

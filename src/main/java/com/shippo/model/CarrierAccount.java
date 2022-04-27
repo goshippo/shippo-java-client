@@ -113,6 +113,10 @@ public class CarrierAccount extends APIResource {
 		this.carrier = carrier;
 	}
 
+	public boolean isTest() {
+		return Boolean.TRUE.equals(test);
+	}
+
 	public Boolean getTest() {
 		return test;
 	}

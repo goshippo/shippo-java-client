@@ -10,14 +10,15 @@ import com.shippo.exception.InvalidRequestException;
 import com.shippo.net.APIResource;
 
 public class Refund extends APIResource {
-	String object_state;
-	String status;
-	String object_purpose;
-	String object_id;
-	String object_owner;
+    String object_state;
+    String status;
+    String object_purpose;
+    String object_id;
+    String object_owner;
     Object object_created;
     Object object_updated;
     Object transaction;
+    private boolean test;
 
     public static Refund create(Map<String, Object> params) throws AuthenticationException, InvalidRequestException,
             DuplicateRefundRequestException, APIConnectionException, APIException {
@@ -33,7 +34,7 @@ public class Refund extends APIResource {
         try {
             return request(RequestMethod.POST, classURL(Refund.class), params, Refund.class, apiKey);
         } catch (InvalidRequestException ex) {
-            if(ex.getMessage().contains(DuplicateRefundRequestException.refundMessagePattern)) {
+            if (ex.getMessage().contains(DuplicateRefundRequestException.refundMessagePattern)) {
                 throw new DuplicateRefundRequestException(ex.getMessage(), ex.getParam(), ex);
             }
             throw ex;
@@ -107,4 +108,13 @@ public class Refund extends APIResource {
     public void setTransaction(Object transaction) {
         this.transaction = transaction;
     }
+
+    public boolean isTest() {
+        return test;
+    }
+
+    public void setTest(boolean test) {
+        this.test = test;
+    }
+
 }

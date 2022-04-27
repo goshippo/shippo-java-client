@@ -68,7 +68,8 @@ public class ManifestTest extends ShippoTest {
         assertEquals(ManifestCollection.getData().size(), 1);
     }
 
-    public static Manifest createManifestFixture() throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
+    public static Manifest createManifestFixture()
+            throws AuthenticationException, InvalidRequestException, APIConnectionException, APIException {
         TimeZone tz = TimeZone.getTimeZone("PST");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         df.setTimeZone(tz);

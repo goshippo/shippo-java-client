@@ -28,7 +28,6 @@ import com.shippo.exception.InvalidRequestException;
 import com.shippo.serialization.GsonFactory;
 import com.shippo.serialization.ShippoObject;
 
-
 public abstract class APIResource extends ShippoObject {
 
 	private static String className(Class<?> clazz) {
@@ -134,7 +133,7 @@ public abstract class APIResource extends ShippoObject {
 		headers.put("User-Agent", GsonFactory.getGson(clazz).toJson(propertyMap));
 		headers.put("Content-Type", "application/json");
 		if (Shippo.apiVersion != null) {
-		    headers.put("Shippo-API-Version", Shippo.apiVersion);
+			headers.put("Shippo-API-Version", Shippo.apiVersion);
 		}
 		return headers;
 	}
@@ -192,35 +191,34 @@ public abstract class APIResource extends ShippoObject {
 
 	private static void checkSSLCert(java.net.HttpURLConnection hconn)
 			throws IOException, APIConnectionException {
-		 if (!Shippo.getVerifySSL() &&
-		 !hconn.getURL().getHost().equals("api.shippo.com")) {
-		 return;
-		 }
+		if (!Shippo.getVerifySSL() &&
+				!hconn.getURL().getHost().equals("api.shippo.com")) {
+			return;
+		}
 
-		 javax.net.ssl.HttpsURLConnection conn =
-		 (javax.net.ssl.HttpsURLConnection) hconn;
-		 conn.connect();
+		javax.net.ssl.HttpsURLConnection conn = (javax.net.ssl.HttpsURLConnection) hconn;
+		conn.connect();
 
-		 Certificate[] certs = conn.getServerCertificates();
+		Certificate[] certs = conn.getServerCertificates();
 
-		 try {
-		 MessageDigest md = MessageDigest.getInstance("SHA-1");
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-1");
 
-		 byte[] der = certs[0].getEncoded();
-		 md.update(der);
-		 byte[] digest = md.digest();
+			byte[] der = certs[0].getEncoded();
+			md.update(der);
+			byte[] digest = md.digest();
 
-		 byte[] revokedCertDigest = {};
+			byte[] revokedCertDigest = {};
 
-		 if (Arrays.equals(digest, revokedCertDigest)) {
-		 throwInvalidCertificateException();
-		 }
+			if (Arrays.equals(digest, revokedCertDigest)) {
+				throwInvalidCertificateException();
+			}
 
-		 } catch (NoSuchAlgorithmException e) {
-		 throw new RuntimeException(e);
-		 } catch (CertificateEncodingException e) {
-		 throwInvalidCertificateException();
-		 }
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		} catch (CertificateEncodingException e) {
+			throwInvalidCertificateException();
+		}
 	}
 
 	private static String formatURL(String url, String query) {
@@ -308,11 +306,11 @@ public abstract class APIResource extends ShippoObject {
 		if (params == null) {
 			return gson.toJson(new HashMap<String, Object>());
 		}
-        // hack to serialize list instead of object
-        Object o = params.get("__list");
-        if (o != null) {
-            return gson.toJson(o);
-        }
+		// hack to serialize list instead of object
+		Object o = params.get("__list");
+		if (o != null) {
+			return gson.toJson(o);
+		}
 		return gson.toJson(params);
 	}
 
@@ -383,12 +381,11 @@ public abstract class APIResource extends ShippoObject {
 		}
 
 		try {
-			if(method.equals(RequestMethod.GET)){
+			if (method.equals(RequestMethod.GET)) {
 				conn = createGetConnection(url, query, apiKey, clazz);
-			}
-			else if (method.equals(RequestMethod.POST) || method.equals(RequestMethod.PUT)) {
+			} else if (method.equals(RequestMethod.POST) || method.equals(RequestMethod.PUT)) {
 				conn = createPostPutConnection(url, query, method, apiKey, clazz);
-			}else{
+			} else {
 				throw new APIConnectionException(
 						String.format(
 								"Unrecognized HTTP method %s. "
@@ -402,18 +399,15 @@ public abstract class APIResource extends ShippoObject {
 
 			String rBody;
 			Map<String, List<String>> headers;
-			
+
 			if (rCode >= 200 && rCode < 300) {
 				rBody = getResponseBody(conn.getInputStream());
-			}
-			else if(rCode == 429){
+			} else if (rCode == 429) {
 				rBody = "Too many requests";
-			}
-			else {
-				try{
-				rBody = getResponseBody(conn.getErrorStream());
-				}
-				catch(NullPointerException e){
+			} else {
+				try {
+					rBody = getResponseBody(conn.getErrorStream());
+				} catch (NullPointerException e) {
 					rBody = "";
 				}
 			}
@@ -440,7 +434,8 @@ public abstract class APIResource extends ShippoObject {
 									+ "Please check your internet connection and try again. If this problem persists,"
 									+ "you should check Shippo's service status at http://status.goshippo.com/,"
 									+ " or let us know at support@goshippo.com.",
-							Shippo.getApiBase(), e.getMessage()), e);
+							Shippo.getApiBase(), e.getMessage()),
+					e);
 		} finally {
 			if (conn != null) {
 				conn.disconnect();
@@ -501,8 +496,8 @@ public abstract class APIResource extends ShippoObject {
 		try {
 			query = createQuery(params, method, clazz);
 		} catch (UnsupportedEncodingException e) {
-			 throw new InvalidRequestException("Unable to encode parameters to " + CHARSET
-	                    + ". Please contact support@shippo.com for assistance.", null, e);
+			throw new InvalidRequestException("Unable to encode parameters to " + CHARSET
+					+ ". Please contact support@shippo.com for assistance.", null, e);
 		}
 		ShippoResponse response = makeURLConnectionRequest(method, url, query, apiKey, clazz);
 
@@ -527,40 +522,40 @@ public abstract class APIResource extends ShippoObject {
 		error.code = rCode + "";
 
 		switch (rCode) {
-		case 400:
-			throw new InvalidRequestException(error.message, error.param, null);
-		case 404:
-			throw new InvalidRequestException(error.message, error.param, null);
-		case 401:
-			throw new AuthenticationException(error.message);
-		default:
-			throw new APIException(error.message, null);
+			case 400:
+				throw new InvalidRequestException(error.message, error.param, null);
+			case 404:
+				throw new InvalidRequestException(error.message, error.param, null);
+			case 401:
+				throw new AuthenticationException(error.message);
+			default:
+				throw new APIException(error.message, null);
 		}
 	}
 
-    private static String createGETQuery(Map<String, Object> params, Class<?> clazz)
-    		throws UnsupportedEncodingException, InvalidRequestException {
+	private static String createGETQuery(Map<String, Object> params, Class<?> clazz)
+			throws UnsupportedEncodingException, InvalidRequestException {
 		Map<String, String> flatParams = flattenParams(params);
 		StringBuilder queryStringBuffer = new StringBuilder();
 		for (Map.Entry<String, String> entry : flatParams.entrySet()) {
-		    if (queryStringBuffer.length() > 0) {
-		        queryStringBuffer.append("&");
-		    }
-		    queryStringBuffer.append(urlEncodePair(entry.getKey(), entry.getValue()));
+			if (queryStringBuffer.length() > 0) {
+				queryStringBuffer.append("&");
+			}
+			queryStringBuffer.append(urlEncodePair(entry.getKey(), entry.getValue()));
 		}
 		return queryStringBuffer.toString();
 	}
 
-    private static String createQuery(Map<String, Object> params, APIResource.RequestMethod method,
-    		Class<?> clazz) throws UnsupportedEncodingException, InvalidRequestException {
+	private static String createQuery(Map<String, Object> params, APIResource.RequestMethod method,
+			Class<?> clazz) throws UnsupportedEncodingException, InvalidRequestException {
 		switch (method) {
-		case GET:
-			return createGETQuery(params, clazz);
-		case POST:
-			return mapToJson(params, clazz);
-		default:
-			return mapToJson(params, clazz);
-    }
+			case GET:
+				return createGETQuery(params, clazz);
+			case POST:
+				return mapToJson(params, clazz);
+			default:
+				return mapToJson(params, clazz);
+		}
 
-}
+	}
 }

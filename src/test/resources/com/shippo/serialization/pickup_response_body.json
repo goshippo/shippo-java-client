@@ -1,0 +1,38 @@
+{
+  "object_created": "2022-04-22T14:47:17.141Z",
+  "object_updated": "2022-04-22T14:47:17.629Z",
+  "object_id": "7867924238494f89bbd24c0bba2fb387",
+  "carrier_account": "09a25c72f0df461ea8fea8b755356aaf",
+  "location": {
+    "instructions": null,
+    "building_location_type": "Knock on door",
+    "building_type": null,
+    "address": {
+      "object_id": "ccc16f4d9b3c4cec8226cd83f129ce64",
+      "name": "Undefault New Wu",
+      "company": "Shippo",
+      "street1": "Clayton St.",
+      "street2": "",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94117",
+      "country": "US",
+      "phone": "0015553419393",
+      "email": "test@goshipppo.com"
+    }
+  },
+  "transactions": [
+    "f352587c9e6846e28fd08eaadb371065"
+  ],
+  "requested_start_time": "2022-04-23T16:45:55.815Z",
+  "requested_end_time": "2022-04-24T16:45:55.815Z",
+  "confirmed_start_time": null,
+  "confirmed_end_time": null,
+  "cancel_by_time": null,
+  "status": "ERROR",
+  "confirmation_code": null,
+  "timezone": "US/Pacific",
+  "messages": null,
+  "metadata": "",
+  "is_test": true
+}

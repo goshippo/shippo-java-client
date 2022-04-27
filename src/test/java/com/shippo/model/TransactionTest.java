@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -22,6 +23,7 @@ public class TransactionTest extends ShippoTest {
 	public void testValidCreate() {
 		Transaction testObject = createTransactionFixture();
 		assertEquals("SUCCESS", testObject.getStatus());
+		assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
 	}
 
 	@Test(expected = InvalidRequestException.class)
@@ -81,16 +83,5 @@ public class TransactionTest extends ShippoTest {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	// Make sure we get a test rate.  We are using a test auth token, so it should not be possible to get a non-test rate back,
-	// but previous author was uncertain, and I don't know enough about the underlying implementation to be sure.
-	private static Rate selectTestRate(List<Rate> rateList) {
-		return rateList.stream().filter(new Predicate<Rate>() {
-			@Override
-			public boolean test(Rate rate) {
-				return rate.test != null && rate.test == true;
-			}
-		}).findAny().orElseThrow();
 	}
 }

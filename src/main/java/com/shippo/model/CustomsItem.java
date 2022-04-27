@@ -28,10 +28,19 @@ public class CustomsItem extends APIResource {
     Object skuCode;
     Object eccnEar99;
     Object metadata;
+    private boolean test;
 
     public static CustomsItem create(Map<String, Object> params) throws AuthenticationException,
             InvalidRequestException, APIConnectionException, APIException {
         return create(params, null);
+    }
+
+    public boolean isTest() {
+        return test;
+    }
+
+    public void setTest(boolean test) {
+        this.test = test;
     }
 
     public String getInstanceURL() {

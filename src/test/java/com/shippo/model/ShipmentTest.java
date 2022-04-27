@@ -13,6 +13,7 @@ import java.util.TimeZone;
 
 import org.junit.Test;
 
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -24,8 +25,9 @@ public class ShipmentTest extends ShippoTest {
     @Test
     public void testValidCreate() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Shipment testObject = (Shipment) createShipmentFixture();
+        Shipment testObject = createShipmentFixture();
         assertEquals("SUCCESS", testObject.getStatus());
+        assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
         Address addressTo = (Address) testObject.getAddressTo();
         assertTrue(addressTo.getIsComplete());
     }
@@ -39,7 +41,7 @@ public class ShipmentTest extends ShippoTest {
     @Test
     public void testRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Shipment testObject = (Shipment) createShipmentFixture();
+        Shipment testObject = createShipmentFixture();
         Shipment retrievedObject;
 
         retrievedObject = Shipment.retrieve((String) testObject.objectId);

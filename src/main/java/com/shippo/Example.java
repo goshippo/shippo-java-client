@@ -13,14 +13,14 @@ import com.shippo.model.Transaction;
 public class Example {
 
 	public static void main(String[] args) throws ShippoException {
-		
+
 		// replace with your Shippo Token
 		// don't have one? get more info here (https://goshippo.com/docs/#overview)
 		Shippo.setApiKey("<API-KEY>");
 		Shippo.setApiVersion("2018-02-08");
 
 		// Optional defaults to false
-		//Shippo.setDEBUG(true);
+		// Shippo.setDEBUG(true);
 
 		// to address
 		Map<String, Object> toAddressMap = new HashMap<String, Object>();
@@ -81,7 +81,8 @@ public class Example {
 			System.out.println(String.format("Label url : %s", transaction.getLabelUrl()));
 			System.out.println(String.format("Tracking number : %s", transaction.getTrackingNumber()));
 		} else {
-			System.out.println(String.format("An Error has occured while generating you label. Messages : %s", transaction.getMessages()));
+			System.out.println(String.format("An Error has occured while generating you label. Messages : %s",
+					transaction.getMessages()));
 		}
 	}
 }

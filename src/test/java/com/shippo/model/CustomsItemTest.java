@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -35,6 +36,7 @@ public class CustomsItemTest extends ShippoTest {
     @Test
     public void testValidCreate() {
         CustomsItem testObject = createCustomsItemFixture();
+        assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
         assertEquals(testObject.getObjectState(), "VALID");
         assertEquals(testObject.getDescription(), objectMap.get("description"));
         assertEquals(testObject.getQuantity(), Double.parseDouble((String) objectMap.get("quantity")));

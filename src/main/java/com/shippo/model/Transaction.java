@@ -26,6 +26,7 @@ public class Transaction extends APIResource {
 	Object labelUrl;
 	Object messages;
 	Object metadata;
+	private boolean test;
 
 	public static Transaction create(Map<String, Object> params)
 			throws AuthenticationException, InvalidRequestException,
@@ -188,7 +189,7 @@ public class Transaction extends APIResource {
 	public void setMessages(Object messages) {
 		this.messages = messages;
 	}
-	
+
 	public Object getCommercialInvoiceUrl() {
 		return commercialInvoiceUrl;
 	}
@@ -203,6 +204,14 @@ public class Transaction extends APIResource {
 
 	public void setMetadata(Object metadata) {
 		this.metadata = metadata;
+	}
+
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
 	}
 
 }

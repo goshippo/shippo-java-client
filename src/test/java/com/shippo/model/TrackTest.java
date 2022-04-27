@@ -1,55 +1,54 @@
 package com.shippo.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
-
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
+import com.shippo.exception.ShippoException;
 
+import org.junit.Test;
 
 public class TrackTest extends ShippoTest {
 
-    final static String carrier = "shippo";
-    final static String number = "SHIPPO_TRANSIT";
+    @Test
+    public void testGet_TestMode() throws AuthenticationException, InvalidRequestException,
+            APIConnectionException, APIException {
 
-    private void checkTrack(Track track) {
-        assertEquals(track.getCarrier(), carrier);
-        assertEquals(track.getTrackingNumber(), number);
+        // GIVEN a track requested with Test Mode (see
+        // https://goshippo.com/docs/tracking/)
+        String testModeCarrier = "shippo";
+        String testModeNumber = "SHIPPO_DELIVERED";
+        Track track = Track.getTrackingInfo(testModeCarrier, testModeNumber, null);
+
+        // EXPECT
+        assertEquals(Shippo.apiKeyIsTest, track.isTest());
+        assertEquals(track.getCarrier(), testModeCarrier);
+        assertEquals(track.getTrackingNumber(), testModeNumber);
         assertEquals(track.getTrackingStatus().getStatus(), Track.TrackingStatus.DELIVERED);
     }
 
-/*    @Test
-    public void testGet()  throws AuthenticationException, InvalidRequestException, 
-            APIConnectionException, APIException {
-        Track track = Track.getTrackingInfo(carrier, number, null);
-        checkTrack(track);
-    }
-*/
     @Test(expected = InvalidRequestException.class)
-    public void testGetInvalidCarrier()  throws AuthenticationException, InvalidRequestException, 
+    public void testGetInvalidCarrier() throws AuthenticationException, InvalidRequestException,
             APIConnectionException, APIException {
-        Track.getTrackingInfo("bad", number, null);
+        String testModeNumber = "SHIPPO_TRANSIT";
+        Track.getTrackingInfo("bad", testModeNumber, null);
     }
 
     @Test(expected = InvalidRequestException.class)
-    public void testGetInvalidCarrierNumber()  throws AuthenticationException, InvalidRequestException, 
-            APIConnectionException, APIException {
-        Track track = Track.getTrackingInfo(carrier, "invalid", null);
-        //These should not get to run as this call now generates an exception.
-        //if it does run, the api isnt behaving as expected and this will fail
-        assertEquals(track.getCarrier(), carrier);
-        assertEquals(track.getTrackingNumber(), "invalid");
-        assertEquals(track.getTrackingStatus(), null);
-       
+    public void testGetInvalidCarrierNumber() throws ShippoException {
+        String testModeCarrier = "shippo";
+        Track.getTrackingInfo(testModeCarrier, "invalid", null);
     }
-/*
-    @Test
-    public void testRegisterWebhook()  throws AuthenticationException, InvalidRequestException, 
-            APIConnectionException, APIException {
-        Track track = Track.registerTrackingWebhook(carrier, number, "meta", null);
-        checkTrack(track);
-    }*/
+    /*
+     * @Test
+     * public void testRegisterWebhook() throws AuthenticationException,
+     * InvalidRequestException,
+     * APIConnectionException, APIException {
+     * Track track = Track.registerTrackingWebhook(carrier, number, "meta", null);
+     * checkTrack(track);
+     * }
+     */
 }

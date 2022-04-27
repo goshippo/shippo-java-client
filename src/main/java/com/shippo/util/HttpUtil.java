@@ -13,10 +13,11 @@ public final class HttpUtil {
 	// Taken from
 	// http://stackoverflow.com/questions/13592236/parse-a-uri-string-into-name-value-collection
 	/**
-	 * Parse given query string of the form <code>name1=value1&amp;name2=value2</code> and return it as {@link Map}
+	 * Parse given query string of the form
+	 * <code>name1=value1&amp;name2=value2</code> and return it as {@link Map}
 	 * 
-	 * @param query	Query string
-	 * @return		Parsed results	
+	 * @param query Query string
+	 * @return Parsed results
 	 * @throws UnsupportedEncodingException
 	 */
 	public static Map<String, String> queryToParams(String query) throws UnsupportedEncodingException {

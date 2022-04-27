@@ -23,6 +23,7 @@ public final class Track extends APIResource {
 
 	private String carrier;
 	private String trackingNumber;
+	private boolean test;
 
 	public static class Address {
 		private String city;
@@ -159,6 +160,14 @@ public final class Track extends APIResource {
 		return trackingHistory;
 	}
 
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
 	/**
 	 * Return URL that maps given tracking number on given carrier as
 	 * https://api.goshippo.com/tracks/<i>carrier</i>/<i>tracking number</i>
@@ -175,13 +184,14 @@ public final class Track extends APIResource {
 
 	/**
 	 * Get tracking information of any package from given carrier. This
-	 * corresponds to https://api.goshippo.com/tracks/<i>carrier</i>/<i>tracking_number</i>
+	 * corresponds to
+	 * https://api.goshippo.com/tracks/<i>carrier</i>/<i>tracking_number</i>
 	 * API defined in https://goshippo.com/docs/reference#tracks-retrieve
 	 *
 	 * @param carrier
-	 *            Name of the carrier (like "usps") tracking the package
+	 *                       Name of the carrier (like "usps") tracking the package
 	 * @param trackingNumber
-	 *            Tracking number provided by the carrier for a package
+	 *                       Tracking number provided by the carrier for a package
 	 * @return Track object containing tracking info
 	 */
 	public static Track getTrackingInfo(String carrier, String trackingNumber, String apiKey)
@@ -196,11 +206,11 @@ public final class Track extends APIResource {
 	 * provided in https://app.goshippo.com
 	 *
 	 * @param carrier
-	 *            Name of the carrier (like "usps") tracking the packing
+	 *                       Name of the carrier (like "usps") tracking the packing
 	 * @param trackingNumber
-	 *            Tracking number provided by the carrier for a package
+	 *                       Tracking number provided by the carrier for a package
 	 * @param metadata
-	 *            Generic information related to this tracking
+	 *                       Generic information related to this tracking
 	 * @return Track object containing tracking info
 	 */
 	public static Track registerTrackingWebhook(String carrier, String trackingNumber, String metadata, String apiKey)

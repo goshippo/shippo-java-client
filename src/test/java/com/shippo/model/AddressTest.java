@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
@@ -17,8 +18,9 @@ public class AddressTest extends ShippoTest {
 
     @Test
     public void testValidCreate() {
-        Address testObject = createAddressFixture1();
-        assertTrue(testObject.getIsComplete());
+        Address address = createAddressFixture1();
+        assertTrue(address.getIsComplete());
+        assertEquals(Shippo.apiKeyIsTest, address.isTest());
     }
 
     @Test(expected = InvalidRequestException.class)

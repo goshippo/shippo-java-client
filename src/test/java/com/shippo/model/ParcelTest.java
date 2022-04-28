@@ -6,20 +6,22 @@ import static org.junit.Assert.assertNotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.ShippoException;
 
+import org.junit.Test;
+
 public class ParcelTest extends ShippoTest {
 
     @Test
     public void testValidCreate() {
-        Parcel testObject = (Parcel) getDefaultObject();
+        Parcel testObject = createParcelFixture();
         assertEquals("VALID", testObject.getObjectState());
+        assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
     }
 
     @Test(expected = InvalidRequestException.class)
@@ -31,7 +33,7 @@ public class ParcelTest extends ShippoTest {
     @Test
     public void testRetrieve() throws AuthenticationException, InvalidRequestException, APIConnectionException,
             APIException {
-        Parcel testObject = (Parcel) getDefaultObject();
+        Parcel testObject = createParcelFixture();
         Parcel retrievedObject;
 
         retrievedObject = Parcel.retrieve((String) testObject.objectId);
@@ -62,7 +64,7 @@ public class ParcelTest extends ShippoTest {
         assertEquals(ParcelCollection.getData().size(), 2);
     }
 
-    public static Object getDefaultObject() {
+    public static Parcel createParcelFixture() {
         Map<String, Object> objectMap = new HashMap<String, Object>();
         objectMap.put("length", "5");
         objectMap.put("width", "5");
@@ -74,8 +76,7 @@ public class ParcelTest extends ShippoTest {
         objectMap.put("metadata", "Customer ID 123456");
 
         try {
-            Parcel testObject = Parcel.create(objectMap);
-            return testObject;
+            return Parcel.create(objectMap);
         } catch (ShippoException e) {
             e.printStackTrace();
         }

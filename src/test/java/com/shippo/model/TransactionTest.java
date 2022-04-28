@@ -1,34 +1,30 @@
 package com.shippo.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
-import org.junit.Test;
-
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.ShippoException;
 
+import org.junit.Test;
+
 public class TransactionTest extends ShippoTest {
 
-	/**
-	 * Intentionally commented out as this test could result in a purchase of a
-	 * non test label depending on your carrier account settings
-	 *
-	 * To use this test, please make sure that test mode is enabled for the
-	 * default rate object used
-	 *
-	 * @Test
-	 *       public void testValidCreate() {
-	 *       Transaction testObject = (Transaction) getDefaultObject();
-	 *       assertEquals("SUCCESS", testObject.getStatus());
-	 * 
-	 **/
+	@Test
+	public void testValidCreate() {
+		Transaction testObject = createTransactionFixture();
+		assertEquals("SUCCESS", testObject.getStatus());
+		assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
+	}
 
 	@Test(expected = InvalidRequestException.class)
 	public void testInvalidCreate() throws AuthenticationException,
@@ -39,7 +35,7 @@ public class TransactionTest extends ShippoTest {
 	@Test
 	public void testRetrieve() throws AuthenticationException,
 			InvalidRequestException, APIConnectionException, APIException {
-		Transaction testObject = (Transaction) getDefaultObject();
+		Transaction testObject = createTransactionFixture();
 		Transaction retrievedObject;
 
 		retrievedObject = Transaction.retrieve((String) testObject.objectId);
@@ -71,18 +67,18 @@ public class TransactionTest extends ShippoTest {
 		assertEquals(TransactionCollection.getData().size(), 1);
 	}
 
-	public static Object getDefaultObject() {
+	public static Transaction createTransactionFixture() {
 		Map<String, Object> objectMap = new HashMap<String, Object>();
-		RateCollection rateCollection = (RateCollection) RateTest
-				.getDefaultObject();
+		RateCollection rateCollection = RateTest.createRateCollectionFixture();
 		List<Rate> rateList = rateCollection.getData();
 
-		objectMap.put("rate", rateList.get(0).getObjectId());
+		Rate selectedRate = selectTestRate(rateList);
+
+		objectMap.put("rate", selectedRate.getObjectId());
 		objectMap.put("metadata", "Customer ID 123456");
 
 		try {
-			Transaction testObject = Transaction.createSync(objectMap);
-			return testObject;
+			return Transaction.createSync(objectMap);
 		} catch (ShippoException e) {
 			e.printStackTrace();
 		}

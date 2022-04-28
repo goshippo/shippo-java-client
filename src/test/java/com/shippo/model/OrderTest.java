@@ -1,27 +1,30 @@
 package com.shippo.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.time.LocalDateTime;
 
-import org.junit.Test;
-
+import com.shippo.Shippo;
 import com.shippo.exception.APIConnectionException;
 import com.shippo.exception.APIException;
 import com.shippo.exception.AuthenticationException;
 import com.shippo.exception.InvalidRequestException;
 import com.shippo.exception.ShippoException;
 
+import org.junit.Test;
+
 public class OrderTest extends ShippoTest {
 
 	@Test
 	public void testValidCreate() {
-		Order testObject = (Order) getDefaultObject();
+		Order testObject = createOrderFixture();
 		assertEquals("PAID", testObject.getOrderStatus().toString());
+		assertEquals(Shippo.apiKeyIsTest, testObject.isTest());
 	}
 
 	@Test(expected = InvalidRequestException.class)
@@ -33,7 +36,7 @@ public class OrderTest extends ShippoTest {
 	@Test
 	public void testRetrieve() throws AuthenticationException,
 			InvalidRequestException, APIConnectionException, APIException {
-		Order testObject = (Order) getDefaultObject();
+		Order testObject = createOrderFixture();
 		Order retrievedObject = Order.retrieve((String) testObject.getObjectId());
 		assertEquals(testObject.getObjectId(), retrievedObject.getObjectId());
 	}
@@ -62,9 +65,9 @@ public class OrderTest extends ShippoTest {
 		assertEquals(OrderCollection.getData().size(), 1);
 	}
 
-	public static Object getDefaultObject() {
-		Address addressFrom = (Address) AddressTest.getDefaultObject();
-		Address addressTo = (Address) AddressTest.getSecondObject();
+	public static Order createOrderFixture() {
+		Address addressFrom = AddressTest.createAddressFixture1();
+		Address addressTo = AddressTest.createAddressFixture2();
 
 		Map<String, Object> lineItem = new HashMap<String, Object>();
 		lineItem.put("title", "Demo Line Item Object");
@@ -98,8 +101,7 @@ public class OrderTest extends ShippoTest {
 		orderParams.put("currency", "USD");
 
 		try {
-			Order testObject = Order.create(orderParams);
-			return testObject;
+			return Order.create(orderParams);
 		} catch (ShippoException e) {
 			e.printStackTrace();
 		}

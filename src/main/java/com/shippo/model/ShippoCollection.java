@@ -3,7 +3,6 @@ package com.shippo.model;
 import java.util.List;
 import com.shippo.serialization.ShippoObject;
 
-
 public abstract class ShippoCollection<T> extends ShippoObject {
     List<T> results;
     Boolean hasMore;

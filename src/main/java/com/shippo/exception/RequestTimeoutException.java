@@ -9,7 +9,7 @@ public class RequestTimeoutException extends ShippoException {
     public RequestTimeoutException(String message, String param, Throwable e) {
         super(message, e);
         this.param = param;
-        
+
     }
 
     public RequestTimeoutException(String message) {

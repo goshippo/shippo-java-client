@@ -24,7 +24,8 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Test with Maven
+      - id : tests
+        name: Test with Maven
         run: mvn -B test --file pom.xml
       - name: Send a Slack notification saying if tests are passing/failing for a given Java version
         shell: bash

@@ -32,7 +32,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           conclusion=${{ steps.tests.conclusion }}
-          if [[ "$conclusion" == "success" ]]; then
+          if [[ "$conclusion" == "ok" ]]; then
             message="✅ Java SDK Test succeeded for Java ${{ matrix.java }}"
           else
             message="❌ Java SDK Test failed for Java ${{ matrix.java }}"

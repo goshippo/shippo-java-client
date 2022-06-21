@@ -24,18 +24,19 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - id : tests
+      - id : test
         name: Test with Maven
         run: mvn -B test --file pom.xml
-      - name: Send a Slack notification saying if tests are passing/failing for a given Java version
+      - name: Send a Slack notification saying if tests are passing/failing for a given java version 
+        if: always()
         shell: bash
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          conclusion=${{ steps.tests.conclusion }}
+          conclusion=${{ steps.test.conclusion }}
           if [[ "$conclusion" == "success" ]]; then
-            message="✅ Java SDK Test succeeded for Java ${{ matrix.java }}"
+            message="✅ JAVA SDK Test succeeded [Env: PROD, JAVA SDK version: ${{ matrix.java-version }}]"
           else
-            message="❌ Java SDK Test failed for Java ${{ matrix.java }}"
+            message="❌ JAVA SDK Test failed [Env: PROD, JAVA SDK version: ${{ matrix.java-version }}]"
           fi
           curl -X POST --data-urlencode "payload={\"text\": \"$message\", \"link_names\": 1}" $SLACK_WEBHOOK_URL

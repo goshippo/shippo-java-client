@@ -1,0 +1,52 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven
+
+on:
+   push:
+    branches:
+    - master
+    - release/*    
+   pull_request:
+    branches:
+    - main
+    
+  # Run the tests for the default branch [master] every Monday 3:00 pm UTC time (8:00 am PST)
+   schedule:
+    - cron: "0 15 * * 1"
+
+  # Run the tests by clicking a button in GitHub's UI
+   workflow_dispatch: 
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - id : test
+        name: Test with Maven
+        run: mvn -B test --file pom.xml
+      - name: Send a Slack notification saying if tests are passing/failing for a given java version 
+        if: always()
+        shell: bash
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          conclusion=${{ steps.test.conclusion }}
+          if [[ "$conclusion" == "success" ]]; then
+            message="✅ JAVA SDK Test succeeded [Env: PROD, JAVA SDK version: ${{ matrix.java-version }}]"
+          else
+            message="❌ JAVA SDK Test failed [Env: PROD, JAVA SDK version: ${{ matrix.java-version }}]"
+          fi
+          curl -X POST --data-urlencode "payload={\"text\": \"$message\", \"link_names\": 1}" $SLACK_WEBHOOK_URL

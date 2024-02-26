@@ -2,6 +2,15 @@
 
 # Shippo Java API wrapper
 
+---
+
+:warning: **Shippo no longer actively maintains this library** <br>
+However, you can use it as a starting point and update it for your needs and future changes to our APIs.<br>
+You can use our [Open API Specification](https://docs.goshippo.com/shippoapi/public-api/) to build your own library using tools like the [OpenAPI Generator](https://openapi-generator.tech/) and [Swagger Codegen](https://swagger.io/tools/swagger-codegen/).
+
+---
+
+
 Shippo is a shipping API that connects you with [multiple shipping carriers](https://goshippo.com/carriers/) (such as USPS, UPS, DHL, Canada Post, Australia Post, UberRUSH and many others) through one interface.
 
 Print a shipping label in 10 mins using our default USPS and DHL Express accounts. No need to register for a carrier account to get started.
